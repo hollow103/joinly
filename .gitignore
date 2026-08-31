@@ -1,0 +1,25 @@
+# Environment and secrets
+.env
+.env.*
+!.env.example
+
+# Java and Spring Boot
+backend/target/
+backend/.gradle/
+backend/build/
+
+# JavaScript and React
+mobile/node_modules/
+admin/node_modules/
+mobile/.expo/
+mobile/dist/
+admin/dist/
+
+# Logs and operating system files
+*.log
+.DS_Store
+
+# Local OpenCode configuration and session state
+opencode.json
+AGENTS.md
+SESSION_HANDOF.md

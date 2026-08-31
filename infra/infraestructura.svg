@@ -1,0 +1,83 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1440" height="900" viewBox="0 0 1440 900" role="img" aria-labelledby="title description">
+  <title id="title">Joinly backend infrastructure</title>
+  <desc id="description">Local Docker Compose backend and PostGIS database, connected to Supabase Auth. Future deployment is shown separately.</desc>
+  <defs>
+    <style>
+      .bg { fill: #f7f8fa; }
+      .title { fill: #172033; font: 700 32px Arial, sans-serif; }
+      .subtitle { fill: #596579; font: 16px Arial, sans-serif; }
+      .group { fill: #ffffff; stroke: #cad2df; stroke-width: 2; }
+      .group-future { fill: #fbfcfe; stroke: #aeb9c9; stroke-width: 2; stroke-dasharray: 8 7; }
+      .node { fill: #eaf2ff; stroke: #2f6fec; stroke-width: 2; }
+      .node-db { fill: #e8f7ef; stroke: #208a56; stroke-width: 2; }
+      .node-auth { fill: #fff3df; stroke: #c77612; stroke-width: 2; }
+      .node-future { fill: #f2f4f8; stroke: #738198; stroke-width: 2; }
+      .group-label { fill: #24324a; font: 700 18px Arial, sans-serif; }
+      .node-title { fill: #172033; font: 700 19px Arial, sans-serif; }
+      .node-copy { fill: #44516a; font: 15px Arial, sans-serif; }
+      .note { fill: #657187; font: 14px Arial, sans-serif; }
+      .arrow { fill: none; stroke: #52627b; stroke-width: 2.5; marker-end: url(#arrowhead); }
+      .arrow-dashed { fill: none; stroke: #8794a8; stroke-width: 2.5; stroke-dasharray: 8 7; marker-end: url(#arrowhead-muted); }
+      .arrow-label { fill: #3d4b61; font: 14px Arial, sans-serif; }
+    </style>
+    <marker id="arrowhead" markerWidth="10" markerHeight="8" refX="9" refY="4" orient="auto">
+      <path d="M 0 0 L 10 4 L 0 8 z" fill="#52627b" />
+    </marker>
+    <marker id="arrowhead-muted" markerWidth="10" markerHeight="8" refX="9" refY="4" orient="auto">
+      <path d="M 0 0 L 10 4 L 0 8 z" fill="#8794a8" />
+    </marker>
+  </defs>
+
+  <rect class="bg" width="1440" height="900" />
+  <text class="title" x="70" y="70">Joinly: backend infrastructure</text>
+  <text class="subtitle" x="70" y="98">Implementation starts with the local backend. Mobile, admin, and production deployment remain deferred.</text>
+
+  <rect class="group" x="70" y="150" width="800" height="590" rx="18" />
+  <text class="group-label" x="105" y="190">Local development machine</text>
+  <text class="note" x="105" y="216">Docker Desktop and Docker Compose</text>
+
+  <rect class="node" x="125" y="285" width="300" height="155" rx="14" />
+  <text class="node-title" x="155" y="325">backend</text>
+  <text class="node-copy" x="155" y="355">Spring Boot / Java 21</text>
+  <text class="node-copy" x="155" y="380">REST API: :8080</text>
+  <text class="node-copy" x="155" y="405">Flyway and Spring Security</text>
+
+  <rect class="node-db" x="535" y="285" width="280" height="155" rx="14" />
+  <text class="node-title" x="565" y="325">db</text>
+  <text class="node-copy" x="565" y="355">PostgreSQL 16 + PostGIS</text>
+  <text class="node-copy" x="565" y="380">Compose volume</text>
+  <text class="node-copy" x="565" y="405">Internal address: db:5432</text>
+
+  <rect class="node-future" x="125" y="535" width="690" height="140" rx="14" />
+  <text class="node-title" x="155" y="575">Backend-only scope</text>
+  <text class="node-copy" x="155" y="605">Phase 0: Compose, migrations, OpenAPI, health check, and automated tests.</text>
+  <text class="node-copy" x="155" y="630">Phase 1: Supabase JWT validation, internal profile, suspension, and admin role.</text>
+  <text class="note" x="155" y="657">No mobile or moderation UI is created at this stage.</text>
+
+  <rect class="group" x="960" y="150" width="410" height="270" rx="18" />
+  <text class="group-label" x="995" y="190">Remote development service</text>
+  <text class="note" x="995" y="216">Supabase project: ulxrjlmpzaeouqbjbnjc</text>
+  <rect class="node-auth" x="995" y="260" width="340" height="115" rx="14" />
+  <text class="node-title" x="1025" y="300">Supabase Auth</text>
+  <text class="node-copy" x="1025" y="330">Email/password identity provider</text>
+  <text class="node-copy" x="1025" y="353">JWT issuer and user subject</text>
+
+  <path class="arrow" d="M 425 345 C 465 345, 490 345, 535 345" />
+  <text class="arrow-label" x="445" y="330">JDBC</text>
+  <path class="arrow" d="M 995 320 C 880 320, 765 260, 425 320" />
+  <text class="arrow-label" x="690" y="264">validate JWT</text>
+
+  <rect class="group-future" x="960" y="510" width="410" height="230" rx="18" />
+  <text class="group-label" x="995" y="550">Future pilot deployment</text>
+  <text class="note" x="995" y="576">Not part of backend implementation now</text>
+  <rect class="node-future" x="995" y="605" width="155" height="90" rx="12" />
+  <text class="node-title" x="1020" y="640">Cloud Run</text>
+  <text class="node-copy" x="1020" y="666">backend container</text>
+  <rect class="node-future" x="1180" y="605" width="155" height="90" rx="12" />
+  <text class="node-title" x="1205" y="640">Supabase</text>
+  <text class="node-copy" x="1205" y="666">PostGIS database</text>
+  <path class="arrow-dashed" d="M 1150 650 L 1180 650" />
+
+  <text class="note" x="70" y="805">Security boundary: exact event locations and participant lists are enforced by the backend response projection.</text>
+  <text class="note" x="70" y="832">No secrets are stored in this diagram or in repository configuration.</text>
+</svg>
