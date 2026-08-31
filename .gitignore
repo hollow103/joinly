@@ -1,13 +1,26 @@
 # Environment and secrets
 .env
 .env.*
+!.env.example
+!mobile/.env.example
 
 # JavaScript and React
 mobile/node_modules/
 admin/node_modules/
 mobile/.expo/
 mobile/dist/
+mobile/web-build/
+mobile/expo-env.d.ts
+mobile/*.tsbuildinfo
 admin/dist/
+
+# Generated native projects (expo prebuild)
+mobile/ios/
+mobile/android/
+
+# Local Docker Compose overrides (per-machine, not shared)
+compose.override.yaml
+compose.override.yml
 
 # Logs and operating system files
 *.log

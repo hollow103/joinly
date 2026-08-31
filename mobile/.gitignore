@@ -1,0 +1,52 @@
+# Learn more https://docs.github.com/en/get-started/getting-started-with-git/ignoring-files
+
+# dependencies
+node_modules/
+.pnp
+.pnp.js
+
+# Expo
+.expo/
+dist/
+web-build/
+expo-env.d.ts
+*.tsbuildinfo
+
+# Metro
+.metro-health-check*
+.metro-cache/
+
+# generated native folders (created by `expo prebuild`)
+/ios
+/android
+
+# native signing material — never commit
+*.jks
+*.keystore
+*.p8
+*.p12
+*.key
+*.pem
+*.mobileprovision
+*.orig.*
+
+# env files — never commit; keep only the checked-in template
+.env
+.env.*
+!.env.example
+
+# debug logs
+npm-debug.*
+yarn-debug.*
+yarn-error.*
+pnpm-debug.*
+
+# testing / coverage
+coverage/
+
+# IDE / OS
+.DS_Store
+*.log
+
+# reset-project output
+/app-example
