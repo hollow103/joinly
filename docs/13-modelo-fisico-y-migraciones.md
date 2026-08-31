@@ -128,7 +128,7 @@ Los tipos iniciales son: `user_status`, `user_role`, `event_category`, `event_ac
 Las restricciones esenciales son:
 
 - `duration_minutes > 0`, `capacity is null or capacity > 0`, `max_uses is null or max_uses > 0` y `used_count >= 0`.
-- Una participación solo puede tener `resolved_at` en estados `confirmed` o `rejected`; `abandoned_at` solo en `abandoned`.
+- `resolved_at` se fija al pasar a `confirmed` o `rejected`; una participación `abandoned` conserva el `resolved_at` de cuando se confirmó y solo exige además `abandoned_at`. `pending` no tiene ninguna de las dos fechas. La restricción `participations_dates_match_status` de `V3` era más estricta y la corrige `V7`.
 - Un reporte tiene exactamente un objetivo: usuario o evento.
 - Las FKs impiden referencias a usuarios o eventos inexistentes. No se aplican borrados en cascada sobre datos de moderación.
 
@@ -157,6 +157,7 @@ No se introducen índices de texto completo, cachés geoespaciales, particionado
 | `V4__invitations_trust_and_moderation.sql` | Crea invitaciones, bloqueos, reportes y auditoría de moderación. |
 | `V5__notifications.sql` | Crea dispositivos push y el registro básico de notificaciones. |
 | `V6__user_profile_preferences_and_audit.sql` | Añade versión del perfil, preferencia de búsqueda manual y auditoría de cambios de rol. |
+| `V7__fix_participation_date_constraint.sql` | Relaja `participations_dates_match_status`: `abandoned` solo exige `abandoned_at`. |
 
 Las migraciones se aplican de forma automática en un despliegue controlado y nunca se editan después de ejecutarse. Un cambio posterior se expresa en una nueva versión. Antes de aplicar migraciones en Supabase Free se realiza una exportación de PostgreSQL.
 

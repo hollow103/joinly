@@ -1,5 +1,6 @@
 package com.joinly.backend.events;
 
+import com.joinly.backend.shared.KeysetCursor;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.Instant;
@@ -40,6 +41,17 @@ public class EventRepository {
 
   public Optional<Event> findById(UUID id) {
     return jdbc.sql("SELECT " + COLUMNS + FROM_JOIN + " WHERE e.id = :id")
+        .param("id", id)
+        .query(this::map)
+        .optional();
+  }
+
+  /**
+   * Loads the event and holds a row lock on it for the rest of the transaction, so concurrent joins
+   * to the same event serialise their capacity checks (test B-07).
+   */
+  public Optional<Event> lockById(UUID id) {
+    return jdbc.sql("SELECT " + COLUMNS + FROM_JOIN + " WHERE e.id = :id FOR UPDATE OF e")
         .param("id", id)
         .query(this::map)
         .optional();
@@ -143,17 +155,25 @@ public class EventRepository {
         > 0;
   }
 
+  private static final String CONFIRMED_COUNT_SUBQUERY =
+      "(SELECT count(*) FROM participations p WHERE p.event_id = e.id AND p.status = 'confirmed')";
+
   /**
-   * Discovery query: published, not hidden, non-private, future events within {@code radiusMeters},
-   * ordered by (distance, startsAt, id) so the keyset cursor is stable. {@code limit} should
-   * already be the page size plus one, to detect whether a further page exists.
+   * Discovery query: published, not hidden, non-private, future events within {@code radiusMeters}
+   * that are not full and not blocked either way against {@code viewerId}, ordered by (distance,
+   * startsAt, id) so the keyset cursor is stable. {@code limit} should already be the page size
+   * plus one, to detect whether a further page exists.
+   *
+   * <p>Reads {@code participations} and {@code blocks} by subquery so the full-event and block
+   * filters can run in SQL and respect {@code LIMIT}; it never writes to those tables.
    */
   public List<EventWithDistance> search(
+      UUID viewerId,
       double originLon,
       double originLat,
       int radiusMeters,
       List<String> dbCategories,
-      PageCursor cursor,
+      KeysetCursor cursor,
       int limit,
       Instant now) {
     StringBuilder sql =
@@ -161,14 +181,22 @@ public class EventRepository {
             .append(COLUMNS)
             .append(", ST_Distance(e.location, ")
             .append(ORIGIN)
-            .append(") AS distance_meters")
+            .append(") AS distance_meters, ")
+            .append(CONFIRMED_COUNT_SUBQUERY)
+            .append(" AS confirmed_count")
             .append(FROM_JOIN)
             .append(" WHERE e.status = 'published' AND e.is_hidden = false")
             .append(" AND e.access_mode <> 'private_invitation' AND e.starts_at > :now")
             .append(" AND ST_DWithin(e.location, ")
             .append(ORIGIN)
-            .append(", :radiusMeters)");
-    // Phase 3 also excludes events whose confirmed participations have reached capacity.
+            .append(", :radiusMeters)")
+            .append(" AND (e.capacity IS NULL OR ")
+            .append(CONFIRMED_COUNT_SUBQUERY)
+            .append(" < e.capacity)")
+            .append(
+                " AND NOT EXISTS (SELECT 1 FROM blocks b WHERE"
+                    + " (b.blocker_id = :viewerId AND b.blocked_id = e.creator_id)"
+                    + " OR (b.blocker_id = e.creator_id AND b.blocked_id = :viewerId))");
     if (!dbCategories.isEmpty()) {
       sql.append(" AND e.category::text IN (:categories)");
     }
@@ -181,6 +209,7 @@ public class EventRepository {
 
     var spec =
         jdbc.sql(sql.toString())
+            .param("viewerId", viewerId)
             .param("originLon", originLon)
             .param("originLat", originLat)
             .param("radiusMeters", radiusMeters)
@@ -191,18 +220,20 @@ public class EventRepository {
     }
     if (cursor != null) {
       spec =
-          spec.param("curDistance", cursor.sortValue())
-              .param("curStartsAt", ts(cursor.startsAt()))
-              .param("curId", cursor.lastId());
+          spec.param("curDistance", Double.parseDouble(cursor.sortKey()))
+              .param("curStartsAt", ts(cursor.timestamp()))
+              .param("curId", cursor.id());
     }
     return spec.query(
             (ResultSet rs, int rowNum) ->
-                new EventWithDistance(map(rs, rowNum), rs.getDouble("distance_meters")))
+                new EventWithDistance(
+                    map(rs, rowNum), rs.getDouble("distance_meters"), rs.getInt("confirmed_count")))
         .list();
   }
 
   /** Own events, newest start first, ordered by (startsAt, id) for a stable keyset cursor. */
-  public List<Event> findByCreator(UUID creatorId, String dbStatus, PageCursor cursor, int limit) {
+  public List<Event> findByCreator(
+      UUID creatorId, String dbStatus, KeysetCursor cursor, int limit) {
     StringBuilder sql =
         new StringBuilder("SELECT ")
             .append(COLUMNS)
@@ -221,7 +252,7 @@ public class EventRepository {
       spec = spec.param("status", dbStatus);
     }
     if (cursor != null) {
-      spec = spec.param("curStartsAt", ts(cursor.startsAt())).param("curId", cursor.lastId());
+      spec = spec.param("curStartsAt", ts(cursor.timestamp())).param("curId", cursor.id());
     }
     return spec.query(this::map).list();
   }
@@ -284,5 +315,5 @@ public class EventRepository {
       Integer capacity,
       AccessMode accessMode) {}
 
-  public record EventWithDistance(Event event, double distanceMeters) {}
+  public record EventWithDistance(Event event, double distanceMeters, int confirmedCount) {}
 }

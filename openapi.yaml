@@ -100,8 +100,8 @@ paths:
   /events/{eventId}/participations:
     parameters: [{$ref: '#/components/parameters/EventId'}]
     get:
-      summary: Lista participantes confirmados de un evento propio
-      parameters: [{$ref: '#/components/parameters/Cursor'}, {$ref: '#/components/parameters/Limit'}, {name: status, in: query, schema: {type: string, enum: [confirmed]}}]
+      summary: Lista participantes de un evento propio (confirmados o pendientes)
+      parameters: [{$ref: '#/components/parameters/Cursor'}, {$ref: '#/components/parameters/Limit'}, {name: status, in: query, schema: {type: string, enum: [confirmed, pending], default: confirmed}}]
       responses:
         '200': {description: Participantes, content: {application/json: {schema: {$ref: '#/components/schemas/ParticipantPage'}}}}
         '404': {$ref: '#/components/responses/NotFound'}
@@ -111,7 +111,8 @@ paths:
       requestBody:
         content: {application/json: {schema: {type: object, properties: {invitationCode: {type: string, minLength: 1, maxLength: 128}}}}}
       responses:
-        '201': {description: Participación creada, content: {application/json: {schema: {$ref: '#/components/schemas/Participation'}}}}
+        '201': {description: Participación creada, headers: {ETag: {$ref: '#/components/headers/ETag'}}, content: {application/json: {schema: {$ref: '#/components/schemas/Participation'}}}}
+        '403': {$ref: '#/components/responses/Forbidden'}
         '404': {$ref: '#/components/responses/NotFound'}
         '409': {$ref: '#/components/responses/Conflict'}
   /events/{eventId}/participation:
@@ -130,7 +131,9 @@ paths:
         required: true
         content: {application/json: {schema: {type: object, required: [status], properties: {status: {type: string, enum: [confirmed, rejected]}}}}}
       responses:
-        '200': {description: Participación resuelta, content: {application/json: {schema: {$ref: '#/components/schemas/Participation'}}}}
+        '200': {description: Participación resuelta, headers: {ETag: {$ref: '#/components/headers/ETag'}}, content: {application/json: {schema: {$ref: '#/components/schemas/Participation'}}}}
+        '404': {$ref: '#/components/responses/NotFound'}
+        '409': {$ref: '#/components/responses/Conflict'}
         '412': {$ref: '#/components/responses/PreconditionFailed'}
         '428': {$ref: '#/components/responses/PreconditionRequired'}
   /events/{eventId}/invitations:
@@ -141,11 +144,14 @@ paths:
         content: {application/json: {schema: {type: object, properties: {expiresAt: {type: string, format: date-time}, maxUses: {type: integer, minimum: 1}}}}}
       responses:
         '201': {description: Invitación; el código solo se devuelve al creador, content: {application/json: {schema: {$ref: '#/components/schemas/Invitation'}}}}
+        '404': {$ref: '#/components/responses/NotFound'}
+        '409': {$ref: '#/components/responses/Conflict'}
+        '422': {$ref: '#/components/responses/ValidationError'}
   /events/{eventId}/invitations/{invitationId}:
     parameters: [{$ref: '#/components/parameters/EventId'}, {$ref: '#/components/parameters/InvitationId'}]
     delete:
       summary: Revoca una invitación privada
-      responses: {'204': {description: Invitación revocada}}
+      responses: {'204': {description: Invitación revocada}, '404': {$ref: '#/components/responses/NotFound'}}
   /blocks:
     get:
       summary: Lista bloqueos creados por la persona autenticada
@@ -156,7 +162,10 @@ paths:
       requestBody:
         required: true
         content: {application/json: {schema: {type: object, required: [blockedUserId], properties: {blockedUserId: {$ref: '#/components/schemas/Uuid'}}}}}
-      responses: {'201': {description: Bloqueo creado}}
+      responses:
+        '201': {description: Bloqueo creado}
+        '404': {$ref: '#/components/responses/NotFound'}
+        '422': {$ref: '#/components/responses/ValidationError'}
   /blocks/{blockedUserId}:
     parameters: [{$ref: '#/components/parameters/BlockedUserId'}]
     delete:

@@ -130,7 +130,7 @@ Los errores siguen RFC 9457 y añaden un código estable de producto:
 }
 ```
 
-`fields` solo aparece para errores de validación. Códigos previstos: `validation_error`, `not_found`, `email_not_verified`, `agreements_not_accepted`, `event_full`, `event_not_joinable`, `event_not_editable`, `event_not_cancellable`, `active_event_limit_reached`, `if_match_required`, `invitation_invalid`, `invitation_expired`, `user_blocked`, `participation_not_pending` y `concurrent_update`.
+`fields` solo aparece para errores de validación. Códigos previstos: `validation_error`, `not_found`, `email_not_verified`, `agreements_not_accepted`, `event_full`, `event_not_joinable`, `event_not_editable`, `event_not_cancellable`, `event_not_approval`, `event_not_private`, `event_started`, `active_event_limit_reached`, `cannot_join_own_event`, `participation_exists`, `participation_not_confirmed`, `participation_not_pending`, `if_match_required`, `idempotency_key_conflict`, `invitation_invalid`, `cannot_block_self` y `concurrent_update`.
 
 ## Recursos de la persona usuaria
 
@@ -196,6 +196,8 @@ La creación de participación se ejecuta en una transacción que comprueba esta
 Una participación confirmada revela `exactLocation` en la respuesta y en posteriores detalles del evento. Abandonar es idempotente: si ya está `abandoned`, devuelve `204`; libera plaza en la misma transacción. No hay lista de espera ni solicitudes para eventos completos.
 
 El código de invitación se devuelve exclusivamente al creador al crearla. No existe una ruta pública para consultar si un código corresponde a un evento, para evitar revelar eventos privados.
+
+`GET /events/{eventId}/participations` admite `status=confirmed` (por defecto) o `status=pending`; el creador usa `pending` para localizar solicitudes a resolver mientras no exista la notificación de Fase 4. Un evento completo tampoco admite nuevas solicitudes `approval` (`409 event_full`). Reintentar `POST /events/{eventId}/participations` con la misma `Idempotency-Key` y un cuerpo distinto responde `409 idempotency_key_conflict`. Una participación `rejected` puede volver a solicitarse; `pending`, `confirmed` o `abandoned` responden `409 participation_exists`.
 
 ## Bloqueos y reportes
 

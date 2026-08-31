@@ -2,6 +2,7 @@ package com.joinly.backend.events;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonSetter;
+import com.joinly.backend.shared.PublicProfile;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.AssertTrue;
 import jakarta.validation.constraints.Max;
@@ -12,6 +13,7 @@ import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 import java.time.Instant;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -38,10 +40,13 @@ public class EventController {
 
   private final EventService events;
   private final EventVisibility visibility;
+  private final EventParticipation participation;
 
-  public EventController(EventService events, EventVisibility visibility) {
+  public EventController(
+      EventService events, EventVisibility visibility, EventParticipation participation) {
     this.events = events;
     this.visibility = visibility;
+    this.participation = participation;
   }
 
   @PostMapping("/events")
@@ -98,21 +103,30 @@ public class EventController {
       @RequestParam(name = "cursor", required = false) String cursor,
       @RequestParam(name = "limit", defaultValue = "20") int limit) {
     EventService.MinePage page = events.findMine(jwt, status, cursor, limit);
+    Map<UUID, Integer> counts =
+        participation.confirmedCounts(page.items().stream().map(Event::id).toList());
     List<EventDetailResponse> items =
         page.items().stream()
-            .map(event -> detail(new EventService.EventView(event, page.viewerId())))
+            .map(event -> ownEventItem(event, counts.getOrDefault(event.id(), 0)))
             .toList();
     return ResponseEntity.ok(new EventPageResponse(items, new PageInfo(page.nextCursor())));
   }
 
   private EventDetailResponse detail(EventService.EventView view) {
     Event event = view.event();
+    UUID viewerId = view.viewerId();
+    boolean creator = visibility.isCreator(event, viewerId);
+    int confirmedCount = participation.confirmedCount(event.id());
     GeoPointResponse exactLocation =
-        visibility.canSeeExactLocation(event, view.viewerId())
+        visibility.canSeeExactLocation(event, viewerId)
             ? new GeoPointResponse("Point", List.of(event.longitude(), event.latitude()))
             : null;
-    List<PublicProfileResponse> confirmedParticipants =
-        visibility.canSeeConfirmedParticipants(event, view.viewerId()) ? List.of() : null;
+    List<PublicProfile> confirmedParticipants =
+        visibility.canSeeConfirmedParticipants(event, viewerId)
+            ? participation.confirmedParticipants(event.id())
+            : null;
+    String myParticipation =
+        creator ? null : participation.myParticipationStatus(viewerId, event.id());
     return new EventDetailResponse(
         event.id(),
         event.title(),
@@ -122,15 +136,39 @@ public class EventController {
         event.durationMinutes(),
         event.accessMode().apiValue(),
         event.capacity(),
-        0, // Phase 3: real confirmed count
-        "available", // Phase 3: derived from capacity vs confirmed count
+        confirmedCount,
+        availability(event.capacity(), confirmedCount),
         event.approximateArea(),
         null,
-        new PublicProfileResponse(event.creatorId(), event.creatorAlias()),
+        new PublicProfile(event.creatorId(), event.creatorAlias()),
         event.notes(),
         event.updatedAt(),
+        myParticipation,
         exactLocation,
         confirmedParticipants);
+  }
+
+  /** Lighter projection for the creator's own-events list: no participant enumeration. */
+  private EventDetailResponse ownEventItem(Event event, int confirmedCount) {
+    return new EventDetailResponse(
+        event.id(),
+        event.title(),
+        event.description(),
+        event.category().apiValue(),
+        event.startsAt(),
+        event.durationMinutes(),
+        event.accessMode().apiValue(),
+        event.capacity(),
+        confirmedCount,
+        availability(event.capacity(), confirmedCount),
+        event.approximateArea(),
+        null,
+        new PublicProfile(event.creatorId(), event.creatorAlias()),
+        event.notes(),
+        event.updatedAt(),
+        null,
+        new GeoPointResponse("Point", List.of(event.longitude(), event.latitude())),
+        null);
   }
 
   private EventDiscoveryResponse discovery(EventService.DiscoveryRow row) {
@@ -144,11 +182,15 @@ public class EventController {
         event.durationMinutes(),
         event.accessMode().apiValue(),
         event.capacity(),
-        0, // Phase 3: real confirmed count
-        "available", // Phase 3: derived from capacity vs confirmed count
+        row.confirmedCount(),
+        availability(event.capacity(), row.confirmedCount()),
         event.approximateArea(),
         row.distanceMeters(),
-        new PublicProfileResponse(event.creatorId(), event.creatorAlias()));
+        new PublicProfile(event.creatorId(), event.creatorAlias()));
+  }
+
+  private static String availability(Integer capacity, int confirmedCount) {
+    return capacity != null && confirmedCount >= capacity ? "full" : "available";
   }
 
   public record CreateEventRequest(
@@ -315,8 +357,6 @@ public class EventController {
 
   public record CancelRequest(@Size(max = 4000) String reason) {}
 
-  public record PublicProfileResponse(UUID id, String alias) {}
-
   public record GeoPointResponse(String type, List<Double> coordinates) {}
 
   public record PageInfo(String nextCursor) {}
@@ -334,7 +374,7 @@ public class EventController {
       String availability,
       String approximateArea,
       Integer distanceMeters,
-      PublicProfileResponse creator) {}
+      PublicProfile creator) {}
 
   public record EventDetailResponse(
       UUID id,
@@ -349,11 +389,12 @@ public class EventController {
       String availability,
       String approximateArea,
       Integer distanceMeters,
-      PublicProfileResponse creator,
+      PublicProfile creator,
       String notes,
       Instant updatedAt,
+      String myParticipation,
       GeoPointResponse exactLocation,
-      List<PublicProfileResponse> confirmedParticipants) {}
+      List<PublicProfile> confirmedParticipants) {}
 
   public record SearchPageResponse(
       List<EventDiscoveryResponse> items, PageInfo page, Integer suggestedRadiusMeters) {}

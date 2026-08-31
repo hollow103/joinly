@@ -6,7 +6,7 @@ Implementar un piloto pequeño que permita crear, descubrir y participar en even
 
 La implementación comienza solo tras aprobar este documento. Cada fase entrega una porción verificable y mantiene el repositorio ejecutable mediante el entorno local descrito en `docs/15-operacion-del-piloto.md`.
 
-**Estado:** Fase 0 completada el 2026-08-31. Fase 1 en curso: validación JWT de Supabase, perfil interno, preferencias y control de suspensión implementados localmente y pendientes de la prueba con un JWT temporal real y de los textos legales antes de cerrarla. Fase 2 (eventos y descubrimiento) implementada el 2026-08-31 con pruebas herméticas de API contra PostGIS que cubren B-01 a B-03; el filtro de eventos completos y las notificaciones de cancelación quedan para la Fase 3.
+**Estado:** Fase 0 completada el 2026-08-31. Fase 1 en curso: pendiente de la prueba con un JWT temporal real y de los textos legales antes de cerrarla. Fase 2 (eventos y descubrimiento) y Fase 3 (participaciones, invitaciones y bloqueos) implementadas el 2026-08-31 con pruebas herméticas de API contra PostGIS que cubren B-01 a B-09, incluida la concurrente B-07. Las notificaciones (registro y entrega push) quedan para la Fase 4.
 
 ## Decisiones de implementación
 
@@ -54,6 +54,8 @@ La implementación comienza solo tras aprobar este documento. Cada fase entrega 
 3. Implementar bloqueos recíprocos en las consultas y operaciones, incluido el comportamiento posterior a una participación confirmada definido en `docs/12-autorizacion-y-permisos.md`.
 4. Añadir la gestión del creador para aprobar o rechazar solicitudes y consultar participantes confirmados.
 **Verificación:** B-04 a B-09, incluida la prueba concurrente B-07 contra PostgreSQL real.
+
+**Estado:** completada el 2026-08-31. Módulos `com.joinly.backend.participation` y `com.joinly.backend.blocks`; puerto `EventParticipation` (implementado por `ParticipationDirectory`) mantiene la dependencia unidireccional `participation → events`. Concurrencia B-07 por `SELECT ... FOR UPDATE` sobre la fila del evento. Migración `V7` correctora de `V3`. `GET /events/{id}/participations` admite `status=pending` para que el creador localice solicitudes sin la notificación de Fase 4. Cerrados los huecos de Fase 2: `confirmedCount`/`availability` reales y filtro de eventos completos en `search`. Las notificaciones y `POST /reports` quedan para la Fase 4.
 
 ## Fase 4: reportes y moderación mínima
 

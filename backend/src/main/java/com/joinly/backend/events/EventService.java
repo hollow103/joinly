@@ -1,6 +1,7 @@
 package com.joinly.backend.events;
 
 import com.joinly.backend.shared.BusinessException;
+import com.joinly.backend.shared.KeysetCursor;
 import com.joinly.backend.users.AppUser;
 import com.joinly.backend.users.CurrentUserService;
 import java.time.Clock;
@@ -84,6 +85,22 @@ public class EventService {
     Event event = events.findById(id).orElseThrow(visibility::notFound);
     visibility.assertVisible(event, viewer.id());
     return new EventView(event, viewer.id());
+  }
+
+  /**
+   * Loads an event with a row lock for the caller's transaction (the participation module). Returns
+   * a uniform {@code 404} when it does not exist; visibility and joinability are checked by the
+   * caller against the locked row.
+   */
+  public Event lockForParticipation(UUID id) {
+    return events.lockById(id).orElseThrow(visibility::notFound);
+  }
+
+  /**
+   * Non-locking load for the participation module's read paths; uniform {@code 404} when missing.
+   */
+  public Event loadOrNotFound(UUID id) {
+    return events.findById(id).orElseThrow(visibility::notFound);
   }
 
   @Transactional
@@ -206,12 +223,14 @@ public class EventService {
     List<String> sortedCategories = cmd.categories().stream().sorted().toList();
     int scopeHash =
         Objects.hash(cmd.longitude(), cmd.latitude(), cmd.radiusMeters(), sortedCategories);
-    PageCursor cursor = cmd.cursor() == null ? null : PageCursor.decode(cmd.cursor(), scopeHash);
+    KeysetCursor cursor =
+        cmd.cursor() == null ? null : KeysetCursor.decode(cmd.cursor(), scopeHash);
     List<String> dbCategories =
         sortedCategories.stream().map(value -> EventCategory.fromApi(value).dbValue()).toList();
 
     List<EventRepository.EventWithDistance> rows =
         events.search(
+            viewer.id(),
             cmd.longitude(),
             cmd.latitude(),
             cmd.radiusMeters(),
@@ -224,15 +243,21 @@ public class EventService {
 
     List<DiscoveryRow> items =
         pageRows.stream()
-            .map(row -> new DiscoveryRow(row.event(), roundToHundred(row.distanceMeters())))
+            .map(
+                row ->
+                    new DiscoveryRow(
+                        row.event(), roundToHundred(row.distanceMeters()), row.confirmedCount()))
             .toList();
 
     String nextCursor = null;
     if (hasMore && !pageRows.isEmpty()) {
       EventRepository.EventWithDistance last = pageRows.get(pageRows.size() - 1);
       nextCursor =
-          PageCursor.encode(
-              scopeHash, last.distanceMeters(), last.event().startsAt(), last.event().id());
+          KeysetCursor.encode(
+              scopeHash,
+              Double.toString(last.distanceMeters()),
+              last.event().startsAt(),
+              last.event().id());
     }
     Integer suggested = null;
     if (items.isEmpty() && cmd.cursor() == null && cmd.radiusMeters() < MAX_RADIUS_METERS) {
@@ -253,14 +278,14 @@ public class EventService {
       status = statusFilter;
     }
     int scopeHash = Objects.hash(viewer.id(), status);
-    PageCursor cursor = cursorToken == null ? null : PageCursor.decode(cursorToken, scopeHash);
+    KeysetCursor cursor = cursorToken == null ? null : KeysetCursor.decode(cursorToken, scopeHash);
     List<Event> rows = events.findByCreator(viewer.id(), status, cursor, limit + 1);
     boolean hasMore = rows.size() > limit;
     List<Event> pageRows = hasMore ? rows.subList(0, limit) : rows;
     String nextCursor = null;
     if (hasMore && !pageRows.isEmpty()) {
       Event last = pageRows.get(pageRows.size() - 1);
-      nextCursor = PageCursor.encode(scopeHash, null, last.startsAt(), last.id());
+      nextCursor = KeysetCursor.encode(scopeHash, null, last.startsAt(), last.id());
     }
     return new MinePage(viewer.id(), pageRows, nextCursor);
   }
@@ -346,7 +371,7 @@ public class EventService {
 
   public record EventView(Event event, UUID viewerId) {}
 
-  public record DiscoveryRow(Event event, int distanceMeters) {}
+  public record DiscoveryRow(Event event, int distanceMeters, int confirmedCount) {}
 
   public record SearchResult(
       UUID viewerId, List<DiscoveryRow> items, String nextCursor, Integer suggestedRadiusMeters) {}
