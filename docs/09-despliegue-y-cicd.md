@@ -10,14 +10,16 @@
 
 Se utilizara un monorepo GitHub con `mobile/`, `backend/`, `admin/` y `docs/`. Los flujos de GitHub Actions ejecutaran validaciones solo para los componentes modificados cuando se implemente el proyecto.
 
+La estrategia de ramas es `feature/<nombre>` hacia `development` mediante pull request. `development` integra los cambios aprobados y es la base de las validaciones locales con Compose. `main` se reserva para promociones aprobadas al entorno de produccion. Cada commit y cada `push` requieren aprobacion explicita de la persona responsable.
+
 ## Pipeline candidato
 
-1. Cada pull request ejecutara validacion de formato, analisis estatico, pruebas unitarias y pruebas de integracion.
-2. Al fusionar cambios en `main`, se generaran los artefactos y se desplegara automaticamente en preproduccion.
-3. El despliegue en produccion requerira aprobacion manual desde GitHub Actions.
+1. Cada pull request hacia `development` ejecutara validacion de formato, analisis estatico, pruebas unitarias y pruebas de integracion cuando existan comandos ejecutables.
+2. Tras aprobar una pull request, el entorno local se validara manualmente con Compose; GitHub Actions no puede desplegar en esta maquina sin un runner autoalojado.
+3. Una pull request de `development` hacia `main` sera la promocion a produccion y requerira aprobacion manual. El despliegue solo se definira cuando existan preproduccion, secretos gestionados, exportacion de PostgreSQL y configuracion de Cloud Run.
 4. Las migraciones de base de datos estaran versionadas y se ejecutaran automaticamente durante el despliegue controlado.
 
-## Plataforma pendiente de seleccion
+## Plataforma prevista
 
 GitHub y GitHub Actions permanecen confirmados. El backend Spring Boot se desplegara como contenedor Docker en Google Cloud Run, en una region europea y con escalado a cero. PostgreSQL con PostGIS y la autenticacion se alojaran en Supabase Free, en region europea. El panel interno React se desplegara como sitio estatico en Render. Los servicios Docker, las migraciones SQL y la exportacion de PostgreSQL mantendran una futura migracion portable.
 

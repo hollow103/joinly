@@ -6,7 +6,7 @@ Implementar un piloto pequeño que permita crear, descubrir y participar en even
 
 La implementación comienza solo tras aprobar este documento. Cada fase entrega una porción verificable y mantiene el repositorio ejecutable mediante el entorno local descrito en `docs/15-operacion-del-piloto.md`.
 
-**Estado:** aprobado el 2026-08-31 y revisado íntegramente. La implementación permanece en pausa hasta que se autorice expresamente iniciar la Fase 0.
+**Estado:** Fase 0 completada el 2026-08-31. Fase 1 está en curso: validación JWT de Supabase, perfil interno, preferencias y control de suspensión están implementados localmente y pendientes de la prueba con un JWT temporal real antes de cerrarla.
 
 ## Decisiones de implementación
 

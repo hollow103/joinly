@@ -1,0 +1,49 @@
+spring:
+  application:
+    name: joinly-backend
+  datasource:
+    url: ${DB_URL:jdbc:postgresql://localhost:5432/joinly}
+    username: ${DB_USERNAME:joinly}
+    password: ${DB_PASSWORD:joinly_local}
+    hikari:
+      maximum-pool-size: 10
+      minimum-idle: 1
+      connection-timeout: 5000
+  flyway:
+    enabled: true
+  jackson:
+    default-property-inclusion: non_null
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: ${SUPABASE_ISSUER:https://ulxrjlmpzaeouqbjbnjc.supabase.co/auth/v1}
+          jwk-set-uri: ${SUPABASE_JWK_SET_URI:https://ulxrjlmpzaeouqbjbnjc.supabase.co/auth/v1/.well-known/jwks.json}
+
+joinly:
+  agreements:
+    guidelines-version: ${JOINLY_GUIDELINES_VERSION:v1}
+    privacy-version: ${JOINLY_PRIVACY_VERSION:v1}
+    terms-version: ${JOINLY_TERMS_VERSION:v1}
+  security:
+    audience: ${SUPABASE_AUDIENCE:authenticated}
+    user-info-uri: ${SUPABASE_USER_INFO_URI:https://ulxrjlmpzaeouqbjbnjc.supabase.co/auth/v1/user}
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info
+  endpoint:
+    health:
+      probes:
+        enabled: true
+      show-details: never
+
+server:
+  error:
+    include-message: never
+
+springdoc:
+  swagger-ui:
+    disable-swagger-default-url: true
+    url: /openapi.yaml

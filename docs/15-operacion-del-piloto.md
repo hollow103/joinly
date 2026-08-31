@@ -17,7 +17,7 @@ La futura configuración `compose.yaml` contiene exactamente dos servicios:
 
 Ambos servicios comparten la red interna predeterminada de Compose. El backend no usa `localhost` para la base de datos: usa el nombre de servicio `db`. La base de datos persiste en un volumen con nombre gestionado por Compose para que reiniciar contenedores no borre datos de desarrollo.
 
-El backend arranca con un perfil `local`, aplica Flyway al iniciar y recibe URL, usuario y contraseña de PostgreSQL mediante variables de entorno locales. Las credenciales no se escriben en el repositorio: la futura plantilla `.env.example` solo contendrá nombres de variables y valores no secretos.
+El backend arranca con un perfil `local`, aplica Flyway al iniciar y recibe URL, usuario y contraseña de PostgreSQL mediante variables de entorno locales. Las credenciales y configuraciones de entorno no se escriben en el repositorio.
 
 ## Herramientas locales sin coste
 
@@ -47,16 +47,17 @@ La URL base se suministrará mediante configuración de entorno de la aplicació
 - Se usan únicamente cuentas de prueba y ubicaciones no residenciales.
 - La configuración local no conecta a una base de datos Supabase de producción ni contiene claves de producción.
 
-## Flujo de trabajo previsto
+## Flujo de trabajo local
 
-Cuando el plan de implementación esté aprobado y se creen los módulos, el flujo será:
+El flujo actual de backend es:
 
-1. Construir y levantar `backend` y `db` mediante la configuración Compose del repositorio.
-2. Esperar a que Flyway complete las migraciones y al endpoint de salud del backend.
-3. Ejecutar los casos críticos de backend de `docs/14-estrategia-pruebas.md` con datos locales.
-4. Solo tras validar el backend, iniciar la aplicación móvil nativa apuntando a la URL correspondiente al emulador o dispositivo.
+1. Definir en un `.env` ignorado solo las variables locales necesarias para sobrescribir los valores predeterminados de Compose.
+2. Construir y levantar `backend` y `db` mediante la configuración Compose del repositorio: `docker compose up --build --detach`.
+3. Esperar a que Flyway complete las migraciones y comprobar `curl -i http://localhost:8080/actuator/health/readiness`.
+4. Ejecutar `./backend/mvnw -f backend/pom.xml test` y `npx --yes @redocly/cli lint openapi.yaml`.
+5. Solo tras validar el backend, iniciar la aplicación móvil nativa apuntando a la URL correspondiente al emulador o dispositivo.
 
-No hay comandos ejecutables todavía porque no existe `compose.yaml`, backend, migraciones ni aplicación móvil. Se añadirán al implementar la estructura aprobada y se documentarán entonces junto con sus requisitos reales.
+El contrato versionado está en `openapi.yaml`. Para aplicar el formato Java configurado se usa `./backend/mvnw -f backend/pom.xml spotless:apply`.
 
 ## Límites deliberados del MVP
 

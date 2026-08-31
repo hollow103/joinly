@@ -1,0 +1,235 @@
+openapi: 3.0.3
+info:
+  title: Joinly API
+  version: 0.1.0
+  description: API REST del MVP de eventos locales. Los recursos de producto requieren un JWT Bearer de Supabase Auth.
+servers:
+  - url: http://localhost:8080/api/v1
+    description: Desarrollo local
+security:
+  - bearerAuth: []
+paths:
+  /me:
+    get:
+      summary: Obtiene el perfil privado de la persona autenticada
+      responses:
+        '200': {description: Perfil, headers: {ETag: {$ref: '#/components/headers/ETag'}}, content: {application/json: {schema: {$ref: '#/components/schemas/Profile'}}}}
+        '401': {$ref: '#/components/responses/Unauthorized'}
+    put:
+      summary: Crea o actualiza el perfil
+      parameters:
+        - $ref: '#/components/parameters/IfMatch'
+      requestBody:
+        required: true
+        content: {application/json: {schema: {$ref: '#/components/schemas/ProfileInput'}}}
+      responses:
+        '200': {description: Perfil actualizado, headers: {ETag: {$ref: '#/components/headers/ETag'}}, content: {application/json: {schema: {$ref: '#/components/schemas/Profile'}}}}
+        '401': {$ref: '#/components/responses/Unauthorized'}
+        '412': {$ref: '#/components/responses/PreconditionFailed'}
+        '428': {$ref: '#/components/responses/PreconditionRequired'}
+    delete:
+      summary: Solicita la supresión de la cuenta
+      responses:
+        '202': {description: Solicitud aceptada}
+        '401': {$ref: '#/components/responses/Unauthorized'}
+  /me/push-settings:
+    put:
+      summary: Actualiza preferencias de notificaciones
+      requestBody:
+        required: true
+        content: {application/json: {schema: {$ref: '#/components/schemas/PushSettings'}}}
+      responses:
+        '200': {description: Preferencias actualizadas, content: {application/json: {schema: {$ref: '#/components/schemas/PushSettings'}}}}
+  /me/events:
+    get:
+      summary: Lista eventos propios
+      parameters: [{$ref: '#/components/parameters/Cursor'}, {$ref: '#/components/parameters/Limit'}, {name: status, in: query, schema: {type: string, enum: [published, cancelled, closed]}}]
+      responses:
+        '200': {description: Eventos, content: {application/json: {schema: {$ref: '#/components/schemas/EventPage'}}}}
+  /events:
+    post:
+      summary: Publica un evento
+      requestBody:
+        required: true
+        content: {application/json: {schema: {$ref: '#/components/schemas/EventInput'}}}
+      responses:
+        '201': {description: Evento publicado, headers: {ETag: {$ref: '#/components/headers/ETag'}}, content: {application/json: {schema: {$ref: '#/components/schemas/EventDetail'}}}}
+        '403': {$ref: '#/components/responses/Forbidden'}
+        '409': {$ref: '#/components/responses/Conflict'}
+        '422': {$ref: '#/components/responses/ValidationError'}
+  /events/search:
+    post:
+      summary: Descubre eventos futuros por radio
+      requestBody:
+        required: true
+        content: {application/json: {schema: {$ref: '#/components/schemas/EventSearch'}}}
+      responses:
+        '200': {description: Eventos visibles sin ubicación exacta, content: {application/json: {schema: {$ref: '#/components/schemas/EventSearchPage'}}}}
+        '400': {$ref: '#/components/responses/ValidationError'}
+  /events/{eventId}:
+    parameters: [{$ref: '#/components/parameters/EventId'}]
+    get:
+      summary: Obtiene un evento visible
+      responses:
+        '200': {description: Evento, headers: {ETag: {$ref: '#/components/headers/ETag'}}, content: {application/json: {schema: {$ref: '#/components/schemas/EventDetail'}}}}
+        '404': {$ref: '#/components/responses/NotFound'}
+    patch:
+      summary: Edita un evento propio
+      parameters: [{$ref: '#/components/parameters/IfMatch'}]
+      requestBody:
+        required: true
+        content: {application/json: {schema: {$ref: '#/components/schemas/EventPatch'}}}
+      responses:
+        '200': {description: Evento actualizado, headers: {ETag: {$ref: '#/components/headers/ETag'}}, content: {application/json: {schema: {$ref: '#/components/schemas/EventDetail'}}}}
+        '403': {$ref: '#/components/responses/Forbidden'}
+        '412': {$ref: '#/components/responses/PreconditionFailed'}
+        '428': {$ref: '#/components/responses/PreconditionRequired'}
+  /events/{eventId}/cancellation:
+    parameters: [{$ref: '#/components/parameters/EventId'}]
+    post:
+      summary: Cancela un evento propio antes de su inicio
+      requestBody:
+        content: {application/json: {schema: {type: object, properties: {reason: {type: string, maxLength: 4000}}}}}
+      responses:
+        '204': {description: Evento cancelado}
+        '403': {$ref: '#/components/responses/Forbidden'}
+        '409': {$ref: '#/components/responses/Conflict'}
+  /events/{eventId}/participations:
+    parameters: [{$ref: '#/components/parameters/EventId'}]
+    get:
+      summary: Lista participantes confirmados de un evento propio
+      parameters: [{$ref: '#/components/parameters/Cursor'}, {$ref: '#/components/parameters/Limit'}, {name: status, in: query, schema: {type: string, enum: [confirmed]}}]
+      responses:
+        '200': {description: Participantes, content: {application/json: {schema: {$ref: '#/components/schemas/ParticipantPage'}}}}
+        '404': {$ref: '#/components/responses/NotFound'}
+    post:
+      summary: Crea una participación o solicitud
+      parameters: [{$ref: '#/components/parameters/IdempotencyKey'}]
+      requestBody:
+        content: {application/json: {schema: {type: object, properties: {invitationCode: {type: string, minLength: 1, maxLength: 128}}}}}
+      responses:
+        '201': {description: Participación creada, content: {application/json: {schema: {$ref: '#/components/schemas/Participation'}}}}
+        '404': {$ref: '#/components/responses/NotFound'}
+        '409': {$ref: '#/components/responses/Conflict'}
+  /events/{eventId}/participation:
+    parameters: [{$ref: '#/components/parameters/EventId'}]
+    delete:
+      summary: Abandona una participación confirmada
+      responses:
+        '204': {description: Participación abandonada}
+        '404': {$ref: '#/components/responses/NotFound'}
+        '409': {$ref: '#/components/responses/Conflict'}
+  /events/{eventId}/participations/{participationId}:
+    parameters: [{$ref: '#/components/parameters/EventId'}, {$ref: '#/components/parameters/ParticipationId'}, {$ref: '#/components/parameters/IfMatch'}]
+    patch:
+      summary: Aprueba o rechaza una solicitud pendiente
+      requestBody:
+        required: true
+        content: {application/json: {schema: {type: object, required: [status], properties: {status: {type: string, enum: [confirmed, rejected]}}}}}
+      responses:
+        '200': {description: Participación resuelta, content: {application/json: {schema: {$ref: '#/components/schemas/Participation'}}}}
+        '412': {$ref: '#/components/responses/PreconditionFailed'}
+        '428': {$ref: '#/components/responses/PreconditionRequired'}
+  /events/{eventId}/invitations:
+    parameters: [{$ref: '#/components/parameters/EventId'}]
+    post:
+      summary: Crea una invitación privada
+      requestBody:
+        content: {application/json: {schema: {type: object, properties: {expiresAt: {type: string, format: date-time}, maxUses: {type: integer, minimum: 1}}}}}
+      responses:
+        '201': {description: Invitación; el código solo se devuelve al creador, content: {application/json: {schema: {$ref: '#/components/schemas/Invitation'}}}}
+  /events/{eventId}/invitations/{invitationId}:
+    parameters: [{$ref: '#/components/parameters/EventId'}, {$ref: '#/components/parameters/InvitationId'}]
+    delete:
+      summary: Revoca una invitación privada
+      responses: {'204': {description: Invitación revocada}}
+  /blocks:
+    get:
+      summary: Lista bloqueos creados por la persona autenticada
+      parameters: [{$ref: '#/components/parameters/Cursor'}, {$ref: '#/components/parameters/Limit'}]
+      responses: {'200': {description: Bloqueos, content: {application/json: {schema: {$ref: '#/components/schemas/CursorPage'}}}}}
+    post:
+      summary: Crea un bloqueo recíproco lógico
+      requestBody:
+        required: true
+        content: {application/json: {schema: {type: object, required: [blockedUserId], properties: {blockedUserId: {$ref: '#/components/schemas/Uuid'}}}}}
+      responses: {'201': {description: Bloqueo creado}}
+  /blocks/{blockedUserId}:
+    parameters: [{$ref: '#/components/parameters/BlockedUserId'}]
+    delete:
+      summary: Elimina un bloqueo propio
+      responses: {'204': {description: Bloqueo eliminado}}
+  /reports:
+    post:
+      summary: Reporta un usuario o evento visible
+      requestBody:
+        required: true
+        content: {application/json: {schema: {$ref: '#/components/schemas/ReportInput'}}}
+      responses: {'201': {description: Reporte creado}}
+  /admin/reports:
+    get:
+      summary: Lista reportes para moderación
+      parameters: [{name: status, in: query, schema: {type: string, enum: [pending, archived, resolved]}}, {$ref: '#/components/parameters/Cursor'}, {$ref: '#/components/parameters/Limit'}]
+      responses:
+        '200': {description: Reportes, content: {application/json: {schema: {$ref: '#/components/schemas/CursorPage'}}}}
+        '403': {$ref: '#/components/responses/Forbidden'}
+  /admin/reports/{reportId}:
+    parameters: [{$ref: '#/components/parameters/ReportId'}]
+    get:
+      summary: Obtiene un reporte para moderación
+      responses: {'200': {description: Reporte, content: {application/json: {schema: {type: object}}}}, '403': {$ref: '#/components/responses/Forbidden'}}
+    patch:
+      summary: Resuelve o archiva un reporte
+      parameters: [{$ref: '#/components/parameters/IfMatch'}]
+      requestBody:
+        required: true
+        content: {application/json: {schema: {$ref: '#/components/schemas/ModerationDecision'}}}
+      responses: {'200': {description: Reporte actualizado}, '403': {$ref: '#/components/responses/Forbidden'}, '412': {$ref: '#/components/responses/PreconditionFailed'}, '428': {$ref: '#/components/responses/PreconditionRequired'}}
+components:
+  securitySchemes:
+    bearerAuth: {type: http, scheme: bearer, bearerFormat: JWT}
+  headers:
+    ETag: {schema: {type: string}, description: Versión opaca del recurso}
+  parameters:
+    EventId: {name: eventId, in: path, required: true, schema: {$ref: '#/components/schemas/Uuid'}}
+    ParticipationId: {name: participationId, in: path, required: true, schema: {$ref: '#/components/schemas/Uuid'}}
+    InvitationId: {name: invitationId, in: path, required: true, schema: {$ref: '#/components/schemas/Uuid'}}
+    ReportId: {name: reportId, in: path, required: true, schema: {$ref: '#/components/schemas/Uuid'}}
+    BlockedUserId: {name: blockedUserId, in: path, required: true, schema: {$ref: '#/components/schemas/Uuid'}}
+    Cursor: {name: cursor, in: query, schema: {type: string}}
+    Limit: {name: limit, in: query, schema: {type: integer, minimum: 1, maximum: 50, default: 20}}
+    IfMatch: {name: If-Match, in: header, required: false, schema: {type: string}}
+    IdempotencyKey: {name: Idempotency-Key, in: header, required: true, schema: {type: string, minLength: 1, maxLength: 100}}
+  responses:
+    Unauthorized: {description: "JWT ausente, inválido o expirado", content: {application/problem+json: {schema: {$ref: '#/components/schemas/Problem'}}}}
+    Forbidden: {description: Operación no permitida, content: {application/problem+json: {schema: {$ref: '#/components/schemas/Problem'}}}}
+    NotFound: {description: Recurso inexistente u oculto, content: {application/problem+json: {schema: {$ref: '#/components/schemas/Problem'}}}}
+    Conflict: {description: Regla de negocio incumplida, content: {application/problem+json: {schema: {$ref: '#/components/schemas/Problem'}}}}
+    ValidationError: {description: Solicitud inválida, content: {application/problem+json: {schema: {$ref: '#/components/schemas/Problem'}}}}
+    PreconditionFailed: {description: ETag desactualizado, content: {application/problem+json: {schema: {$ref: '#/components/schemas/Problem'}}}}
+    PreconditionRequired: {description: Falta If-Match, content: {application/problem+json: {schema: {$ref: '#/components/schemas/Problem'}}}}
+  schemas:
+    Uuid: {type: string, format: uuid}
+    GeoPoint:
+      type: object
+      required: [type, coordinates]
+      properties: {type: {type: string, enum: [Point]}, coordinates: {type: array, minItems: 2, maxItems: 2, items: {type: number}}}
+    PublicProfile: {type: object, required: [id, alias], properties: {id: {$ref: '#/components/schemas/Uuid'}, alias: {type: string}, photoUrl: {type: string, format: uri, nullable: true}}}
+    ManualSearchArea: {type: object, required: [longitude, latitude, label], properties: {longitude: {type: number, minimum: -180, maximum: 180}, latitude: {type: number, minimum: -90, maximum: 90}, label: {type: string, minLength: 1, maxLength: 160}}}
+    ProfileInput: {type: object, required: [alias, adultConfirmed, termsVersion, privacyVersion, guidelinesVersion], properties: {alias: {type: string, minLength: 3, maxLength: 40}, photoUrl: {type: string, format: uri}, adultConfirmed: {type: boolean, enum: [true]}, termsVersion: {type: string, pattern: '^[A-Za-z0-9._-]{1,32}$'}, privacyVersion: {type: string, pattern: '^[A-Za-z0-9._-]{1,32}$'}, guidelinesVersion: {type: string, pattern: '^[A-Za-z0-9._-]{1,32}$'}, manualSearchArea: {$ref: '#/components/schemas/ManualSearchArea'}}}
+    Profile: {allOf: [{$ref: '#/components/schemas/PublicProfile'}, {type: object, required: [status, emailVerified, agreementsAccepted, termsVersion, privacyVersion, guidelinesVersion, termsAcceptedAt, privacyAcceptedAt, guidelinesAcceptedAt, role], properties: {status: {type: string, enum: [active, suspended]}, emailVerified: {type: boolean}, agreementsAccepted: {type: boolean}, termsVersion: {type: string}, privacyVersion: {type: string}, guidelinesVersion: {type: string}, termsAcceptedAt: {type: string, format: date-time}, privacyAcceptedAt: {type: string, format: date-time}, guidelinesAcceptedAt: {type: string, format: date-time}, manualSearchArea: {$ref: '#/components/schemas/ManualSearchArea'}, role: {type: string, enum: [user, admin]}}}]}
+    EventInput: {type: object, required: [title, description, category, startsAt, durationMinutes, exactLocation, accessMode], properties: {title: {type: string, minLength: 3, maxLength: 120}, description: {type: string, maxLength: 4000}, notes: {type: string, maxLength: 4000}, category: {type: string, enum: [sportWellbeing, cultureLeisure, learning, communityVolunteering, pets, networking]}, startsAt: {type: string, format: date-time}, durationMinutes: {type: integer, minimum: 15, maximum: 1440}, exactLocation: {$ref: '#/components/schemas/GeoPoint'}, accessMode: {type: string, enum: [direct, approval, privateInvitation]}, capacity: {type: integer, minimum: 1, nullable: true}}}
+    EventPatch: {type: object, minProperties: 1, properties: {title: {type: string, minLength: 3, maxLength: 120}, description: {type: string, maxLength: 4000}, notes: {type: string, maxLength: 4000}, category: {type: string, enum: [sportWellbeing, cultureLeisure, learning, communityVolunteering, pets, networking]}, startsAt: {type: string, format: date-time}, durationMinutes: {type: integer, minimum: 15, maximum: 1440}, exactLocation: {$ref: '#/components/schemas/GeoPoint'}, accessMode: {type: string, enum: [direct, approval, privateInvitation]}, capacity: {type: integer, minimum: 1, nullable: true}}}
+    EventSearch: {type: object, required: [origin, radiusMeters], properties: {origin: {$ref: '#/components/schemas/GeoPoint'}, radiusMeters: {type: integer, minimum: 100, maximum: 50000}, categories: {type: array, items: {type: string}}, cursor: {type: string, nullable: true}, limit: {type: integer, minimum: 1, maximum: 50, default: 20}}}
+    EventDiscovery: {type: object, required: [id, title, description, category, startsAt, durationMinutes, accessMode, confirmedCount, availability, approximateArea, creator], properties: {id: {$ref: '#/components/schemas/Uuid'}, title: {type: string}, description: {type: string}, category: {type: string}, startsAt: {type: string, format: date-time}, durationMinutes: {type: integer}, accessMode: {type: string}, capacity: {type: integer, nullable: true}, confirmedCount: {type: integer}, availability: {type: string, enum: [available, full]}, approximateArea: {type: string}, distanceMeters: {type: integer}, creator: {$ref: '#/components/schemas/PublicProfile'}}}
+    EventDetail: {allOf: [{$ref: '#/components/schemas/EventDiscovery'}, {type: object, properties: {notes: {type: string}, updatedAt: {type: string, format: date-time}, myParticipation: {type: string, enum: [pending, confirmed, rejected, abandoned]}, exactLocation: {$ref: '#/components/schemas/GeoPoint'}, confirmedParticipants: {type: array, items: {$ref: '#/components/schemas/PublicProfile'}}}}]}
+    Participation: {type: object, required: [id, eventId, status, requestedAt], properties: {id: {$ref: '#/components/schemas/Uuid'}, eventId: {$ref: '#/components/schemas/Uuid'}, status: {type: string, enum: [pending, confirmed, rejected, abandoned]}, requestedAt: {type: string, format: date-time}, resolvedAt: {type: string, format: date-time, nullable: true}}}
+    Invitation: {type: object, required: [id, code], properties: {id: {$ref: '#/components/schemas/Uuid'}, code: {type: string}, expiresAt: {type: string, format: date-time, nullable: true}, maxUses: {type: integer, nullable: true}}}
+    PushSettings: {type: object, required: [enabled], properties: {enabled: {type: boolean}, expoPushToken: {type: string}, preferences: {type: object}}}
+    ReportInput: {type: object, required: [targetType, targetId, reason], properties: {targetType: {type: string, enum: [user, event]}, targetId: {$ref: '#/components/schemas/Uuid'}, reason: {type: string, enum: [inappropriateContent, abusiveBehavior, fraudulentEvent, misleadingLocation, other]}, description: {type: string}}}
+    ModerationDecision: {type: object, required: [status, action], properties: {status: {type: string, enum: [archived, resolved]}, action: {type: string, enum: [none, hideEvent, warnUser, suspendUser]}, note: {type: string}}}
+    CursorPage: {type: object, required: [items, page], properties: {items: {type: array, items: {type: object}}, page: {type: object, required: [nextCursor], properties: {nextCursor: {type: string, nullable: true}}}}}
+    EventPage: {allOf: [{$ref: '#/components/schemas/CursorPage'}]}
+    EventSearchPage: {allOf: [{$ref: '#/components/schemas/CursorPage'}, {type: object, properties: {suggestedRadiusMeters: {type: integer}}}]}
+    ParticipantPage: {allOf: [{$ref: '#/components/schemas/CursorPage'}]}
+    Problem: {type: object, required: [type, title, status, code], properties: {type: {type: string, format: uri}, title: {type: string}, status: {type: integer}, code: {type: string}, detail: {type: string}, fields: {type: object, additionalProperties: {type: string}}}}

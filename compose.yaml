@@ -1,0 +1,36 @@
+services:
+  db:
+    image: postgis/postgis:16-3.4
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB:-joinly}
+      POSTGRES_USER: ${POSTGRES_USER:-joinly}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-joinly_local}
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-joinly} -d ${POSTGRES_DB:-joinly}"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+    volumes:
+      - joinly_db_data:/var/lib/postgresql/data
+
+  backend:
+    build:
+      context: .
+      dockerfile: backend/Dockerfile
+    environment:
+      SPRING_PROFILES_ACTIVE: local
+      DB_URL: jdbc:postgresql://db:5432/${POSTGRES_DB:-joinly}
+      DB_USERNAME: ${POSTGRES_USER:-joinly}
+      DB_PASSWORD: ${POSTGRES_PASSWORD:-joinly_local}
+      SUPABASE_ISSUER: ${SUPABASE_ISSUER:-https://ulxrjlmpzaeouqbjbnjc.supabase.co/auth/v1}
+      SUPABASE_JWK_SET_URI: ${SUPABASE_JWK_SET_URI:-https://ulxrjlmpzaeouqbjbnjc.supabase.co/auth/v1/.well-known/jwks.json}
+      SUPABASE_AUDIENCE: ${SUPABASE_AUDIENCE:-authenticated}
+      SUPABASE_USER_INFO_URI: ${SUPABASE_USER_INFO_URI:-https://ulxrjlmpzaeouqbjbnjc.supabase.co/auth/v1/user}
+    ports:
+      - "8080:8080"
+    depends_on:
+      db:
+        condition: service_healthy
+
+volumes:
+  joinly_db_data:

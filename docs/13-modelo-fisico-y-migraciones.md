@@ -153,9 +153,10 @@ No se introducen índices de texto completo, cachés geoespaciales, particionado
 | --- | --- |
 | `V1__extensions_and_types.sql` | Activa `postgis` y `pgcrypto` para `gen_random_uuid()`; crea los tipos enumerados. |
 | `V2__users_and_events.sql` | Crea `users`, `events`, restricciones e índices geoespaciales y de descubrimiento. |
-| `V3__participations_and_invitations.sql` | Crea participaciones, invitaciones y las restricciones para plazas e invitaciones. |
-| `V4__trust_and_moderation.sql` | Crea bloqueos, reportes y auditoría de moderación. |
+| `V3__participations_and_idempotency.sql` | Crea participaciones, sus restricciones de plazas y registros de idempotencia. |
+| `V4__invitations_trust_and_moderation.sql` | Crea invitaciones, bloqueos, reportes y auditoría de moderación. |
 | `V5__notifications.sql` | Crea dispositivos push y el registro básico de notificaciones. |
+| `V6__user_profile_preferences_and_audit.sql` | Añade versión del perfil, preferencia de búsqueda manual y auditoría de cambios de rol. |
 
 Las migraciones se aplican de forma automática en un despliegue controlado y nunca se editan después de ejecutarse. Un cambio posterior se expresa en una nueva versión. Antes de aplicar migraciones en Supabase Free se realiza una exportación de PostgreSQL.
 

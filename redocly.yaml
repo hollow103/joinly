@@ -1,0 +1,6 @@
+rules:
+  info-license: off
+  no-server-example.com: off
+  no-illogical-composition-keywords: off
+  operation-4xx-response: off
+  operation-operationId: off

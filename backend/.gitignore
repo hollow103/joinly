@@ -1,0 +1,16 @@
+# Build output
+/target/
+/build/
+/out/
+
+# IDE metadata
+/.idea/
+/*.iml
+/.classpath
+/.factorypath
+/.project
+/.settings/
+
+# JVM diagnostics
+hs_err_pid*
+replay_pid*
