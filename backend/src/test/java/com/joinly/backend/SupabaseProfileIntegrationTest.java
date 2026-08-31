@@ -109,6 +109,52 @@ class SupabaseProfileIntegrationTest {
         .andExpect(header().string(HttpHeaders.ETAG, "\"profile-1\""));
 
     jdbc.update(
+        "UPDATE users SET terms_version = 'v0', privacy_version = 'v0', guidelines_version = 'v0' WHERE id = ?",
+        UUID.fromString(created.get("id").asText()));
+
+    mvc.perform(
+            put("/api/v1/me")
+                .header(HttpHeaders.AUTHORIZATION, authorization)
+                .header(HttpHeaders.IF_MATCH, "\"profile-1\"")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(profile))
+        .andExpect(status().isOk())
+        .andExpect(header().string(HttpHeaders.ETAG, "\"profile-2\""))
+        .andExpect(jsonPath("$.agreementsAccepted").value(true));
+
+    String profileWithoutManualArea =
+        objectMapper.writeValueAsString(
+            Map.of(
+                "alias", "joinlyTestUser",
+                "adultConfirmed", true,
+                "termsVersion", "v1",
+                "privacyVersion", "v1",
+                "guidelinesVersion", "v1"));
+    mvc.perform(
+            put("/api/v1/me")
+                .header(HttpHeaders.AUTHORIZATION, authorization)
+                .header(HttpHeaders.IF_MATCH, "\"profile-2\"")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(profileWithoutManualArea))
+        .andExpect(status().isOk())
+        .andExpect(header().string(HttpHeaders.ETAG, "\"profile-3\""))
+        .andExpect(jsonPath("$.manualSearchArea.label").value("Vigo"));
+
+    String profileWithoutManualAreaValue =
+        """
+        {"alias":"joinlyTestUser","adultConfirmed":true,"termsVersion":"v1","privacyVersion":"v1","guidelinesVersion":"v1","manualSearchArea":null}
+        """;
+    mvc.perform(
+            put("/api/v1/me")
+                .header(HttpHeaders.AUTHORIZATION, authorization)
+                .header(HttpHeaders.IF_MATCH, "\"profile-3\"")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(profileWithoutManualAreaValue))
+        .andExpect(status().isOk())
+        .andExpect(header().string(HttpHeaders.ETAG, "\"profile-4\""))
+        .andExpect(jsonPath("$.manualSearchArea").doesNotExist());
+
+    jdbc.update(
         "UPDATE users SET status = 'suspended' WHERE id = ?",
         UUID.fromString(created.get("id").asText()));
 
@@ -119,7 +165,7 @@ class SupabaseProfileIntegrationTest {
     mvc.perform(
             put("/api/v1/me")
                 .header(HttpHeaders.AUTHORIZATION, authorization)
-                .header(HttpHeaders.IF_MATCH, "\"profile-1\"")
+                .header(HttpHeaders.IF_MATCH, "\"profile-4\"")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(profile))
         .andExpect(status().isForbidden())

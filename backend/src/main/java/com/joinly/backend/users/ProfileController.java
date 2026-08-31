@@ -1,5 +1,6 @@
 package com.joinly.backend.users;
 
+import com.fasterxml.jackson.annotation.JsonSetter;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.AssertTrue;
 import jakarta.validation.constraints.DecimalMax;
@@ -53,14 +54,86 @@ public class ProfileController {
         .body(ProfileResponse.from(user, profiles.agreementsAccepted(user)));
   }
 
-  public record UpsertProfileRequest(
-      @NotBlank @Size(min = 3, max = 40) String alias,
-      @Size(max = 2048) String photoUrl,
-      @NotNull @AssertTrue(message = "must be confirmed") Boolean adultConfirmed,
-      @NotBlank @Pattern(regexp = "[A-Za-z0-9._-]{1,32}") String termsVersion,
-      @NotBlank @Pattern(regexp = "[A-Za-z0-9._-]{1,32}") String privacyVersion,
-      @NotBlank @Pattern(regexp = "[A-Za-z0-9._-]{1,32}") String guidelinesVersion,
-      @Valid ManualSearchAreaRequest manualSearchArea) {}
+  public static final class UpsertProfileRequest {
+
+    @NotBlank
+    @Size(min = 3, max = 40)
+    private String alias;
+
+    @NotNull
+    @AssertTrue(message = "must be confirmed")
+    private Boolean adultConfirmed;
+
+    @NotBlank
+    @Pattern(regexp = "[A-Za-z0-9._-]{1,32}")
+    private String termsVersion;
+
+    @NotBlank
+    @Pattern(regexp = "[A-Za-z0-9._-]{1,32}")
+    private String privacyVersion;
+
+    @NotBlank
+    @Pattern(regexp = "[A-Za-z0-9._-]{1,32}")
+    private String guidelinesVersion;
+
+    @Valid private ManualSearchAreaRequest manualSearchArea;
+    private boolean manualSearchAreaProvided;
+
+    public String alias() {
+      return alias;
+    }
+
+    public String termsVersion() {
+      return termsVersion;
+    }
+
+    public String privacyVersion() {
+      return privacyVersion;
+    }
+
+    public String guidelinesVersion() {
+      return guidelinesVersion;
+    }
+
+    public ManualSearchAreaRequest manualSearchArea() {
+      return manualSearchArea;
+    }
+
+    public boolean hasManualSearchArea() {
+      return manualSearchAreaProvided;
+    }
+
+    @JsonSetter("alias")
+    public void setAlias(String alias) {
+      this.alias = alias;
+    }
+
+    @JsonSetter("adultConfirmed")
+    public void setAdultConfirmed(Boolean adultConfirmed) {
+      this.adultConfirmed = adultConfirmed;
+    }
+
+    @JsonSetter("termsVersion")
+    public void setTermsVersion(String termsVersion) {
+      this.termsVersion = termsVersion;
+    }
+
+    @JsonSetter("privacyVersion")
+    public void setPrivacyVersion(String privacyVersion) {
+      this.privacyVersion = privacyVersion;
+    }
+
+    @JsonSetter("guidelinesVersion")
+    public void setGuidelinesVersion(String guidelinesVersion) {
+      this.guidelinesVersion = guidelinesVersion;
+    }
+
+    @JsonSetter("manualSearchArea")
+    public void setManualSearchArea(ManualSearchAreaRequest manualSearchArea) {
+      this.manualSearchArea = manualSearchArea;
+      this.manualSearchAreaProvided = true;
+    }
+  }
 
   public record ManualSearchAreaRequest(
       @NotNull @DecimalMin("-180.0") @DecimalMax("180.0") Double longitude,
@@ -75,7 +148,6 @@ public class ProfileController {
   public record ProfileResponse(
       UUID id,
       String alias,
-      String photoUrl,
       String status,
       boolean emailVerified,
       boolean agreementsAccepted,
@@ -94,7 +166,6 @@ public class ProfileController {
       return new ProfileResponse(
           user.id(),
           user.alias(),
-          user.photoUrl(),
           user.status(),
           user.emailVerified(),
           agreementsAccepted,

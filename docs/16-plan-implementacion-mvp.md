@@ -6,7 +6,7 @@ Implementar un piloto pequeño que permita crear, descubrir y participar en even
 
 La implementación comienza solo tras aprobar este documento. Cada fase entrega una porción verificable y mantiene el repositorio ejecutable mediante el entorno local descrito en `docs/15-operacion-del-piloto.md`.
 
-**Estado:** Fase 0 completada el 2026-08-31. Fase 1 está en curso: validación JWT de Supabase, perfil interno, preferencias y control de suspensión están implementados localmente y pendientes de la prueba con un JWT temporal real antes de cerrarla.
+**Estado:** Fase 0 completada el 2026-08-31. Fase 1 en curso: validación JWT de Supabase, perfil interno, preferencias y control de suspensión implementados localmente y pendientes de la prueba con un JWT temporal real y de los textos legales antes de cerrarla. Fase 2 (eventos y descubrimiento) implementada el 2026-08-31 con pruebas herméticas de API contra PostGIS que cubren B-01 a B-03; el filtro de eventos completos y las notificaciones de cancelación quedan para la Fase 3.
 
 ## Decisiones de implementación
 
@@ -39,11 +39,13 @@ La implementación comienza solo tras aprobar este documento. Cada fase entrega 
 
 ## Fase 2: eventos y descubrimiento
 
-1. Implementar creación, consulta, edición, cancelación y cierre de eventos con ETag.
+1. Implementar creación, consulta, edición y cancelación de eventos con ETag; el cierre programado se trata por filtro temporal en las consultas y su job se implementa en la Fase 6.
 2. Aplicar límite de tres eventos activos, horarios futuros, categorías, capacidad y estados.
-3. Implementar búsqueda PostGIS por radio con cursor, orden estable y proyección de zona aproximada y distancia.
-4. Centralizar la política de visibilidad para que ninguna consulta exponga ubicación exacta antes de una participación confirmada.
-**Verificación:** B-01 a B-03 mediante pruebas de API contra PostGIS.
+3. Implementar búsqueda PostGIS por radio con cursor opaco, orden estable `(distancia, startsAt, id)` y proyección de zona aproximada y distancia redondeada.
+4. Centralizar la política de visibilidad en `EventVisibility` para que ninguna consulta exponga ubicación exacta antes de una participación confirmada.
+**Verificación:** B-01 a B-03 mediante pruebas de API herméticas contra PostGIS (JWT sintético y Supabase simulado).
+
+**Estado:** completada el 2026-08-31. Módulo `com.joinly.backend.events` (`EventController`, `EventService`, `EventRepository`, `EventVisibility`, `ApproximateArea`, `PageCursor`). `approximateArea` se deriva por rejilla de ~1,1 km sin geocodificación externa. `confirmedCount`, `availability` y el filtro de eventos completos dependen de participaciones y se completan en la Fase 3.
 
 ## Fase 3: participaciones, invitaciones y bloqueos
 

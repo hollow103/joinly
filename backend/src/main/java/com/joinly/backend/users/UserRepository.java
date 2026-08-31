@@ -14,7 +14,7 @@ public class UserRepository {
 
   private static final String SELECT =
       """
-            SELECT id, auth_subject, alias, photo_url, status::text, email_verified,
+            SELECT id, auth_subject, alias, status::text, email_verified,
                    terms_version, privacy_version, guidelines_version, terms_accepted_at,
                    privacy_accepted_at, guidelines_accepted_at,
                    ST_X(preferred_search_point::geometry) AS preferred_longitude,
@@ -41,12 +41,12 @@ public class UserRepository {
         jdbc.sql(
                 """
                         INSERT INTO users (
-                            auth_subject, alias, alias_normalized, photo_url, email_verified,
+                            auth_subject, alias, alias_normalized, email_verified,
                             adult_confirmed_at, terms_version, privacy_version, guidelines_version,
                             terms_accepted_at, privacy_accepted_at, guidelines_accepted_at,
                             preferred_search_point, preferred_search_label, created_at, updated_at
                         ) VALUES (
-                            :authSubject, :alias, lower(trim(:alias)), :photoUrl, :emailVerified,
+                            :authSubject, :alias, lower(trim(:alias)), :emailVerified,
                             :now, :termsVersion, :privacyVersion, :guidelinesVersion,
                             :now, :now, :now,
                             ST_SetSRID(ST_MakePoint(:longitude, :latitude), 4326)::geography,
@@ -55,7 +55,6 @@ public class UserRepository {
                         """)
             .param("authSubject", profile.authSubject())
             .param("alias", profile.alias().trim())
-            .param("photoUrl", profile.photoUrl())
             .param("emailVerified", profile.emailVerified())
             .param("termsVersion", profile.termsVersion())
             .param("privacyVersion", profile.privacyVersion())
@@ -75,8 +74,13 @@ public class UserRepository {
                     UPDATE users
                     SET alias = :alias,
                         alias_normalized = lower(trim(:alias)),
-                        photo_url = :photoUrl,
                         email_verified = :emailVerified,
+                        terms_version = :termsVersion,
+                        privacy_version = :privacyVersion,
+                        guidelines_version = :guidelinesVersion,
+                        terms_accepted_at = CASE WHEN terms_version IS DISTINCT FROM :termsVersion THEN :now ELSE terms_accepted_at END,
+                        privacy_accepted_at = CASE WHEN privacy_version IS DISTINCT FROM :privacyVersion THEN :now ELSE privacy_accepted_at END,
+                        guidelines_accepted_at = CASE WHEN guidelines_version IS DISTINCT FROM :guidelinesVersion THEN :now ELSE guidelines_accepted_at END,
                         preferred_search_point = ST_SetSRID(ST_MakePoint(:longitude, :latitude), 4326)::geography,
                         preferred_search_label = :label,
                         version = version + 1,
@@ -86,8 +90,10 @@ public class UserRepository {
                     """)
         .param("authSubject", profile.authSubject())
         .param("alias", profile.alias().trim())
-        .param("photoUrl", profile.photoUrl())
         .param("emailVerified", profile.emailVerified())
+        .param("termsVersion", profile.termsVersion())
+        .param("privacyVersion", profile.privacyVersion())
+        .param("guidelinesVersion", profile.guidelinesVersion())
         .param("longitude", profile.manualSearchArea().longitude())
         .param("latitude", profile.manualSearchArea().latitude())
         .param("label", profile.manualSearchArea().label())
@@ -127,7 +133,6 @@ public class UserRepository {
         resultSet.getObject("id", UUID.class),
         resultSet.getObject("auth_subject", UUID.class),
         resultSet.getString("alias"),
-        resultSet.getString("photo_url"),
         resultSet.getString("status"),
         resultSet.getBoolean("email_verified"),
         resultSet.getString("terms_version"),
@@ -146,7 +151,6 @@ public class UserRepository {
   public record ProfileData(
       UUID authSubject,
       String alias,
-      String photoUrl,
       boolean emailVerified,
       String termsVersion,
       String privacyVersion,

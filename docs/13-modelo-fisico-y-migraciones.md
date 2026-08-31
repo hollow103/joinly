@@ -26,7 +26,7 @@ Perfil interno vinculado a Supabase Auth.
 | `auth_subject` | `uuid` | `unique`, identificador `sub` de Supabase Auth |
 | `alias` | `varchar(40)` | Visible públicamente |
 | `alias_normalized` | `varchar(40)` | `unique`, minúsculas para impedir alias equivalentes |
-| `photo_url` | `text` | Opcional |
+| `photo_url` | `text` | Reservado para una fase posterior; el piloto no recibe ni devuelve fotos |
 | `status` | `user_status` | `active` o `suspended` |
 | `email_verified` | `boolean` | Sincronizado desde Supabase Auth |
 | `terms_version`, `privacy_version`, `guidelines_version` | `varchar(32)` | Versiones aceptadas |

@@ -2,10 +2,12 @@ package com.joinly.backend.authentication;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.joinly.backend.shared.BusinessException;
+import java.time.Duration;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
+import org.springframework.http.client.SimpleClientHttpRequestFactory;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestClient;
 import org.springframework.web.client.RestClientException;
@@ -16,8 +18,14 @@ public class SupabaseAuthClient {
   private final RestClient restClient;
   private final String userInfoUri;
 
-  public SupabaseAuthClient(@Value("${joinly.security.user-info-uri}") String userInfoUri) {
-    this.restClient = RestClient.create();
+  public SupabaseAuthClient(
+      @Value("${joinly.security.user-info-uri}") String userInfoUri,
+      @Value("${joinly.security.connect-timeout}") Duration connectTimeout,
+      @Value("${joinly.security.read-timeout}") Duration readTimeout) {
+    SimpleClientHttpRequestFactory requestFactory = new SimpleClientHttpRequestFactory();
+    requestFactory.setConnectTimeout(connectTimeout);
+    requestFactory.setReadTimeout(readTimeout);
+    this.restClient = RestClient.builder().requestFactory(requestFactory).build();
     this.userInfoUri = userInfoUri;
   }
 

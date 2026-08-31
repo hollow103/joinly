@@ -45,12 +45,11 @@ Supabase Auth es la fuente de identidad. El backend consulta su propia base de d
 ```json
 {
   "id": "uuid",
-  "alias": "senderistaVigo",
-  "photoUrl": "https://..."
+  "alias": "senderistaVigo"
 }
 ```
 
-`photoUrl` es opcional. Correo, nombre real, teléfono, identificador de Supabase y perfiles sociales nunca se devuelven como perfil público.
+El piloto no admite fotos de perfil. Correo, nombre real, teléfono, identificador de Supabase y perfiles sociales nunca se devuelven como perfil público.
 
 ### Evento de descubrimiento
 
@@ -131,20 +130,22 @@ Los errores siguen RFC 9457 y añaden un código estable de producto:
 }
 ```
 
-`fields` solo aparece para errores de validación. Códigos previstos: `validation_error`, `email_not_verified`, `agreements_not_accepted`, `event_full`, `event_not_joinable`, `active_event_limit_reached`, `invitation_invalid`, `invitation_expired`, `user_blocked`, `participation_not_pending` y `concurrent_update`.
+`fields` solo aparece para errores de validación. Códigos previstos: `validation_error`, `not_found`, `email_not_verified`, `agreements_not_accepted`, `event_full`, `event_not_joinable`, `event_not_editable`, `event_not_cancellable`, `active_event_limit_reached`, `if_match_required`, `invitation_invalid`, `invitation_expired`, `user_blocked`, `participation_not_pending` y `concurrent_update`.
 
 ## Recursos de la persona usuaria
 
 | Método y ruta | Autorización | Solicitud | Respuesta |
 | --- | --- | --- | --- |
 | `GET /me` | Persona autenticada | - | `200` perfil privado y estado de requisitos |
-| `PUT /me` | Persona autenticada | `alias`, `photoUrl` opcional, `manualSearchArea` opcional | `200` perfil creado o actualizado; `If-Match` solo si ya existía |
+| `PUT /me` | Persona autenticada | `alias`, acuerdos y `manualSearchArea` opcional | `200` perfil creado o actualizado; `If-Match` solo si ya existía |
 | `DELETE /me` | Persona autenticada | - | `202` solicitud de supresión aceptada |
 | `PUT /me/push-settings` | Persona autenticada | `enabled`, preferencias por tipo, `expoPushToken` opcional | `200` preferencias |
 
 `GET /me` devuelve las fechas de aceptación de términos, privacidad y normas, y los indicadores `emailVerified` y `status`. La creación inicial del perfil se realiza mediante `PUT /me` tras el registro en Supabase e incluye obligatoriamente las versiones y fechas de aceptación de los tres acuerdos; las actualizaciones posteriores requieren `If-Match`.
 
 La eliminación de cuenta es asíncrona. Revoca el acceso de producto de inmediato y programa la supresión de datos personales en un máximo de 30 días, salvo retención legal aplicable.
+
+En una actualización, `manualSearchArea` ausente conserva la preferencia actual y `null` la elimina. La aceptación de un documento solo actualiza su versión y fecha si cambia la versión aceptada.
 
 ## Eventos y descubrimiento
 
@@ -169,9 +170,11 @@ La eliminación de cuenta es asíncrona. Revoca el acceso de producto de inmedia
 }
 ```
 
-`radiusMeters` y `limit` tienen máximos definidos en la implementación OpenAPI; el orden es distancia ascendente y, a igual distancia, `startsAt` ascendente e `id`. Una colección vacía incluye `suggestedRadiusMeters` cuando sea razonable ampliar el radio.
+`radiusMeters` admite de 100 a 50000 metros y `limit` de 1 a 50 (por defecto 20); el orden es distancia ascendente y, a igual distancia, `startsAt` ascendente e `id`. El cursor es opaco, va ligado a los filtros y al orden de la petición y se rechaza con `400 validation_error` si se altera o se reutiliza con otros filtros. `distanceMeters` se redondea a la centena de metros para dificultar la trilateración. Una colección vacía en la primera página incluye `suggestedRadiusMeters` (el doble del radio, hasta 50000) cuando es razonable ampliar el radio. Los eventos `privateInvitation` y los ya finalizados (`startsAt + durationMinutes` en el pasado) no aparecen en descubrimiento.
 
-El cuerpo de creación exige `title`, `description`, `category`, `startsAt`, `durationMinutes`, `exactLocation` y `accessMode`; admite `capacity` y `notes`. `startsAt` debe ser futuro, `capacity` es positiva si existe y el creador no puede tener tres eventos activos. La API calcula `approximateArea`; no acepta este valor del cliente.
+El cuerpo de creación exige `title`, `description`, `category`, `startsAt`, `durationMinutes`, `exactLocation` y `accessMode`; admite `capacity` y `notes`. `startsAt` debe ser futuro, `capacity` es positiva si existe y el creador no puede tener tres eventos activos. La API calcula `approximateArea`; no acepta este valor del cliente. El piloto lo deriva redondeando la ubicación exacta a una rejilla de ~1,1 km (dos decimales) y presentándola como texto, sin geocodificación externa; se sustituirá por una etiqueta legible cuando exista un origen de datos sin coste.
+
+Las ediciones (`PATCH`) requieren `If-Match`: sin la cabecera se responde `428 if_match_required` y si no coincide `412 concurrent_update`. Un evento ajeno o inexistente responde `404 not_found`. Los campos principales solo se editan mientras el evento no ha comenzado; después solo `notes` y hasta que finaliza. Un intento fuera de esos plazos responde `409 event_not_editable`. `POST /events/{eventId}/cancellation` responde `409 event_not_cancellable` si el evento ya comenzó, se canceló o se cerró.
 
 Un evento se crea publicado. Sus estados son `published`, `cancelled` y `closed`. `published` deja de ser un evento activo al empezar; un proceso programado lo marca `closed` al finalizar `startsAt + durationMinutes`, lo retira del descubrimiento y agenda su eliminación o anonimización en 30 días. Cancelar un evento notifica a participantes confirmados.
 

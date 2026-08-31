@@ -7,7 +7,6 @@ public record AppUser(
     UUID id,
     UUID authSubject,
     String alias,
-    String photoUrl,
     String status,
     boolean emailVerified,
     String termsVersion,

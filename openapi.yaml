@@ -82,6 +82,8 @@ paths:
       responses:
         '200': {description: Evento actualizado, headers: {ETag: {$ref: '#/components/headers/ETag'}}, content: {application/json: {schema: {$ref: '#/components/schemas/EventDetail'}}}}
         '403': {$ref: '#/components/responses/Forbidden'}
+        '404': {$ref: '#/components/responses/NotFound'}
+        '409': {$ref: '#/components/responses/Conflict'}
         '412': {$ref: '#/components/responses/PreconditionFailed'}
         '428': {$ref: '#/components/responses/PreconditionRequired'}
   /events/{eventId}/cancellation:
@@ -93,6 +95,7 @@ paths:
       responses:
         '204': {description: Evento cancelado}
         '403': {$ref: '#/components/responses/Forbidden'}
+        '404': {$ref: '#/components/responses/NotFound'}
         '409': {$ref: '#/components/responses/Conflict'}
   /events/{eventId}/participations:
     parameters: [{$ref: '#/components/parameters/EventId'}]
@@ -214,9 +217,9 @@ components:
       type: object
       required: [type, coordinates]
       properties: {type: {type: string, enum: [Point]}, coordinates: {type: array, minItems: 2, maxItems: 2, items: {type: number}}}
-    PublicProfile: {type: object, required: [id, alias], properties: {id: {$ref: '#/components/schemas/Uuid'}, alias: {type: string}, photoUrl: {type: string, format: uri, nullable: true}}}
+    PublicProfile: {type: object, required: [id, alias], properties: {id: {$ref: '#/components/schemas/Uuid'}, alias: {type: string}}}
     ManualSearchArea: {type: object, required: [longitude, latitude, label], properties: {longitude: {type: number, minimum: -180, maximum: 180}, latitude: {type: number, minimum: -90, maximum: 90}, label: {type: string, minLength: 1, maxLength: 160}}}
-    ProfileInput: {type: object, required: [alias, adultConfirmed, termsVersion, privacyVersion, guidelinesVersion], properties: {alias: {type: string, minLength: 3, maxLength: 40}, photoUrl: {type: string, format: uri}, adultConfirmed: {type: boolean, enum: [true]}, termsVersion: {type: string, pattern: '^[A-Za-z0-9._-]{1,32}$'}, privacyVersion: {type: string, pattern: '^[A-Za-z0-9._-]{1,32}$'}, guidelinesVersion: {type: string, pattern: '^[A-Za-z0-9._-]{1,32}$'}, manualSearchArea: {$ref: '#/components/schemas/ManualSearchArea'}}}
+    ProfileInput: {type: object, required: [alias, adultConfirmed, termsVersion, privacyVersion, guidelinesVersion], properties: {alias: {type: string, minLength: 3, maxLength: 40}, adultConfirmed: {type: boolean, enum: [true]}, termsVersion: {type: string, pattern: '^[A-Za-z0-9._-]{1,32}$'}, privacyVersion: {type: string, pattern: '^[A-Za-z0-9._-]{1,32}$'}, guidelinesVersion: {type: string, pattern: '^[A-Za-z0-9._-]{1,32}$'}, manualSearchArea: {allOf: [{$ref: '#/components/schemas/ManualSearchArea'}], nullable: true, description: Ausente conserva la preferencia actual; null la elimina.}}}
     Profile: {allOf: [{$ref: '#/components/schemas/PublicProfile'}, {type: object, required: [status, emailVerified, agreementsAccepted, termsVersion, privacyVersion, guidelinesVersion, termsAcceptedAt, privacyAcceptedAt, guidelinesAcceptedAt, role], properties: {status: {type: string, enum: [active, suspended]}, emailVerified: {type: boolean}, agreementsAccepted: {type: boolean}, termsVersion: {type: string}, privacyVersion: {type: string}, guidelinesVersion: {type: string}, termsAcceptedAt: {type: string, format: date-time}, privacyAcceptedAt: {type: string, format: date-time}, guidelinesAcceptedAt: {type: string, format: date-time}, manualSearchArea: {$ref: '#/components/schemas/ManualSearchArea'}, role: {type: string, enum: [user, admin]}}}]}
     EventInput: {type: object, required: [title, description, category, startsAt, durationMinutes, exactLocation, accessMode], properties: {title: {type: string, minLength: 3, maxLength: 120}, description: {type: string, maxLength: 4000}, notes: {type: string, maxLength: 4000}, category: {type: string, enum: [sportWellbeing, cultureLeisure, learning, communityVolunteering, pets, networking]}, startsAt: {type: string, format: date-time}, durationMinutes: {type: integer, minimum: 15, maximum: 1440}, exactLocation: {$ref: '#/components/schemas/GeoPoint'}, accessMode: {type: string, enum: [direct, approval, privateInvitation]}, capacity: {type: integer, minimum: 1, nullable: true}}}
     EventPatch: {type: object, minProperties: 1, properties: {title: {type: string, minLength: 3, maxLength: 120}, description: {type: string, maxLength: 4000}, notes: {type: string, maxLength: 4000}, category: {type: string, enum: [sportWellbeing, cultureLeisure, learning, communityVolunteering, pets, networking]}, startsAt: {type: string, format: date-time}, durationMinutes: {type: integer, minimum: 15, maximum: 1440}, exactLocation: {$ref: '#/components/schemas/GeoPoint'}, accessMode: {type: string, enum: [direct, approval, privateInvitation]}, capacity: {type: integer, minimum: 1, nullable: true}}}

@@ -27,6 +27,8 @@ joinly:
     terms-version: ${JOINLY_TERMS_VERSION:v1}
   security:
     audience: ${SUPABASE_AUDIENCE:authenticated}
+    connect-timeout: ${SUPABASE_CONNECT_TIMEOUT:2s}
+    read-timeout: ${SUPABASE_READ_TIMEOUT:3s}
     user-info-uri: ${SUPABASE_USER_INFO_URI:https://ulxrjlmpzaeouqbjbnjc.supabase.co/auth/v1/user}
 management:
   endpoints:

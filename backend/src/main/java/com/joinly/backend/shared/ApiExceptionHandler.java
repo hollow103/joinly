@@ -16,7 +16,11 @@ public class ApiExceptionHandler {
 
   @ExceptionHandler(BusinessException.class)
   ProblemDetail handleBusiness(BusinessException exception) {
-    return problem(exception.status(), exception.code(), exception.getMessage());
+    ProblemDetail problem = problem(exception.status(), exception.code(), exception.getMessage());
+    if (!exception.fields().isEmpty()) {
+      problem.setProperty("fields", exception.fields());
+    }
+    return problem;
   }
 
   @ExceptionHandler(MethodArgumentNotValidException.class)
