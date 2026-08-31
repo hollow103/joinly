@@ -25,6 +25,7 @@ services:
       SUPABASE_ISSUER: ${SUPABASE_ISSUER:-https://ulxrjlmpzaeouqbjbnjc.supabase.co/auth/v1}
       SUPABASE_JWK_SET_URI: ${SUPABASE_JWK_SET_URI:-https://ulxrjlmpzaeouqbjbnjc.supabase.co/auth/v1/.well-known/jwks.json}
       SUPABASE_AUDIENCE: ${SUPABASE_AUDIENCE:-authenticated}
+      SUPABASE_API_KEY: ${SUPABASE_API_KEY:-sb_publishable_TEBaRu7TbvpJ075XD-B_kA_3m_aosAd}
       SUPABASE_USER_INFO_URI: ${SUPABASE_USER_INFO_URI:-https://ulxrjlmpzaeouqbjbnjc.supabase.co/auth/v1/user}
     ports:
       - "8080:8080"

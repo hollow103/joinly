@@ -17,9 +17,11 @@ public class SupabaseAuthClient {
 
   private final RestClient restClient;
   private final String userInfoUri;
+  private final String apiKey;
 
   public SupabaseAuthClient(
       @Value("${joinly.security.user-info-uri}") String userInfoUri,
+      @Value("${joinly.security.api-key}") String apiKey,
       @Value("${joinly.security.connect-timeout}") Duration connectTimeout,
       @Value("${joinly.security.read-timeout}") Duration readTimeout) {
     SimpleClientHttpRequestFactory requestFactory = new SimpleClientHttpRequestFactory();
@@ -27,6 +29,7 @@ public class SupabaseAuthClient {
     requestFactory.setReadTimeout(readTimeout);
     this.restClient = RestClient.builder().requestFactory(requestFactory).build();
     this.userInfoUri = userInfoUri;
+    this.apiKey = apiKey;
   }
 
   public boolean emailVerified(String accessToken) {
@@ -36,6 +39,7 @@ public class SupabaseAuthClient {
               .get()
               .uri(userInfoUri)
               .header(HttpHeaders.AUTHORIZATION, "Bearer " + accessToken)
+              .header("apikey", apiKey)
               .retrieve()
               .onStatus(
                   HttpStatusCode::isError,
