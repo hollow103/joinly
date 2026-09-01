@@ -1,9 +1,9 @@
-import * as Location from 'expo-location';
 import { useState } from 'react';
 import { useRouter } from 'expo-router';
 import { ActivityIndicator, Pressable, ScrollView, StyleSheet, View } from 'react-native';
 import { categoryOptions } from '@/events/discovery';
 import { useEventSearch } from '@/events/search-store';
+import { locationErrorMessage, readCurrentLocation } from '@/lib/location';
 import { Button, Screen, Text, tokens } from '@/ui';
 
 const radii = [3000, 5000, 10000];
@@ -21,29 +21,12 @@ export default function Search() {
   async function useCurrentLocation() {
     setErrorMessage(null);
     setIsLocating(true);
-    const permission = await Location.requestForegroundPermissionsAsync();
-    if (permission.status !== 'granted') {
-      setIsLocating(false);
-      setErrorMessage(
-        'Necesitamos tu permiso para buscar planes cerca de ti. No guardaremos tu ubicación.',
-      );
-      return;
-    }
-
     try {
-      const position = await Location.getCurrentPositionAsync({
-        accuracy: Location.Accuracy.Balanced,
-      });
-      setOrigin({
-        latitude: position.coords.latitude,
-        longitude: position.coords.longitude,
-        label: 'Ubicación actual',
-      });
+      const coords = await readCurrentLocation();
+      setOrigin({ ...coords, label: 'Ubicación actual' });
       router.replace('/home');
-    } catch {
-      setErrorMessage(
-        'No pudimos obtener tu ubicación. Comprueba que la ubicación del dispositivo esté activa.',
-      );
+    } catch (error) {
+      setErrorMessage(locationErrorMessage(error));
     } finally {
       setIsLocating(false);
     }

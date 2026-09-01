@@ -301,6 +301,22 @@ export default function EditEvent() {
         </View>
 
         <View style={styles.card}>
+          <Text variant="heading">Participación</Text>
+          <Button
+            label="Solicitudes y participantes"
+            variant="secondary"
+            onPress={() => router.push(`/events/${id}/participants`)}
+          />
+          {draft.accessMode === 'privateInvitation' ? (
+            <Button
+              label="Invitaciones"
+              variant="secondary"
+              onPress={() => router.push(`/events/${id}/invitations`)}
+            />
+          ) : null}
+        </View>
+
+        <View style={styles.card}>
           <Text variant="heading">Cancelar el plan</Text>
           <Text variant="muted">
             El plan deja de estar disponible y se avisa a las personas confirmadas.

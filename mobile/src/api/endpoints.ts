@@ -90,3 +90,92 @@ export function cancelEvent(
     token,
   });
 }
+
+// ---- M4: participation, approvals and invitations -------------------------
+
+export type Participation = components['schemas']['Participation'];
+export type Invitation = components['schemas']['Invitation'];
+
+export type Participant = {
+  participationId: string;
+  user: PublicProfile;
+  status: 'pending' | 'confirmed' | 'rejected' | 'abandoned';
+  requestedAt: string;
+};
+
+export type ParticipantPage = {
+  items: Participant[];
+  page: { nextCursor: string | null };
+};
+
+export function joinEvent(
+  token: string | null,
+  eventId: string,
+  idempotencyKey: string,
+  invitationCode?: string,
+): Promise<ApiResult<Participation>> {
+  return apiFetch<Participation>(`/events/${eventId}/participations`, {
+    method: 'POST',
+    body: invitationCode ? { invitationCode } : {},
+    token,
+    idempotencyKey,
+  });
+}
+
+export function abandonParticipation(
+  token: string | null,
+  eventId: string,
+): Promise<ApiResult<null>> {
+  return apiFetch<null>(`/events/${eventId}/participation`, { method: 'DELETE', token });
+}
+
+export function getParticipants(
+  token: string | null,
+  eventId: string,
+  params: { status: 'confirmed' | 'pending'; cursor?: string | null; limit?: number },
+): Promise<ApiResult<ParticipantPage>> {
+  const query = new URLSearchParams({ status: params.status });
+  if (params.cursor) query.set('cursor', params.cursor);
+  query.set('limit', String(params.limit ?? 20));
+  return apiFetch<ParticipantPage>(`/events/${eventId}/participations?${query.toString()}`, {
+    token,
+  });
+}
+
+export function resolveParticipation(
+  token: string | null,
+  eventId: string,
+  participationId: string,
+  status: 'confirmed' | 'rejected',
+  ifMatch: string,
+): Promise<ApiResult<Participation>> {
+  return apiFetch<Participation>(`/events/${eventId}/participations/${participationId}`, {
+    method: 'PATCH',
+    body: { status },
+    token,
+    ifMatch,
+  });
+}
+
+export function createInvitation(
+  token: string | null,
+  eventId: string,
+  input: { maxUses?: number; expiresAt?: string } = {},
+): Promise<ApiResult<Invitation>> {
+  return apiFetch<Invitation>(`/events/${eventId}/invitations`, {
+    method: 'POST',
+    body: input,
+    token,
+  });
+}
+
+export function revokeInvitation(
+  token: string | null,
+  eventId: string,
+  invitationId: string,
+): Promise<ApiResult<null>> {
+  return apiFetch<null>(`/events/${eventId}/invitations/${invitationId}`, {
+    method: 'DELETE',
+    token,
+  });
+}

@@ -1,5 +1,4 @@
 import { useMemo, useState } from 'react';
-import * as Location from 'expo-location';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useRouter } from 'expo-router';
 import { Pressable, ScrollView, StyleSheet, View } from 'react-native';
@@ -8,6 +7,7 @@ import { ApiError } from '@/api/problem';
 import { AuthField } from '@/auth/AuthField';
 import { useSession } from '@/auth/session';
 import { useEventSearch } from '@/events/search-store';
+import { locationErrorMessage, readCurrentLocation } from '@/lib/location';
 import {
   accessModeOptions,
   categoryOptions,
@@ -116,30 +116,13 @@ export default function NewEvent() {
 
   async function useCurrentLocation() {
     setIsLocating(true);
-    const permission = await Location.requestForegroundPermissionsAsync();
-    if (permission.status !== 'granted') {
-      setIsLocating(false);
-      setErrors((current) => ({
-        ...current,
-        location: 'Necesitamos el permiso de ubicación para marcar dónde es el plan.',
-      }));
-      return;
-    }
     try {
-      const position = await Location.getCurrentPositionAsync({
-        accuracy: Location.Accuracy.Balanced,
-      });
-      setCoords({
-        latitude: position.coords.latitude,
-        longitude: position.coords.longitude,
-      });
+      const coords = await readCurrentLocation();
+      setCoords(coords);
       setLocationLabel('Ubicación actual');
       setErrors((current) => ({ ...current, location: undefined }));
-    } catch {
-      setErrors((current) => ({
-        ...current,
-        location: 'No pudimos obtener tu ubicación. Comprueba que esté activada.',
-      }));
+    } catch (error) {
+      setErrors((current) => ({ ...current, location: locationErrorMessage(error) }));
     } finally {
       setIsLocating(false);
     }
