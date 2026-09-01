@@ -117,6 +117,20 @@ public class UserRepository {
         .update();
   }
 
+  public boolean requestDeletion(UUID authSubject, Instant now) {
+    return jdbc.sql(
+                """
+                UPDATE users
+                SET status = 'deletion_requested', deletion_requested_at = :now,
+                    version = version + 1, updated_at = :now
+                WHERE auth_subject = :authSubject AND status = 'active'
+                """)
+            .param("authSubject", authSubject)
+            .param("now", now.atOffset(ZoneOffset.UTC))
+            .update()
+        == 1;
+  }
+
   private Optional<AppUser> findById(UUID id) {
     return jdbc.sql(SELECT + " WHERE id = :id").param("id", id).query(this::map).optional();
   }

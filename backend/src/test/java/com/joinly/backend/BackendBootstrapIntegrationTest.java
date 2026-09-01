@@ -50,7 +50,7 @@ class BackendBootstrapIntegrationTest {
             .queryForObject(
                 "SELECT count(*) FROM flyway_schema_history WHERE success = true", Integer.class);
 
-    assertThat(versionCount).isEqualTo(7);
+    assertThat(versionCount).isEqualTo(8);
   }
 
   @Test

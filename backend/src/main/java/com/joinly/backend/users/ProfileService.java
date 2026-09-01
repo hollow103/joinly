@@ -9,6 +9,7 @@ import java.util.UUID;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class ProfileService {
@@ -85,6 +86,28 @@ public class ProfileService {
 
   public boolean agreementsAccepted(AppUser user) {
     return agreements.accepted(user);
+  }
+
+  @Transactional
+  public void requestDeletion(Jwt jwt) {
+    UUID subject = claims.subject(jwt);
+    AppUser existing =
+        users
+            .findByAuthSubject(subject)
+            .orElseThrow(
+                () ->
+                    new BusinessException(
+                        HttpStatus.FORBIDDEN,
+                        "profile_required",
+                        "Create the internal profile before using Joinly."));
+    if ("deletion_requested".equals(existing.status())) {
+      return;
+    }
+    if (!"active".equals(existing.status())) {
+      throw new BusinessException(
+          HttpStatus.FORBIDDEN, "account_suspended", "The account cannot use product operations.");
+    }
+    users.requestDeletion(subject, Instant.now(clock));
   }
 
   public String etag(AppUser user) {

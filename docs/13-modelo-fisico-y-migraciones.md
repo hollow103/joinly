@@ -27,7 +27,8 @@ Perfil interno vinculado a Supabase Auth.
 | `alias` | `varchar(40)` | Visible públicamente |
 | `alias_normalized` | `varchar(40)` | `unique`, minúsculas para impedir alias equivalentes |
 | `photo_url` | `text` | Reservado para una fase posterior; el piloto no recibe ni devuelve fotos |
-| `status` | `user_status` | `active` o `suspended` |
+| `status` | `user_status` | `active`, `suspended` o `deletion_requested` |
+| `deletion_requested_at` | `timestamptz` opcional | Instante de solicitud de supresión; revoca acceso antes de la eliminación física |
 | `email_verified` | `boolean` | Sincronizado desde Supabase Auth |
 | `terms_version`, `privacy_version`, `guidelines_version` | `varchar(32)` | Versiones aceptadas |
 | `terms_accepted_at`, `privacy_accepted_at`, `guidelines_accepted_at` | `timestamptz` | Obligatorios al activar el perfil |
@@ -158,6 +159,7 @@ No se introducen índices de texto completo, cachés geoespaciales, particionado
 | `V5__notifications.sql` | Crea dispositivos push y el registro básico de notificaciones. |
 | `V6__user_profile_preferences_and_audit.sql` | Añade versión del perfil, preferencia de búsqueda manual y auditoría de cambios de rol. |
 | `V7__fix_participation_date_constraint.sql` | Relaja `participations_dates_match_status`: `abandoned` solo exige `abandoned_at`. |
+| `V8__account_deletion_requests.sql` | Añade estado `deletion_requested`, fecha de solicitud e índice para el proceso asíncrono de supresión. |
 
 Las migraciones se aplican de forma automática en un despliegue controlado y nunca se editan después de ejecutarse. Un cambio posterior se expresa en una nueva versión. Antes de aplicar migraciones en Supabase Free se realiza una exportación de PostgreSQL.
 
