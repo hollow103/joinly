@@ -350,6 +350,47 @@ Sin EAS ni cuenta Expo (`docs/09`, `docs/16`):
 Para desarrollo diario se usa `npx expo run:android` (build de depuración) o
 Expo Go cuando ninguna dependencia nativa lo impida.
 
+## Dudas abiertas de M6 (accesibilidad, pulido y APK)
+
+Pendientes de decidir con el usuario antes de abrir el hito.
+
+1. **Barrido de i18n.** Hay textos en duro fuera de `es.ts` en la mayoria de
+   pantallas de M3–M5 (`search`, `events/[id]`, `events/edit/[id]`,
+   `(tabs)/create`, `(tabs)/plans`, `participants`, `invitations`, `blocks`,
+   `notifications`, `guidelines`, etiquetas de pestañas y de filtros
+   temporales). ¿M6 los mueve todos a `es.ts` con claves por dominio?
+2. **APK y token FCM.** `expo-notifications` en un APK standalone necesita
+   `google-services.json` de un proyecto Firebase para registrar el token.
+   ¿Se crea proyecto Firebase para el piloto o el registro sigue como *stub*
+   tambien en el APK (la recepcion es Fase 4)?
+3. **Identidad de la app en `app.json`.** Faltan `android.package`,
+   `versionCode`, icono y splash definitivos y la config del plugin
+   `expo-notifications`. ¿Se fija ahora (p. ej. `com.joinly.app`)?
+4. **Scheme de deep link.** Hoy es `mobile`; para el piloto y los deep links
+   de notificacion conviene `joinly`. ¿Se cambia en M6?
+5. **Alcance de la auditoria WCAG AA.** Contraste de tokens (hay grises sobre
+   grises), `accessibilityLabel`/`Role` faltantes, orden de foco, fuente
+   escalable, objetivos de 48 dp. ¿Todas las pantallas o solo el flujo central?
+6. **Estados de error y vacio.** Hoy es desigual (el Radar tiene error +
+   reintento; otras pantallas solo *spinner* o nada). ¿Barrido completo?
+7. **Teclado en Android.** `KeyboardAvoidingView` solo desplaza en iOS; varios
+   formularios tapan el input con el teclado. ¿Se arregla en M6?
+8. **Fecha/hora en crear/editar evento.** Son campos de texto. ¿M6 introduce
+   `@react-native-community/datetimepicker` o se deja como texto?
+9. **Recorrido manual de `docs/14` (B-01 a B-11).** Requiere terminal fisico
+   (o emulador con ubicacion por Extended Controls), varias cuentas y mas datos
+   sembrados (hoy 8 eventos, todos en Vigo, sin volumen para paginacion).
+   ¿Quien lo ejecuta y con que dispositivo?
+10. **Deuda de navegacion.** La confirmacion de unirse/abandonar usa
+    `Alert.alert` en vez de la hoja inferior de `docs/19`. ¿Se sustituye por
+    hojas en M6 o se acepta para el piloto?
+
+Ademas, para poder **cerrar** M2, M3 y M5 (no es trabajo de M6): recorrido
+manual en terminal fisico, resolver el comportamiento de bloqueo con
+participacion confirmada previa, e implementar en el backend `DELETE /api/v1/me`
+y `PUT /api/v1/me/push-settings` (ambos documentados en `openapi.yaml` sin
+handler, devuelven 405).
+
 ## Fuera del alcance de este documento
 
 - Panel de moderación React/Vite y endpoints `/admin/*` (Fase 4 del backend).
