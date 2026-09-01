@@ -6,7 +6,7 @@ Implementar un piloto pequeño que permita crear, descubrir y participar en even
 
 La implementación comienza solo tras aprobar este documento. Cada fase entrega una porción verificable y mantiene el repositorio ejecutable mediante el entorno local descrito en `docs/15-operacion-del-piloto.md`.
 
-**Estado:** Fase 0 completada el 2026-08-31. Fase 1 en curso: pendiente de la prueba con un JWT temporal real y de los textos legales antes de cerrarla. Fase 2 (eventos y descubrimiento) y Fase 3 (participaciones, invitaciones y bloqueos) implementadas el 2026-08-31 con pruebas herméticas de API contra PostGIS que cubren B-01 a B-09, incluida la concurrente B-07. Fase 4 implementa reportes, cola administrativa, decisiones auditadas y preferencias push; queda pendiente el panel de moderación y la entrega de notificaciones. En Fase 5, el frontend movil ha completado y verificado M0 (andamiaje Expo) y M1 (identidad y perfil, registro y alta contra Supabase probados en el emulador el 2026-09-01); M2 (descubrimiento) esta implementado y pendiente del recorrido manual; M3 (crear y gestionar) y M4 (participar) estan implementados y verificados contra el backend real (M4 incluye union directa/aprobacion/privada, reintento idempotente sin duplicar, aprobar con `If-Match`, abandonar e invitaciones); M5-M6 y el panel de moderacion no estan implementados. Las notificaciones (registro y entrega push) quedan para la Fase 4.
+**Estado:** Fases 0 a 3 completadas. Fase 1 se cerró para el MVP controlado tras ejecutar la integración con un JWT real de Supabase y aprobar los textos v1 provisionales; los datos legales ficticios deben sustituirse antes de una apertura pública. Fase 4 implementa reportes, cola administrativa, decisiones auditadas y preferencias push; queda pendiente el panel de moderación y la entrega de notificaciones. En Fase 5, el frontend movil ha completado y verificado M0 (andamiaje Expo) y M1 (identidad y perfil, registro y alta contra Supabase probados en el emulador el 2026-09-01); M2 (descubrimiento) esta implementado y pendiente del recorrido manual; M3 (crear y gestionar) y M4 (participar) estan implementados y verificados contra el backend real (M4 incluye union directa/aprobacion/privada, reintento idempotente sin duplicar, aprobar con `If-Match`, abandonar e invitaciones); M5-M6 y el panel de moderacion no estan implementados. Las notificaciones (registro y entrega push) quedan para la Fase 4.
 
 ## Decisiones de implementación
 
@@ -36,6 +36,8 @@ La implementación comienza solo tras aprobar este documento. Cada fase entrega 
 3. Implementar el estado `suspended`, su comprobación por petición y la integración necesaria para revocar sesiones en Supabase.
 4. Implementar el rol interno `admin` y el proceso manual de asignación documentado, sin endpoint público de roles.
 **Verificación:** `GET /me` y `PUT /me` contra JWT válidos e inválidos, además de la denegación de operaciones de una cuenta con estado `suspended`.
+
+**Estado:** completada para el MVP controlado el 2026-09-01. La integración `SupabaseProfileIntegrationTest` se ejecutó con un JWT recién emitido y validó el ciclo de perfil y los rechazos de suspensión/JWT inválido. La revocación de sesiones sigue el procedimiento manual documentado en `docs/17-identidad-y-administracion.md`; los textos legales v1 emplean datos ficticios deliberados y no autorizan una apertura pública.
 
 ## Fase 2: eventos y descubrimiento
 

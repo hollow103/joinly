@@ -40,7 +40,7 @@ public class EventRepository {
   }
 
   public Optional<Event> findById(UUID id) {
-    return jdbc.sql("SELECT " + COLUMNS + FROM_JOIN + " WHERE e.id = :id")
+    return jdbc.sql("SELECT " + COLUMNS + FROM_JOIN + " WHERE e.id = :id AND u.status = 'active'")
         .param("id", id)
         .query(this::map)
         .optional();
@@ -51,7 +51,11 @@ public class EventRepository {
    * to the same event serialise their capacity checks (test B-07).
    */
   public Optional<Event> lockById(UUID id) {
-    return jdbc.sql("SELECT " + COLUMNS + FROM_JOIN + " WHERE e.id = :id FOR UPDATE OF e")
+    return jdbc.sql(
+            "SELECT "
+                + COLUMNS
+                + FROM_JOIN
+                + " WHERE e.id = :id AND u.status = 'active' FOR UPDATE OF e")
         .param("id", id)
         .query(this::map)
         .optional();
@@ -185,7 +189,7 @@ public class EventRepository {
             .append(CONFIRMED_COUNT_SUBQUERY)
             .append(" AS confirmed_count")
             .append(FROM_JOIN)
-            .append(" WHERE e.status = 'published' AND e.is_hidden = false")
+            .append(" WHERE e.status = 'published' AND e.is_hidden = false AND u.status = 'active'")
             .append(" AND e.access_mode <> 'private_invitation' AND e.starts_at > :now")
             .append(" AND ST_DWithin(e.location, ")
             .append(ORIGIN)

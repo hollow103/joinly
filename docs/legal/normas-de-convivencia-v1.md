@@ -1,9 +1,9 @@
-# Normas de convivencia de Joinly (borrador v1)
+# Normas de convivencia de Joinly (v1 provisional de MVP)
 
 **Última actualización: 2026-09-01.**
 
-> Antes de publicar el piloto, revisar y aprobar este texto junto con los términos y
-> la política de privacidad. Este borrador no está listo para publicación.
+> Esta versión se aprueba para el MVP controlado. Debe revisarse jurídicamente junto con
+> los términos y la política de privacidad antes de una apertura pública.
 
 1. Trata a las demás personas con respeto. No se admiten acoso, discriminación,
    amenazas, violencia ni contenido sexual no consentido.

@@ -174,7 +174,7 @@ Las migraciones se aplican de forma automática en un despliegue controlado y nu
 
 ## Elementos diferidos
 
-- El job diario anonimiza cuentas en `deletion_requested` después de 30 días: sustituye el sujeto de Auth y el alias, elimina token push y preferencia de zona, oculta eventos futuros y conserva relaciones, reportes y auditorías obligatorias.
+- El job diario anonimiza cuentas en `deletion_requested` desde el día 29 para garantizar la supresión en un máximo de 30 días: sustituye el sujeto de Auth y el alias, elimina token push y preferencia de zona, oculta eventos futuros y conserva relaciones, reportes y auditorías obligatorias.
 - No hay agenda de trabajos, outbox, cola, analítica de producto, auditoría general de todas las lecturas ni proyecciones de lectura separadas.
 - No se persisten búsquedas por ubicación actual, mapas, rutas ni historial de asistentes.
 - Si el piloto exige mayor complejidad, se añadirá mediante migraciones nuevas y una actualización previa del contrato API.

@@ -10,7 +10,8 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 public class AccountRetentionService {
 
-  private static final Duration DELETION_GRACE_PERIOD = Duration.ofDays(30);
+  // Daily execution begins a day early so every request is anonymized within 30 days.
+  private static final Duration DELETION_GRACE_PERIOD = Duration.ofDays(29);
 
   private final UserRepository users;
   private final Clock clock;

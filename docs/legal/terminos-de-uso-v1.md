@@ -1,10 +1,10 @@
-# Términos de uso de Joinly (borrador v1)
+# Términos de uso de Joinly (v1 provisional de MVP)
 
 **Última actualización: 2026-09-01.**
 
-> Antes de publicar el piloto, sustituir los marcadores `[TITULAR]`, `[DOMICILIO]` y
-> `[CONTACTO]` por los datos legales del responsable y someter este texto a revisión
-> jurídica aplicable. Este borrador no está listo para publicación.
+> Esta versión autoriza exclusivamente el MVP controlado. Los datos de titularidad son
+> ficticios y deben sustituirse por los datos reales y revisarse jurídicamente antes de
+> una apertura pública.
 
 ## 1. Servicio y aceptación
 
@@ -12,8 +12,10 @@ Joinly es un servicio para descubrir y proponer planes locales entre personas ad
 Al crear una cuenta, la persona usuaria confirma que ha leído y acepta estos términos,
 la Política de privacidad y las Normas de convivencia.
 
-El servicio es operado por `[TITULAR]`, con domicilio en `[DOMICILIO]`. Las consultas
-sobre estos términos se atenderán en `[CONTACTO]`.
+El servicio es operado, para este MVP, por **Joinly MVP Demo, S.L.** (entidad ficticia de
+prueba, CIF ficticio B00000000), con domicilio ficticio en Calle de Demostración 1, 36201
+Vigo, Pontevedra, España. Las consultas sobre estos términos se atenderán en
+legal@joinly.example.
 
 ## 2. Requisitos de uso
 
@@ -46,3 +48,8 @@ La persona usuaria puede solicitar la eliminación de su cuenta desde la aplicac
 
 Podremos actualizar estos términos cuando sea necesario. Una nueva versión requerirá
 aceptación antes de usar funcionalidades que dependan de ella.
+
+## 7. Ley aplicable
+
+Para este MVP controlado se toma como referencia la legislación española. Antes de una
+apertura pública se definirá el responsable real, la jurisdicción y el texto definitivo.

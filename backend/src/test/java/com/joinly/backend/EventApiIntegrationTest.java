@@ -223,6 +223,46 @@ class EventApiIntegrationTest {
   }
 
   @Test
+  void suspensionHidesCreatorsEventsAndPreventsNewParticipations() throws Exception {
+    UUID reporter = insertUser("suspensionReporter", true);
+    UUID target = insertUser("suspensionTarget", true);
+    UUID admin = insertUser("suspensionAdmin", true);
+    UUID eventId = createEvent(target, VIGO_LON, VIGO_LAT);
+    jdbc.update("UPDATE users SET role = 'admin' WHERE auth_subject = ?", admin);
+
+    String reportId =
+        objectMapper
+            .readTree(
+                mvc.perform(
+                        authored(post("/api/v1/reports"), reporter)
+                            .content(
+                                "{\"targetType\":\"user\",\"targetId\":\""
+                                    + userId(target)
+                                    + "\",\"reason\":\"abusiveBehavior\"}"))
+                    .andExpect(status().isCreated())
+                    .andReturn()
+                    .getResponse()
+                    .getContentAsString())
+            .get("id")
+            .asText();
+
+    mvc.perform(
+            authored(patch("/api/v1/admin/reports/" + reportId), admin)
+                .header(HttpHeaders.IF_MATCH, "\"report-0\"")
+                .content("{\"status\":\"resolved\",\"action\":\"suspendUser\"}"))
+        .andExpect(status().isOk());
+    mvc.perform(
+            authored(post("/api/v1/events/search"), reporter)
+                .content(searchJson(VIGO_LON, VIGO_LAT, 5000)))
+        .andExpect(status().isOk())
+        .andExpect(jsonPath("$.items").isEmpty());
+    mvc.perform(
+            authored(post("/api/v1/events/" + eventId + "/participations"), reporter)
+                .header("Idempotency-Key", "suspension-test"))
+        .andExpect(status().isNotFound());
+  }
+
+  @Test
   void rejectsAFourthActiveEvent() throws Exception {
     UUID creator = insertUser("busyCreator", true);
     for (int i = 0; i < 3; i++) {
@@ -464,6 +504,11 @@ class EventApiIntegrationTest {
             .getResponse()
             .getContentAsString();
     return UUID.fromString(objectMapper.readTree(body).get("id").asText());
+  }
+
+  private UUID userId(UUID authSubject) {
+    return jdbc.queryForObject(
+        "SELECT id FROM users WHERE auth_subject = ?", UUID.class, authSubject);
   }
 
   private UUID insertStartedEvent(UUID creatorSubject) {

@@ -1,15 +1,17 @@
-# Política de privacidad de Joinly (borrador v1)
+# Política de privacidad de Joinly (v1 provisional de MVP)
 
 **Última actualización: 2026-09-01.**
 
-> Antes de publicar el piloto, sustituir `[TITULAR]`, `[DOMICILIO]` y `[CONTACTO]`,
-> completar la base jurídica y revisar este texto conforme a la normativa aplicable.
-> Este borrador no está listo para publicación.
+> Esta versión autoriza exclusivamente el MVP controlado. Los datos de titularidad son
+> ficticios y deben sustituirse, completar su base jurídica y revisarse antes de una
+> apertura pública.
 
 ## 1. Responsable y contacto
 
-El responsable previsto del tratamiento es `[TITULAR]`, con domicilio en `[DOMICILIO]`.
-Las solicitudes relacionadas con privacidad se atenderán en `[CONTACTO]`.
+El responsable provisional del tratamiento es **Joinly MVP Demo, S.L.** (entidad ficticia
+de prueba, CIF ficticio B00000000), con domicilio ficticio en Calle de Demostración 1,
+36201 Vigo, Pontevedra, España. Las solicitudes relacionadas con privacidad se atenderán
+en legal@joinly.example.
 
 ## 2. Datos y finalidades
 
@@ -38,5 +40,5 @@ a la información necesaria para operar Joinly.
 ## 5. Derechos
 
 La persona usuaria puede solicitar acceso, rectificación, supresión, limitación,
-oposición o portabilidad cuando sean aplicables, mediante `[CONTACTO]`. También puede
-presentar una reclamación ante la autoridad de protección de datos competente.
+oposición o portabilidad cuando sean aplicables, mediante legal@joinly.example. También
+puede presentar una reclamación ante la autoridad de protección de datos competente.

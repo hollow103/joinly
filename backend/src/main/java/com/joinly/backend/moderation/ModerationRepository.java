@@ -177,6 +177,15 @@ public class ModerationRepository {
         .param("userId", userId)
         .param("now", ts(now))
         .update();
+    jdbc.sql(
+            """
+            UPDATE events
+            SET is_hidden = true, version = version + 1, updated_at = :now
+            WHERE creator_id = :userId AND status = 'published' AND NOT is_hidden
+            """)
+        .param("userId", userId)
+        .param("now", ts(now))
+        .update();
   }
 
   private Report map(ResultSet rs, int rowNum) throws SQLException {
