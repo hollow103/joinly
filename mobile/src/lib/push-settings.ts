@@ -1,6 +1,6 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import Constants from 'expo-constants';
 import * as Device from 'expo-device';
-import * as Notifications from 'expo-notifications';
 
 export type PushPreferenceKey = 'requests' | 'decisions' | 'changes' | 'cancellations';
 
@@ -52,7 +52,8 @@ export async function savePushSettings(settings: PushSettings): Promise<void> {
  */
 export async function tryRegisterPushToken(): Promise<string | null> {
   try {
-    if (!Device.isDevice) return null;
+    if (!Device.isDevice || Constants.executionEnvironment === 'storeClient') return null;
+    const Notifications = await import('expo-notifications');
     const current = await Notifications.getPermissionsAsync();
     let granted = current.granted;
     if (!granted && current.canAskAgain) {

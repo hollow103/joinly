@@ -3,14 +3,15 @@
 ## Objetivo y alcance
 
 Este documento define cómo se construye la aplicación móvil del piloto: una app
-Expo / React Native / TypeScript para Android que consume la API REST ya
-implementada y verificada del backend. Corresponde a la parte móvil de la Fase 5
-de `docs/16-plan-implementacion-mvp.md`.
+Expo / React Native / TypeScript con distribución inicial para Android que consume
+la API REST ya implementada y verificada del backend. Corresponde a la parte móvil
+de la Fase 5 de `docs/16-plan-implementacion-mvp.md`. El proyecto también se ha
+precompilado y ejecutado en simulador iOS; eso no cambia el alcance Android-first
+del piloto.
 
 Queda **fuera de este documento** el panel de moderación (React + Vite). El panel
-depende de los endpoints `/admin/*` y `POST /reports`, que pertenecen a la Fase 4
-del backend y todavía no existen; se documentará por separado cuando esa fase se
-aborde.
+depende de los endpoints de moderación de la Fase 4. Esos endpoints ya existen en
+el backend, pero el panel no se ha iniciado y se documentará por separado.
 
 ## Estado del que parte
 
@@ -22,10 +23,10 @@ aborde.
 - Autenticación: Supabase Auth (proyecto de desarrollo
   `https://ulxrjlmpzaeouqbjbnjc.supabase.co`) con correo y contraseña y
   validación de correo. El backend valida los JWT y nunca recibe contraseñas.
-- No están implementados en el backend: `POST /reports`, `/admin/*` y la entrega
-  de notificaciones push (Fase 4). La app deja preparada la pantalla de
-  preferencias de notificaciones y el registro de token, pero no cablea la
-  recepción hasta que exista el emisor.
+- El backend implementa `POST /reports`, acciones administrativas, preferencias
+  push, solicitudes de eliminación y retención. La app todavía no incorpora el
+  flujo de reportes ni el panel de moderación. La entrega y recepción real de push
+  siguen diferidas hasta que exista un emisor.
 
 ## Estado de avance
 
@@ -36,7 +37,7 @@ no por numero de archivos, lineas de codigo ni artefactos de diseno.
 | --- | --- | --- |
 | Andamiaje tecnico M0 | 100% | Expo SDK 57, TypeScript estricto, Router, cliente API, tipos generados, tokens, i18n y herramientas de calidad estan implementados y verificados |
 | Contrato visual | 100% | El patron Radar de planes, sus pantallas, estados, tokens y criterios de aceptacion estan fijados en `docs/19-diseno-radar-movil.md` y `mobile/design/radar-prototype.html` |
-| Aplicacion movil funcional M0-M6 | ~68% | M0 y M1 completados y verificados en el emulador contra el backend real. M2 (descubrimiento) implementado, pendiente de recorrido manual completo. M3 (crear y gestionar) implementado y verificado a nivel de contrato de API (create 201, `GET /me/events`, `PATCH` con `If-Match` 200, conflicto 412, cancelacion 204). M4 (participar) implementado y verificado contra el backend (union directa/aprobacion/privada, reintento idempotente sin duplicar, aprobar con `If-Match`, abandonar, invitaciones crear/revocar) y con el recorrido union directa → confirmada → ubicacion exacta → abandonar caminado en la app. M5 (bloqueos y ajustes) implementado: barra de pestañas inferior, bloqueo desde la ficha y lista en Perfil, pantalla de notificaciones (preferencias locales + `PUT /me/push-settings` a prueba de fallos + token stub), normas de convivencia. Sin recorrido manual (pendiente de terminal fisico) |
+| Aplicacion movil funcional M0-M6 | ~68% | M0 y M1 completados y verificados en el emulador contra el backend real. M2 (descubrimiento) está implementado y se comprobó visualmente en Android, pendiente de recorrido manual completo. M3 (crear y gestionar) y M4 (participar) están implementados y verificados contra el backend real. M5 (bloqueos y ajustes) está implementado: barra de pestañas inferior, bloqueo desde la ficha y lista en Perfil, pantalla de notificaciones (preferencias locales + `PUT /me/push-settings` + registro de token que se omite de forma segura en Expo Go), normas de convivencia. M5 sigue pendiente de aceptación manual. |
 | Integracion Supabase real | 100% | El 2026-09-01 se ejecuto el flujo completo en el emulador: registro de una cuenta nueva con Supabase, alta de perfil (`PUT /me`) y entrada al Radar; el perfil persiste (comprobado en la base de datos). El proyecto Supabase de desarrollo tiene la confirmacion por correo desactivada, por lo que el registro devuelve sesion directa; la ruta "cuenta sin verificar no puede continuar" existe en codigo pero no es ejercitable con esa configuracion |
 | Flujo central crear, descubrir y participar | ~65% | Crear y gestionar (M3) y participar (M4) implementados y verificados contra el backend; descubrir (M2) implementado y pendiente del recorrido manual |
 | Ubicacion en el emulador | Parcial | El manejo en la app se endurecio (`src/lib/location.ts`: cache primero, `getCurrentPositionAsync` con timeout de 15 s y mensajes claros); ya no se cuelga. El emulador `joinly_pixel7_api35` no propaga la posicion via `adb emu geo fix` en la imagen API 35 con Google APIs: hay que fijarla desde Extended Controls → Location del emulador |
@@ -60,36 +61,35 @@ terminado.
 | Estado de aplicación | `zustand` (store mínimo) | Sesión, preferencias de búsqueda y radio; sin Redux |
 | Cliente Supabase | `@supabase/supabase-js` con almacenamiento en `expo-secure-store` | Persistencia y refresco de sesión seguros en el dispositivo |
 | Formularios | `react-hook-form` + `zod` | Validación declarativa que refleja las reglas del contrato antes de llamar a la API |
-| Tipos de API | `openapi-typescript` genera `src/api/schema.d.ts` desde `openapi.yaml` | El contrato del repo dirige los tipos; no se escriben a mano |
+| Tipos de API | `openapi-typescript` genera `src/api/schema.ts` desde `openapi.yaml` | El contrato del repo dirige los tipos; no se escriben a mano |
 | Interfaz | Componentes propios de React Native + `StyleSheet` y una librería atómica interna (`src/ui/`) con tokens | La referencia visual vinculante es `docs/19-diseno-radar-movil.md`; cumple la guía de `AGENTS.md` y el objetivo WCAG 2.1 AA sin dependencia pesada |
 | Descubrimiento | Patrón "Radar de planes": radar abstracto de proximidad, filtros temporales y lista de eventos con distancia y zona aproximada textual; **sin mapa** | El radar no representa ni solicita coordenadas exactas y conserva una lista accesible como resultado principal; cero claves de API y cero cuenta de facturación. Un mapa se evalúa tras el piloto |
 | i18n | `i18next` + `react-i18next`, español por defecto (`expo-localization` cuando se detecte el idioma del dispositivo) | Requisito no funcional de soporte multiidioma posterior |
 | Ubicación | `expo-location`, permiso contextual | Solo se pide al elegir "buscar con mi ubicación"; nunca se guarda historial |
 | Fechas | `date-fns` con locale `es` | Formato y cálculo de "empieza en / ha terminado" |
-| Pruebas | `jest-expo` + `@testing-library/react-native` + `msw`; recorrido manual Android de `docs/14` | Unitarias y de componente con API simulada; E2E manual en el piloto |
+| Pruebas | Recorrido manual Android de `docs/14`; pruebas de componente aún no configuradas | El E2E manual es obligatorio antes del APK. Las pruebas unitarias/de componente se evalúan en M6 si aportan cobertura de regresión concreta. |
 | Calidad | `eslint-config-expo` + Prettier + `tsc --noEmit` + `expo-doctor` | Mismas puertas que el backend, adaptadas |
 | Distribución | `expo prebuild` + Gradle local con Android SDK; **sin EAS ni cuenta Expo** | Igual que `docs/09` y `docs/16`: APK de pruebas compilado en el equipo |
 
 ## Requisitos del sistema
 
-Estado comprobado en el equipo de desarrollo (macOS, Apple Silicon) y lo que
-falta instalar. El backend sigue usando Java dentro de su contenedor; nada de lo
-siguiente lo altera.
+Estado comprobado en el equipo de desarrollo (macOS, Apple Silicon). El backend
+sigue usando Java dentro de su contenedor; nada de lo siguiente lo altera.
 
 | Herramienta | Requerido | Estado actual | Acción |
 | --- | --- | --- | --- |
-| Node.js | 22.x LTS (Expo SDK admite 20.19+ o 22.x) | `v23.7.0` (no LTS) | Instalar `nvm` y fijar Node 22 LTS (`.nvmrc` en `mobile/`) |
-| Gestor de paquetes | npm ≥ 10 | `npm 10.9.2` | Ninguna. `pnpm` opcional |
-| Watchman | Recomendado para Metro en macOS | No instalado | `brew install watchman` |
+| Node.js | 22.x LTS (Expo SDK admite 20.19+ o 22.x) | `v22.23.2` mediante `nvm` | Usar la versión de `.nvmrc` |
+| Gestor de paquetes | npm ≥ 10 | `npm 10.9.8` | Ninguna. `pnpm` opcional |
+| Watchman | Recomendado para Metro en macOS | Instalado | Ninguna |
 | JDK 17 | Para el build Android con Gradle | instalado con `brew install openjdk@17` (fórmula sin sudo, keg-only en `/opt/homebrew/opt/openjdk@17`) | Alias `jdk17` en `~/.zshrc` exporta `JAVA_HOME` solo para el build del APK; el backend conserva la JDK del sistema |
-| Android Studio | Sí (SDK + emulador) | No instalado | Instalar Android Studio |
-| Android SDK Platform | API 35 (Android 15) | No instalado | Desde Android Studio: SDK Platform 35 |
-| Android SDK Build-Tools | 35.x | No instalado | Android Studio |
-| Platform-Tools (`adb`) | Sí | No instalado (`adb` ausente) | Android Studio |
-| Android Emulator + imagen de sistema | Pixel, API 35, `arm64` | No instalado | Android Studio |
-| Command-line Tools (latest) | Sí (para `sdkmanager` y `prebuild`) | No instalado | Android Studio |
-| Variables de entorno | `ANDROID_HOME=$HOME/Library/Android/sdk`; `platform-tools` y `emulator` en `PATH` | Sin definir | Añadir al perfil del shell |
-| Xcode / CocoaPods | No (iOS diferido) | Ausente | Ninguna |
+| Android Studio | Sí (SDK + emulador) | Instalado | Ninguna |
+| Android SDK Platform | API 35 (Android 15) | Instalado | Ninguna |
+| Android SDK Build-Tools | 35.x | Instalado | Ninguna |
+| Platform-Tools (`adb`) | Sí | Instalado | Ninguna |
+| Android Emulator + imagen de sistema | Pixel, API 35, `arm64` | Instalado: `joinly_pixel7_api35` | Ninguna |
+| Command-line Tools (latest) | Sí (para `sdkmanager` y `prebuild`) | Instalado | Ninguna |
+| Variables de entorno | `ANDROID_HOME=$HOME/Library/Android/sdk`; `platform-tools` y `emulator` en `PATH` | Configuradas | Ninguna |
+| Xcode / CocoaPods | Para validar iOS en desarrollo | Xcode 26.6, runtime iOS 26.5 y CocoaPods 1.17.0 instalados; simulador validado | La instalación física requiere configurar firma Apple Development |
 | Cuenta Expo / EAS | No (build local) | — | Ninguna |
 | Espacio en disco | ~15 GB (Studio, SDK, imagen, `node_modules`, cachés de Gradle) | — | Reservar |
 | RAM | 16 GB recomendado (emulador + Metro + contenedores del backend) | — | — |
@@ -107,7 +107,8 @@ o servicios (`docs/15`).
 | --- | --- |
 | Emulador Android estándar | `http://10.0.2.2:8080/api/v1` |
 | Dispositivo Android por USB | `http://127.0.0.1:8080/api/v1` con `adb reverse` del puerto 8080 |
-| Simulador iOS (futuro) | `http://127.0.0.1:8080/api/v1` |
+| Simulador iOS | `http://127.0.0.1:8080/api/v1` |
+| iPhone físico en la misma Wi-Fi | URL HTTPS publicada; para desarrollo LAN, URL de la máquina y excepción ATS limitada |
 
 Variables (`mobile/.env`, con plantilla `mobile/.env.example` versionada):
 
@@ -121,8 +122,8 @@ La clave `anon` de Supabase es pública por diseño y puede vivir en `.env`. No 
 incluye ninguna clave de servicio ni secreto del backend. No se habilita CORS
 permisivo ni se expone la base de datos.
 
-`app.config.ts` lee estas variables mediante `expo-constants`; la app no arranca
-si falta alguna.
+`src/config/env.ts` valida estas variables desde `process.env`; Metro las inserta
+en el bundle. La app no arranca si falta alguna.
 
 ## Estructura del proyecto
 
@@ -304,35 +305,20 @@ una porción verificable, siguiendo el mismo principio que las fases del backend
 | **M2 · Descubrimiento** | Patrón Radar de planes de `docs/19`: formulario de búsqueda (ubicación actual, radio), radar abstracto, lista con distancia y zona aproximada, "ampliar radio", scroll infinito por cursor y ficha `GET /events/{id}` condicionada por visibilidad | Implementado; pendiente del recorrido manual: listar eventos sembrados, acción de ampliar radio sin resultados, ficha sin ubicación exacta antes de participar |
 | **M3 · Crear y gestionar** 🟡 | `POST /events` con validación (categorías, futuro, capacidad, acceso), `GET /me/events` con filtro de estado, `PATCH` con `If-Match`, `POST /cancellation`, edición de `notes`; entrada desde el botón circular naranja del Radar y enlace "Mis planes" | Implementado. Verificado contra el backend real con la cuenta de prueba: `POST /events` → `201`, `GET /me/events` lista el evento, `PATCH` con `If-Match` → `200`, `If-Match` obsoleto → `412`, `POST /cancellation` → `204` y el evento pasa al filtro "Cancelados". El formulario de tres bloques y la lista "Mis planes" renderizan en la app. Pendiente: recorrido manual completo de creación desde la interfaz y el rechazo del cuarto evento activo (`409`) |
 | **M4 · Participar** 🟡 | Uniones directa/aprobación/privada con `Idempotency-Key` persistida por evento, abandonar, lista de solicitudes y participantes del creador, aprobar/rechazar con `If-Match`, crear/copiar (`expo-clipboard`)/revocar invitaciones | Implementado. Verificado contra el backend real con dos cuentas: unión directa → `201 confirmed`; reintento con la misma `Idempotency-Key` → misma participación, sin duplicar; ficha muestra la ubicación exacta solo tras confirmar; abandono → `204`; solicitud de aprobación → `pending` → el creador la aprueba con `If-Match` → `confirmed`; evento privado sin código → `404`; invitación creada, unión con código → `201`, invitación revocada → `204`. En la app se caminó unión directa → confirmada → ubicación exacta → abandonar. Pendiente: recorrido manual completo B-04/B-05/B-08/B-09 de `docs/14` desde la interfaz con el teclado y la ubicación del emulador |
-| **M5 · Bloqueos y ajustes** 🟡 | Barra de pestañas inferior (Radar / Mis planes / Crear / Perfil); `POST/DELETE/GET /blocks` con bloqueo desde la ficha de evento (al creador) y lista en Perfil para desbloquear; pantalla de notificaciones con interruptor general y cuatro conmutadores por tipo, persistidos en local (`src/lib/push-settings.ts`), registro de token *stub* (Expo Go Android no admite push remoto y no hay EAS) y `PUT /me/push-settings` a prueba de fallos porque el backend aun no tiene handler; normas de convivencia reutilizando el visor legal de M1. Perfil convertido en hub | Implementado; typecheck/lint/prettier en verde. Pendiente: recorrido manual B-06 (bloquear → desaparece del descubrimiento → ficha `404`) en terminal fisico con dos cuentas. Duda abierta: comportamiento de "Mis planes"/ficha cuando se bloquea a alguien con una participacion confirmada previa |
-| **M6 · Accesibilidad, pulido y APK** | Auditoría WCAG AA, barrido de i18n, estados de error y vacío, recorrido manual Android completo de `docs/14`, compilación local del APK de pruebas | Recorrido de `docs/14` superado; APK instalable en un dispositivo Android que funciona contra el backend en Compose |
+| **M5 · Bloqueos y ajustes** 🟡 | Barra de pestañas inferior (Radar / Mis planes / Crear / Perfil); `POST/DELETE/GET /blocks` con bloqueo desde la ficha de evento (al creador) y lista en Perfil para desbloquear; pantalla de notificaciones con interruptor general y cuatro conmutadores por tipo, persistidos en local (`src/lib/push-settings.ts`), registro de token que se omite con seguridad en Expo Go y `PUT /me/push-settings`; normas de convivencia reutilizando el visor legal de M1. Perfil convertido en hub | Implementado; typecheck/lint/prettier en verde. Pendiente: recorrido manual B-06 (bloquear → desaparece del descubrimiento → ficha `404`) con dos cuentas. Duda abierta: comportamiento de "Mis planes"/ficha cuando se bloquea a alguien con una participacion confirmada previa |
+| **M6 · Accesibilidad, pulido y APK** | Auditoría WCAG AA, barrido de i18n, estados de error y vacío, recorrido manual Android completo de `docs/14`, compilación local del APK de pruebas | Pendiente. No hay APK de release ni recorrido completo cerrado. |
 
-## Siguientes pasos de implementacion
+## Siguientes pasos de validacion
 
-El orden es obligatorio para conservar una aplicacion ejecutable y validar cada
-porcion contra servicios reales antes de abrir el siguiente flujo.
+Los flujos M1-M5 ya están implementados. El orden siguiente conserva una
+aplicación ejecutable y cierra evidencia funcional antes de abrir M6.
 
-1. **M1 · Identidad y perfil.** Instalar `expo-secure-store`,
-   `@react-native-async-storage/async-storage` y `@supabase/supabase-js`;
-   implementar las pantallas Radar de acceso, registro, verificacion y perfil;
-   conectar Supabase Auth, `GET`/`PUT`/`DELETE /me`, acuerdos versionados y el
-   manejo de `If-Match`. Verificar una cuenta nueva y una cuenta sin correo
-   verificado. Los textos legales reales siguen siendo un bloqueo para cerrar M1.
-2. **M2 · Descubrimiento.** Instalar `expo-location`; implementar la pantalla
-   Radar, busqueda por zona o permiso contextual, filtros, lista paginada,
-   estado vacio y fichas publicas conforme a `docs/19`. Conectar
-   `POST /events/search` y `GET /events/{id}` sin mapas ni coordenadas exactas.
-3. **M3 · Crear y gestionar.** Construir el formulario de tres bloques, Mis
-   planes y gestion del creador; conectar creacion, listado propio, edicion y
-   cancelacion con ETag, limite de tres eventos y validacion local.
-4. **M4 · Participar.** Implementar hojas de confirmacion, acceso directo,
-   solicitud, codigo privado, abandono, solicitudes del creador e invitaciones.
-   Persistir la `Idempotency-Key` por evento y probar reintentos.
-5. **M5 · Bloqueos y ajustes.** Conectar bloqueos desde las superficies previstas
-   por el contrato visual, preferencias de notificacion y normas. No implementar
-   recepcion de push ni reportes hasta que exista Fase 4.
-6. **M6 · Cierre.** Ejecutar auditoria WCAG AA, pruebas de componente, recorrido
-   Android completo, gestion de errores y compilacion local del APK.
+1. **M2 · Descubrimiento.** Ejecutar el recorrido completo con eventos sembrados: ubicación real o de emulador, radio ampliado, resultados vacíos, paginación y ficha sin ubicación exacta antes de confirmar.
+2. **M3 · Crear y gestionar.** Recorrer el formulario desde la interfaz, comprobar teclado y validaciones, y verificar el rechazo del cuarto evento activo (`409`).
+3. **M4 · Participar.** Recorrer en la interfaz B-04, B-05, B-08 y B-09 con varias cuentas, incluida la ruta privada y las invitaciones.
+4. **M5 · Bloqueos y ajustes.** Recorrer B-06 con dos cuentas y decidir el comportamiento de una participación confirmada previa al bloqueo. Validar las preferencias contra `PUT /me/push-settings`.
+5. **Firma iOS.** Configurar Apple Development signing antes de probar la app en el iPhone físico. La compilación en simulador ya fue correcta; no existe instalación física verificada.
+6. **M6 · Cierre.** Tras los recorridos anteriores, ejecutar auditoría de accesibilidad e i18n, homogeneizar estados, decidir las dudas de producto y compilar el APK de pruebas.
 
 Cada paso requiere `npm run typecheck` y `npm run lint` en `mobile/`; los hitos
 M1-M5 se verifican tambien contra el backend en Docker Compose antes de marcarse
@@ -363,9 +349,9 @@ Pendientes de decidir con el usuario antes de abrir el hito.
    `google-services.json` de un proyecto Firebase para registrar el token.
    ¿Se crea proyecto Firebase para el piloto o el registro sigue como *stub*
    tambien en el APK (la recepcion es Fase 4)?
-3. **Identidad de la app en `app.json`.** Faltan `android.package`,
-   `versionCode`, icono y splash definitivos y la config del plugin
-   `expo-notifications`. ¿Se fija ahora (p. ej. `com.joinly.app`)?
+3. **Identidad de la app en `app.json`.** iOS usa `com.joinly.app`, pero faltan
+    `android.package`, `versionCode`, icono y splash definitivos y la config del
+    plugin `expo-notifications`. ¿Se fija ahora el identificador Android?
 4. **Scheme de deep link.** Hoy es `mobile`; para el piloto y los deep links
    de notificacion conviene `joinly`. ¿Se cambia en M6?
 5. **Alcance de la auditoria WCAG AA.** Contraste de tokens (hay grises sobre
@@ -385,17 +371,17 @@ Pendientes de decidir con el usuario antes de abrir el hito.
     `Alert.alert` en vez de la hoja inferior de `docs/19`. ¿Se sustituye por
     hojas en M6 o se acepta para el piloto?
 
-Ademas, para poder **cerrar** M2, M3 y M5 (no es trabajo de M6): recorrido
-manual en terminal fisico, resolver el comportamiento de bloqueo con
-participacion confirmada previa, e implementar en el backend `DELETE /api/v1/me`
-y `PUT /api/v1/me/push-settings` (ambos documentados en `openapi.yaml` sin
-handler, devuelven 405).
+Ademas, para poder **cerrar** M2, M3 y M5 (no es trabajo de M6) faltan los
+recorridos manuales indicados, resolver el comportamiento de bloqueo con una
+participacion confirmada previa y registrar su evidencia. El backend ya implementa
+`DELETE /api/v1/me` y `PUT /api/v1/me/push-settings`.
 
 ## Fuera del alcance de este documento
 
-- Panel de moderación React/Vite y endpoints `/admin/*` (Fase 4 del backend).
-- `POST /reports` y la entrada de "reportar" en la app (se añade al cerrar la
-  Fase 4).
+- Panel de moderación React/Vite. Los endpoints de moderación de Fase 4 existen,
+  pero la interfaz administrativa no se ha iniciado.
+- La entrada de "reportar" en la app. `POST /reports` existe en el backend, pero
+  el flujo móvil se añade tras decidir su prioridad.
 - Entrega y recepción real de notificaciones push.
 - Publicación en tiendas, soporte de lanzamiento iOS, mapas y geocodificación.
 - Chat, pagos, valoraciones, verificación de identidad, grupos recurrentes y

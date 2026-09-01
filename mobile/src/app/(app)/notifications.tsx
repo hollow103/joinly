@@ -48,7 +48,6 @@ export default function Notifications() {
       setPushTokenMissing(false);
     }
     try {
-      // Backend handler does not exist yet; a 404/405 is expected and ignored.
       await updatePushSettings(token, {
         enabled: next.enabled,
         preferences: next.preferences,

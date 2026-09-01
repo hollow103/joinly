@@ -125,138 +125,145 @@ export default function Home() {
 
   return (
     <Screen backgroundColor={tokens.color.brandNavy} edges={['top']} style={styles.screen}>
-      <FlatList
-        data={events}
-        keyExtractor={(event) => event.id}
-        contentContainerStyle={styles.content}
-        showsVerticalScrollIndicator={false}
-        onEndReached={() => {
-          if (eventsQuery.hasNextPage && !eventsQuery.isFetchingNextPage)
-            void eventsQuery.fetchNextPage();
-        }}
-        onEndReachedThreshold={0.4}
-        ListHeaderComponent={
-          <>
-            <View style={styles.hero}>
-              <View style={styles.topRow}>
-                <Text style={styles.wordmark}>{t('common.appName').toLowerCase()}</Text>
-              </View>
-              <Text style={styles.eyebrow}>{t('home.eyebrow')}</Text>
-              <Text style={styles.title}>{t('home.title')}</Text>
-              {origin ? (
-                <Pressable
-                  accessibilityLabel={t('home.changeSearch')}
-                  accessibilityRole="button"
-                  onPress={openSearch}
-                  style={({ pressed }) => [styles.location, pressed ? styles.pressed : null]}
-                >
-                  <View style={styles.locationDot} />
-                  <Text style={styles.locationLabel}>{origin.label}</Text>
-                  <Text style={styles.radius}>{radiusMeters / 1000} km · Cambiar</Text>
-                </Pressable>
-              ) : null}
-            </View>
+      <View style={styles.fixedHeader}>
+        <View style={styles.hero}>
+          <View style={styles.topRow}>
+            <Text style={styles.wordmark}>{t('common.appName').toLowerCase()}</Text>
+          </View>
+          <Text style={styles.eyebrow}>{t('home.eyebrow')}</Text>
+          <Text style={styles.title}>{t('home.title')}</Text>
+          {origin ? (
+            <Pressable
+              accessibilityLabel={t('home.changeSearch')}
+              accessibilityRole="button"
+              onPress={openSearch}
+              style={({ pressed }) => [styles.location, pressed ? styles.pressed : null]}
+            >
+              <View style={styles.locationDot} />
+              <Text style={styles.locationLabel}>{origin.label}</Text>
+              <Text style={styles.radius}>{radiusMeters / 1000} km · Cambiar</Text>
+            </Pressable>
+          ) : null}
+        </View>
 
-            {!origin ? (
-              <View style={styles.firstSearch}>
-                <Text variant="heading">{t('home.locationTitle')}</Text>
-                <Text variant="muted">{t('home.locationDescription')}</Text>
-                <Button label={t('home.useLocation')} onPress={openSearch} />
-              </View>
-            ) : (
-              <>
-                <Radar events={events} />
-                <View style={styles.timeFilters}>
-                  {timeFilters.map(([filter, label]) => (
-                    <Pressable
-                      key={filter}
-                      accessibilityRole="button"
-                      accessibilityState={{ selected: filter === timeFilter }}
-                      onPress={() => setTimeFilter(filter)}
-                      style={[
-                        styles.timeFilter,
-                        filter === timeFilter ? styles.timeFilterSelected : null,
-                      ]}
-                    >
-                      <Text
-                        style={
-                          filter === timeFilter
-                            ? styles.timeFilterTextSelected
-                            : styles.timeFilterText
-                        }
-                      >
-                        {label}
-                      </Text>
-                    </Pressable>
-                  ))}
-                </View>
-              </>
-            )}
-            {origin ? (
-              <View style={styles.resultsHeading}>
-                <Text variant="heading">{t('home.radar')}</Text>
+        {!origin ? (
+          <View style={styles.firstSearch}>
+            <Text variant="heading">{t('home.locationTitle')}</Text>
+            <Text variant="muted">{t('home.locationDescription')}</Text>
+            <Button label={t('home.useLocation')} onPress={openSearch} />
+          </View>
+        ) : (
+          <>
+            <View style={styles.radarStage}>
+              <Radar events={events} />
+            </View>
+            <View style={styles.timeFilters}>
+              {timeFilters.map(([filter, label]) => (
                 <Pressable
+                  key={filter}
                   accessibilityRole="button"
-                  onPress={openSearch}
-                  style={styles.filterButton}
+                  accessibilityState={{ selected: filter === timeFilter }}
+                  onPress={() => setTimeFilter(filter)}
+                  style={[
+                    styles.timeFilter,
+                    filter === timeFilter ? styles.timeFilterSelected : null,
+                  ]}
                 >
-                  <Text style={styles.filterButtonText}>{t('home.filter')}</Text>
+                  <Text
+                    style={
+                      filter === timeFilter ? styles.timeFilterTextSelected : styles.timeFilterText
+                    }
+                  >
+                    {label}
+                  </Text>
                 </Pressable>
-              </View>
-            ) : null}
+              ))}
+            </View>
+            <View style={styles.resultsHeading}>
+              <Text variant="heading">{t('home.radar')}</Text>
+              <Pressable
+                accessibilityRole="button"
+                onPress={openSearch}
+                style={styles.filterButton}
+              >
+                <Text style={styles.filterButtonText}>{t('home.filter')}</Text>
+              </Pressable>
+            </View>
           </>
-        }
-        renderItem={({ item: event }) => (
-          <Pressable
-            accessibilityRole="button"
-            accessibilityLabel={`${event.title}, ${event.approximateArea}`}
-            onPress={() => router.push({ pathname: '/events/[id]', params: { id: event.id } })}
-            style={({ pressed }) => [styles.eventCard, pressed ? styles.pressed : null]}
-          >
-            <View style={styles.eventMark}>
-              <Text style={styles.eventMarkText}>{event.title.charAt(0).toUpperCase()}</Text>
-            </View>
-            <View style={styles.eventDetails}>
-              <Text style={styles.category}>{categoryLabel(event.category).toUpperCase()}</Text>
-              <Text variant="heading" numberOfLines={1}>
-                {event.title}
-              </Text>
-              <Text variant="caption" numberOfLines={1}>
-                {eventDate(event.startsAt)} · {event.approximateArea}
-              </Text>
-            </View>
-            <Text style={styles.availability}>{availabilityLabel(event)}</Text>
-          </Pressable>
         )}
-        ListEmptyComponent={
-          origin && !eventsQuery.isLoading ? (
-            <View style={styles.empty}>
-              <Text variant="heading">{t('home.emptyTitle')}</Text>
-              <Text variant="muted">{t('home.emptyDescription')}</Text>
-              {suggestedRadius ? (
-                <Button
-                  label={t('home.expandRadius', { radius: suggestedRadius / 1000 })}
-                  onPress={() => setRadiusMeters(suggestedRadius)}
-                />
-              ) : null}
-            </View>
-          ) : null
-        }
-        ListFooterComponent={
-          eventsQuery.isLoading || eventsQuery.isFetchingNextPage ? (
-            <ActivityIndicator color={tokens.color.primaryText} style={styles.loader} />
-          ) : null
-        }
-      />
+      </View>
+
+      {origin ? (
+        <View style={styles.eventListSurface}>
+          <FlatList
+            data={events}
+            keyExtractor={(event) => event.id}
+            contentContainerStyle={styles.content}
+            showsVerticalScrollIndicator={false}
+            onEndReached={() => {
+              if (eventsQuery.hasNextPage && !eventsQuery.isFetchingNextPage)
+                void eventsQuery.fetchNextPage();
+            }}
+            onEndReachedThreshold={0.4}
+            renderItem={({ item: event }) => (
+              <Pressable
+                accessibilityRole="button"
+                accessibilityLabel={`${event.title}, ${event.approximateArea}`}
+                onPress={() => router.push({ pathname: '/events/[id]', params: { id: event.id } })}
+                style={({ pressed }) => [styles.eventCard, pressed ? styles.pressed : null]}
+              >
+                <View style={styles.eventMark}>
+                  <Text style={styles.eventMarkText}>{event.title.charAt(0).toUpperCase()}</Text>
+                </View>
+                <View style={styles.eventDetails}>
+                  <Text style={styles.category}>{categoryLabel(event.category).toUpperCase()}</Text>
+                  <Text variant="heading" numberOfLines={1}>
+                    {event.title}
+                  </Text>
+                  <Text variant="caption" numberOfLines={1}>
+                    {eventDate(event.startsAt)} · {event.approximateArea}
+                  </Text>
+                </View>
+                <Text style={styles.availability}>{availabilityLabel(event)}</Text>
+              </Pressable>
+            )}
+            ListEmptyComponent={
+              !eventsQuery.isLoading ? (
+                <View style={styles.empty}>
+                  <Text variant="heading">{t('home.emptyTitle')}</Text>
+                  <Text variant="muted">{t('home.emptyDescription')}</Text>
+                  {suggestedRadius ? (
+                    <Button
+                      label={t('home.expandRadius', { radius: suggestedRadius / 1000 })}
+                      onPress={() => setRadiusMeters(suggestedRadius)}
+                    />
+                  ) : null}
+                </View>
+              ) : null
+            }
+            ListFooterComponent={
+              eventsQuery.isLoading || eventsQuery.isFetchingNextPage ? (
+                <ActivityIndicator color={tokens.color.primary} style={styles.loader} />
+              ) : null
+            }
+          />
+        </View>
+      ) : null}
     </Screen>
   );
 }
 
 const styles = StyleSheet.create({
-  screen: { padding: 0 },
+  screen: { gap: 0, padding: 0 },
   loadingScreen: { alignItems: 'center', justifyContent: 'center' },
-  content: { paddingBottom: tokens.space.xxl },
-  hero: { paddingHorizontal: tokens.space.xl, paddingTop: tokens.space.lg, gap: tokens.space.sm },
+  content: { backgroundColor: tokens.color.bg, paddingBottom: tokens.space.xxl },
+  fixedHeader: { backgroundColor: tokens.color.bg, zIndex: 1 },
+  hero: {
+    backgroundColor: tokens.color.brandNavy,
+    gap: tokens.space.sm,
+    paddingHorizontal: tokens.space.xl,
+    paddingTop: tokens.space.lg,
+  },
   topRow: { alignItems: 'center', flexDirection: 'row', justifyContent: 'space-between' },
   wordmark: { color: tokens.color.primaryText, fontSize: 16, fontWeight: '700' },
   eyebrow: { color: '#B8C7FF', fontSize: 11, fontWeight: '700', letterSpacing: 1 },
@@ -283,50 +290,59 @@ const styles = StyleSheet.create({
     padding: tokens.space.xl,
   },
   radar: {
-    height: 252,
+    height: 208,
     marginHorizontal: tokens.space.xl,
     marginTop: tokens.space.xl,
     position: 'relative',
   },
+  radarStage: { backgroundColor: tokens.color.brandNavy, paddingBottom: 28 },
   ring: { borderColor: '#4966B6', borderRadius: 999, borderWidth: 1, position: 'absolute' },
-  ringOuter: { height: 252, left: 0, top: 0, width: 252 },
-  ringMiddle: { height: 168, left: 42, top: 42, width: 168 },
-  ringInner: { height: 84, left: 84, top: 84, width: 84 },
+  ringOuter: { height: 208, left: '50%', marginLeft: -104, top: 0, width: 208 },
+  ringMiddle: { height: 140, left: '50%', marginLeft: -70, top: 34, width: 140 },
+  ringInner: { height: 72, left: '50%', marginLeft: -36, top: 68, width: 72 },
   radarCenter: {
     backgroundColor: tokens.color.accent,
     borderColor: tokens.color.primaryText,
     borderRadius: 10,
     borderWidth: 3,
     height: 20,
-    left: 116,
+    left: '50%',
+    marginLeft: -10,
     position: 'absolute',
-    top: 116,
+    top: 94,
     width: 20,
   },
   blip: {
     backgroundColor: tokens.color.primarySoft,
     borderRadius: tokens.radius.sm,
-    maxWidth: 116,
+    maxWidth: 128,
     padding: tokens.space.sm,
     position: 'absolute',
   },
-  blip0: { right: 0, top: 20 },
-  blip1: { bottom: 12, right: 6 },
-  blip2: { left: 0, top: 100 },
+  blip0: { left: 18, top: 20 },
+  blip1: { right: 0, top: 82 },
+  blip2: { bottom: 0, left: 54 },
   blipTitle: { color: tokens.color.brandNavy, fontSize: 12, fontWeight: '700' },
   blipDistance: { color: tokens.color.textMuted, fontSize: 11, marginTop: 2 },
   timeFilters: {
+    backgroundColor: tokens.color.surface,
+    borderRadius: 20,
+    elevation: 5,
     flexDirection: 'row',
     gap: tokens.space.sm,
-    paddingHorizontal: tokens.space.lg,
-    marginVertical: tokens.space.lg,
+    marginHorizontal: tokens.space.lg,
+    marginTop: -28,
+    padding: 5,
+    shadowColor: '#07133B',
+    shadowOffset: { width: 0, height: 5 },
+    shadowOpacity: 0.16,
+    shadowRadius: 10,
   },
   timeFilter: {
     alignItems: 'center',
-    backgroundColor: tokens.color.surface,
     borderRadius: tokens.radius.pill,
     flex: 1,
-    minHeight: 48,
+    minHeight: 44,
     justifyContent: 'center',
     paddingHorizontal: tokens.space.sm,
   },
@@ -335,15 +351,13 @@ const styles = StyleSheet.create({
   timeFilterTextSelected: { color: tokens.color.primaryText, fontSize: 12, fontWeight: '700' },
   resultsHeading: {
     alignItems: 'center',
-    backgroundColor: tokens.color.bg,
-    borderTopLeftRadius: 28,
-    borderTopRightRadius: 28,
     flexDirection: 'row',
     justifyContent: 'space-between',
     marginTop: tokens.space.sm,
     paddingHorizontal: tokens.space.xl,
-    paddingTop: tokens.space.xl,
+    paddingTop: tokens.space.md,
   },
+  eventListSurface: { backgroundColor: tokens.color.bg, flex: 1 },
   filterButton: { minHeight: 48, justifyContent: 'center' },
   filterButtonText: { color: tokens.color.primary, fontSize: 14, fontWeight: '700' },
   eventCard: {
