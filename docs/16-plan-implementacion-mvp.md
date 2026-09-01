@@ -32,7 +32,7 @@ La implementación comienza solo tras aprobar este documento. Cada fase entrega 
 ## Fase 1: identidad y perfil
 
 1. Configurar un proyecto Supabase Free exclusivo de desarrollo y validar sus JWT en Spring Security; resolver el perfil interno por `sub`.
-2. Implementar creación y actualización de perfil, estado de correo validado, aceptación versionada de acuerdos y preferencias de búsqueda manual.
+2. Implementar creación y actualización de perfil, estado de correo validado, aceptación versionada de acuerdos, preferencias de búsqueda manual y solicitud asíncrona de supresión de cuenta.
 3. Implementar el estado `suspended`, su comprobación por petición y la integración necesaria para revocar sesiones en Supabase.
 4. Implementar el rol interno `admin` y el proceso manual de asignación documentado, sin endpoint público de roles.
 **Verificación:** `GET /me` y `PUT /me` contra JWT válidos e inválidos, además de la denegación de operaciones de una cuenta con estado `suspended`.

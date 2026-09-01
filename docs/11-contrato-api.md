@@ -143,7 +143,7 @@ Los errores siguen RFC 9457 y añaden un código estable de producto:
 
 `GET /me` devuelve las fechas de aceptación de términos, privacidad y normas, y los indicadores `emailVerified` y `status`. La creación inicial del perfil se realiza mediante `PUT /me` tras el registro en Supabase e incluye obligatoriamente las versiones y fechas de aceptación de los tres acuerdos; las actualizaciones posteriores requieren `If-Match`.
 
-La eliminación de cuenta es asíncrona. Revoca el acceso de producto de inmediato y programa la supresión de datos personales en un máximo de 30 días, salvo retención legal aplicable.
+La eliminación de cuenta es asíncrona e idempotente. `DELETE /me` registra la solicitud, revoca el acceso de producto de inmediato y deja la supresión física para el proceso de retención, con un máximo de 30 días salvo retención legal aplicable.
 
 En una actualización, `manualSearchArea` ausente conserva la preferencia actual y `null` la elimina. La aceptación de un documento solo actualiza su versión y fecha si cambia la versión aceptada.
 

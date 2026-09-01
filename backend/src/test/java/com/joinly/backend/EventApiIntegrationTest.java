@@ -1,8 +1,10 @@
 package com.joinly.backend;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.jwt;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.patch;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
@@ -105,6 +107,29 @@ class EventApiIntegrationTest {
         .andExpect(
             jsonPath("$.items[0].exactLocation.coordinates[1]")
                 .value(org.hamcrest.Matchers.closeTo(VIGO_LAT, 1e-6)));
+  }
+
+  @Test
+  void acceptsAccountDeletionAndRevokesProductAccessImmediately() throws Exception {
+    UUID subject = insertUser("deletionUser", true);
+
+    mvc.perform(authored(delete("/api/v1/me"), subject)).andExpect(status().isAccepted());
+
+    assertThat(
+            jdbc.queryForObject(
+                "SELECT status::text FROM users WHERE auth_subject = ?", String.class, subject))
+        .isEqualTo("deletion_requested");
+    assertThat(
+            jdbc.queryForObject(
+                "SELECT deletion_requested_at IS NOT NULL FROM users WHERE auth_subject = ?",
+                Boolean.class,
+                subject))
+        .isTrue();
+
+    mvc.perform(authored(get("/api/v1/me"), subject))
+        .andExpect(status().isForbidden())
+        .andExpect(jsonPath("$.code").value("account_suspended"));
+    mvc.perform(authored(delete("/api/v1/me"), subject)).andExpect(status().isAccepted());
   }
 
   @Test
