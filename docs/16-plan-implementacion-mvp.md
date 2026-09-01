@@ -81,11 +81,12 @@ Antes de crear interfaces, el backend debe ejecutarse en Compose contra PostGIS 
 **Verificación:** recorrido manual Android de `docs/14-estrategia-pruebas.md` y moderación manual del panel contra el backend ya validado.
 
 **Estado mobile:** M0 y M1 completados y verificados en el emulador contra el
-backend real; M3 y M4 implementados y verificados contra el backend; M2
-implementado y pendiente del recorrido manual de aceptacion. El avance funcional
-estimado es ~55% (dos hitos cerrados de siete, M3 y M4 verificados contra el
-backend y M2 implementado). El detalle de avance y el orden de ejecucion estan en
-`docs/18-implementacion-frontend-movil.md`.
+backend real; M3 y M4 implementados y verificados contra el backend; M2 y M5
+implementados y pendientes del recorrido manual de aceptacion (requiere terminal
+fisico). El avance funcional estimado es ~68% (dos hitos cerrados de siete, M3 y
+M4 verificados contra el backend, M2 y M5 implementados). Solo falta M6
+(accesibilidad, pulido y APK). El detalle de avance y el orden de ejecucion estan
+en `docs/18-implementacion-frontend-movil.md`.
 
 ## Fase 6: endurecimiento y APK de prueba
 
