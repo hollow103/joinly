@@ -19,8 +19,8 @@
 - El creador podra editar o cancelar un evento antes de su inicio. Al cancelar o modificar un evento, el sistema notificara a los participantes confirmados.
 - El sistema mostrara eventos disponibles en una lista o rejilla dentro de un rango de distancia elegido por la persona usuaria.
 - El permiso de ubicacion se solicitara de forma contextual, solo cuando la persona usuaria elija buscar con la ubicacion actual.
-- El sistema permitira buscar desde la ubicacion actual, previa autorizacion explicita, o desde una zona introducida manualmente.
-- El sistema no almacenara el historial de ubicaciones del dispositivo. Solo podra guardar una zona introducida manualmente si la persona usuaria decide usarla como preferencia.
+- En el piloto Android, el sistema permitira buscar exclusivamente desde la ubicacion actual, previa autorizacion explicita. La busqueda desde una zona manual queda diferida.
+- El sistema no almacenara el historial de ubicaciones del dispositivo.
 - La persona usuaria podra eliminar su cuenta desde la aplicacion y solicitar la supresion de sus datos personales.
 - Los eventos finalizados se eliminaran o anonimizaran en un plazo de 30 dias. Los reportes y decisiones de moderacion se conservaran durante 12 meses. Los datos personales de una cuenta eliminada se suprimiran en un maximo de 30 dias, salvo obligacion legal aplicable.
 - Si no hay eventos en el rango seleccionado, el sistema propondra ampliar el radio de busqueda.

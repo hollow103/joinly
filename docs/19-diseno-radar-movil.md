@@ -113,9 +113,9 @@ La pantalla Radar es la pantalla principal tras iniciar sesion.
 - Seccion "En tu radar": tarjetas verticales con ilustracion geometrica por
   categoria, etiqueta, titulo, hora, zona aproximada, distancia o disponibilidad
   y chevron. No hay fotografias de perfil ni direcciones exactas.
-- Buscar: pantalla clara con alternancia "Zona manual" / "Usar ubicacion actual",
-  campo de zona, selector de radio y chips de categoria. "Actualizar radar"
-  vuelve al Radar y conserva la consulta activa.
+- Buscar: pantalla clara que solicita ubicacion actual solo tras una accion
+  explicita, con selector de radio y chips de categoria. La zona manual queda
+  diferida. "Actualizar radar" vuelve al Radar y conserva la consulta activa.
 - Sin resultados: icono de radar, mensaje claro de que no hay planes en el rango
   y CTA "Ampliar a X km". No afirma que no haya eventos en otras zonas.
 

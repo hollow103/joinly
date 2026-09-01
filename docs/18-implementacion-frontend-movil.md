@@ -27,6 +27,25 @@ aborde.
   preferencias de notificaciones y el registro de token, pero no cablea la
   recepción hasta que exista el emisor.
 
+## Estado de avance
+
+Fecha de corte: 2026-09-01. El avance se mide por hitos funcionales verificables,
+no por numero de archivos, lineas de codigo ni artefactos de diseno.
+
+| Dimension | Avance | Estado |
+| --- | --- | --- |
+| Andamiaje tecnico M0 | 100% | Expo SDK 57, TypeScript estricto, Router, cliente API, tipos generados, tokens, i18n y herramientas de calidad estan implementados y verificados |
+| Contrato visual | 100% | El patron Radar de planes, sus pantallas, estados, tokens y criterios de aceptacion estan fijados en `docs/19-diseno-radar-movil.md` y `mobile/design/radar-prototype.html` |
+| Aplicacion movil funcional M0-M6 | 14% | Solo M0 de siete hitos esta completado; el prototipo HTML no sustituye pantallas React Native ni llamadas reales |
+| Integracion Supabase real | 0% | Aun no se ha ejecutado el flujo de sesion contra Supabase desde la aplicacion |
+| Flujo central crear, descubrir y participar | 0% | M2-M4 estan pendientes de implementacion contra el backend real |
+| Accesibilidad final y APK | 0% | Corresponden a M6, despues de completar los flujos funcionales |
+
+El porcentaje funcional global se mantiene en **14%**. El diseno puede utilizarse
+desde ahora como criterio de implementacion, pero no incrementa ese porcentaje:
+cada pantalla debe convertirse en React Native, conectarse a sus endpoints y
+superar su verificacion para contar como hito terminado.
+
 ## Decisiones de implementación
 
 | Área | Decisión | Motivo |
@@ -283,6 +302,37 @@ una porción verificable, siguiendo el mismo principio que las fases del backend
 | **M4 · Participar** | Uniones directa/aprobación/privada con `Idempotency-Key`, abandonar, lista de participantes del creador, aprobar/rechazar con `If-Match`, crear y revocar invitaciones, compartir código | Recorrido B-04, B-05, B-08, B-09 de `docs/14` de forma manual; el reintento de unión no duplica participación |
 | **M5 · Bloqueos y ajustes** | `POST/DELETE/GET /blocks`, bloquear desde perfil y ficha, pantalla de preferencias de notificaciones (`PUT /me/push-settings`), pantalla de normas de convivencia | Tras bloquear, los eventos de la otra persona desaparecen del descubrimiento y la ficha da `404` (B-06) |
 | **M6 · Accesibilidad, pulido y APK** | Auditoría WCAG AA, barrido de i18n, estados de error y vacío, recorrido manual Android completo de `docs/14`, compilación local del APK de pruebas | Recorrido de `docs/14` superado; APK instalable en un dispositivo Android que funciona contra el backend en Compose |
+
+## Siguientes pasos de implementacion
+
+El orden es obligatorio para conservar una aplicacion ejecutable y validar cada
+porcion contra servicios reales antes de abrir el siguiente flujo.
+
+1. **M1 · Identidad y perfil.** Instalar `expo-secure-store`,
+   `@react-native-async-storage/async-storage` y `@supabase/supabase-js`;
+   implementar las pantallas Radar de acceso, registro, verificacion y perfil;
+   conectar Supabase Auth, `GET`/`PUT`/`DELETE /me`, acuerdos versionados y el
+   manejo de `If-Match`. Verificar una cuenta nueva y una cuenta sin correo
+   verificado. Los textos legales reales siguen siendo un bloqueo para cerrar M1.
+2. **M2 · Descubrimiento.** Instalar `expo-location`; implementar la pantalla
+   Radar, busqueda por zona o permiso contextual, filtros, lista paginada,
+   estado vacio y fichas publicas conforme a `docs/19`. Conectar
+   `POST /events/search` y `GET /events/{id}` sin mapas ni coordenadas exactas.
+3. **M3 · Crear y gestionar.** Construir el formulario de tres bloques, Mis
+   planes y gestion del creador; conectar creacion, listado propio, edicion y
+   cancelacion con ETag, limite de tres eventos y validacion local.
+4. **M4 · Participar.** Implementar hojas de confirmacion, acceso directo,
+   solicitud, codigo privado, abandono, solicitudes del creador e invitaciones.
+   Persistir la `Idempotency-Key` por evento y probar reintentos.
+5. **M5 · Bloqueos y ajustes.** Conectar bloqueos desde las superficies previstas
+   por el contrato visual, preferencias de notificacion y normas. No implementar
+   recepcion de push ni reportes hasta que exista Fase 4.
+6. **M6 · Cierre.** Ejecutar auditoria WCAG AA, pruebas de componente, recorrido
+   Android completo, gestion de errores y compilacion local del APK.
+
+Cada paso requiere `npm run typecheck` y `npm run lint` en `mobile/`; los hitos
+M1-M5 se verifican tambien contra el backend en Docker Compose antes de marcarse
+como completados.
 
 ## Compilación del APK de pruebas
 
