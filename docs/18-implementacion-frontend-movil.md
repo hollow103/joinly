@@ -36,15 +36,17 @@ no por numero de archivos, lineas de codigo ni artefactos de diseno.
 | --- | --- | --- |
 | Andamiaje tecnico M0 | 100% | Expo SDK 57, TypeScript estricto, Router, cliente API, tipos generados, tokens, i18n y herramientas de calidad estan implementados y verificados |
 | Contrato visual | 100% | El patron Radar de planes, sus pantallas, estados, tokens y criterios de aceptacion estan fijados en `docs/19-diseno-radar-movil.md` y `mobile/design/radar-prototype.html` |
-| Aplicacion movil funcional M0-M6 | 14% | Solo M0 de siete hitos esta completado; el prototipo HTML no sustituye pantallas React Native ni llamadas reales |
-| Integracion Supabase real | 0% | Aun no se ha ejecutado el flujo de sesion contra Supabase desde la aplicacion |
-| Flujo central crear, descubrir y participar | 0% | M2-M4 estan pendientes de implementacion contra el backend real |
+| Aplicacion movil funcional M0-M6 | ~40% | M0 y M1 completados y verificados en el emulador contra el backend real. M2 (descubrimiento) y M3 (crear y gestionar) implementados; M2 pendiente de recorrido manual completo y M3 verificado a nivel de contrato de API (create 201, `GET /me/events`, `PATCH` con `If-Match` 200, conflicto 412, cancelacion 204) mas el formulario y la lista renderizando en la app |
+| Integracion Supabase real | 100% | El 2026-09-01 se ejecuto el flujo completo en el emulador: registro de una cuenta nueva con Supabase, alta de perfil (`PUT /me`) y entrada al Radar; el perfil persiste (comprobado en la base de datos). El proyecto Supabase de desarrollo tiene la confirmacion por correo desactivada, por lo que el registro devuelve sesion directa; la ruta "cuenta sin verificar no puede continuar" existe en codigo pero no es ejercitable con esa configuracion |
+| Flujo central crear, descubrir y participar | ~50% | Crear y gestionar (M3) implementado y verificado contra el backend; descubrir (M2) implementado y pendiente de recorrido; participar (M4) sin empezar |
 | Accesibilidad final y APK | 0% | Corresponden a M6, despues de completar los flujos funcionales |
 
-El porcentaje funcional global se mantiene en **14%**. El diseno puede utilizarse
-desde ahora como criterio de implementacion, pero no incrementa ese porcentaje:
-cada pantalla debe convertirse en React Native, conectarse a sus endpoints y
-superar su verificacion para contar como hito terminado.
+El porcentaje funcional global sube a **~40%**: dos de siete hitos (M0, M1)
+completados y verificados, y dos mas (M2, M3) implementados a la espera de su
+recorrido manual de aceptacion. El diseno sigue siendo criterio de
+implementacion y no cuenta por si mismo: cada pantalla debe estar en React
+Native, conectada a sus endpoints y superar su verificacion para contar como
+hito terminado.
 
 ## Decisiones de implementación
 
@@ -296,9 +298,9 @@ una porción verificable, siguiendo el mismo principio que las fases del backend
 | Hito | Contenido | Verificación |
 | --- | --- | --- |
 | **M0 · Andamiaje** ✅ | Proyecto Expo SDK 57, Expo Router en `src/app/`, `src/ui/` con tokens, ESLint + Prettier + TS strict, `src/config/env.ts` (validación con zod), cliente de API con parser problem+json, `src/api/schema.ts` generado, `QueryClientProvider`, i18n español, `.env.example`, `.nvmrc` | Hecho el 2026-08-31: la app arranca en el emulador `joinly_pixel7_api35`, resuelve el entorno y `GET /me` sin sesión responde `401`, mostrado en la pantalla de acceso como "Sin iniciar (401)". `typecheck` y `lint` en verde |
-| **M1 · Identidad y perfil** | Registro y sesión con Supabase, verificación de correo, aceptación de acuerdos, `PUT /me` de alta, `GET /me`, editar perfil, borrar cuenta | Alta completa de una cuenta nueva; el perfil persiste; una cuenta sin verificar no puede continuar |
-| **M2 · Descubrimiento** | Patrón Radar de planes de `docs/19`: formulario de búsqueda (ubicación actual vs zona manual, radio), radar abstracto, lista con distancia y zona aproximada, "ampliar radio", scroll infinito por cursor y ficha `GET /events/{id}` condicionada por visibilidad | Se listan eventos sembrados; sin resultados aparece la acción de ampliar radio; la ficha no muestra ubicación exacta sin participación |
-| **M3 · Crear y gestionar** | `POST /events` con validación (categorías, futuro, capacidad, acceso), `GET /me/events`, `PATCH` con `If-Match`, `POST /cancellation`, edición de `notes` | Crear, editar y cancelar un evento propio; el cuarto evento activo se rechaza con mensaje claro; `412` al editar en conflicto |
+| **M1 · Identidad y perfil** ✅ | Registro y sesión con Supabase, verificación de correo, aceptación de acuerdos, `PUT /me` de alta, `GET /me`, editar perfil, borrar cuenta | Verificado el 2026-09-01 en el emulador: registro de cuenta nueva → alta de perfil (`PUT /me`) → Radar; el perfil persiste (comprobado en la base de datos: alias, acuerdos `v1`, `email_verified`, `status active`). El guard enruta `(auth)` ↔ `(app)` por `profile_required`, `emailVerified` y `agreementsAccepted`. La confirmación por correo está desactivada en el proyecto Supabase de desarrollo, por lo que el registro devuelve sesión directa; el bloqueo por correo no verificado está en código pero no es ejercitable con esa configuración |
+| **M2 · Descubrimiento** | Patrón Radar de planes de `docs/19`: formulario de búsqueda (ubicación actual, radio), radar abstracto, lista con distancia y zona aproximada, "ampliar radio", scroll infinito por cursor y ficha `GET /events/{id}` condicionada por visibilidad | Implementado; pendiente del recorrido manual: listar eventos sembrados, acción de ampliar radio sin resultados, ficha sin ubicación exacta antes de participar |
+| **M3 · Crear y gestionar** 🟡 | `POST /events` con validación (categorías, futuro, capacidad, acceso), `GET /me/events` con filtro de estado, `PATCH` con `If-Match`, `POST /cancellation`, edición de `notes`; entrada desde el botón circular naranja del Radar y enlace "Mis planes" | Implementado. Verificado contra el backend real con la cuenta de prueba: `POST /events` → `201`, `GET /me/events` lista el evento, `PATCH` con `If-Match` → `200`, `If-Match` obsoleto → `412`, `POST /cancellation` → `204` y el evento pasa al filtro "Cancelados". El formulario de tres bloques y la lista "Mis planes" renderizan en la app. Pendiente: recorrido manual completo de creación desde la interfaz y el rechazo del cuarto evento activo (`409`) |
 | **M4 · Participar** | Uniones directa/aprobación/privada con `Idempotency-Key`, abandonar, lista de participantes del creador, aprobar/rechazar con `If-Match`, crear y revocar invitaciones, compartir código | Recorrido B-04, B-05, B-08, B-09 de `docs/14` de forma manual; el reintento de unión no duplica participación |
 | **M5 · Bloqueos y ajustes** | `POST/DELETE/GET /blocks`, bloquear desde perfil y ficha, pantalla de preferencias de notificaciones (`PUT /me/push-settings`), pantalla de normas de convivencia | Tras bloquear, los eventos de la otra persona desaparecen del descubrimiento y la ficha da `404` (B-06) |
 | **M6 · Accesibilidad, pulido y APK** | Auditoría WCAG AA, barrido de i18n, estados de error y vacío, recorrido manual Android completo de `docs/14`, compilación local del APK de pruebas | Recorrido de `docs/14` superado; APK instalable en un dispositivo Android que funciona contra el backend en Compose |

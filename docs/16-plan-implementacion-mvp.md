@@ -6,7 +6,7 @@ Implementar un piloto pequeño que permita crear, descubrir y participar en even
 
 La implementación comienza solo tras aprobar este documento. Cada fase entrega una porción verificable y mantiene el repositorio ejecutable mediante el entorno local descrito en `docs/15-operacion-del-piloto.md`.
 
-**Estado:** Fase 0 completada el 2026-08-31. Fase 1 en curso: pendiente de la prueba con un JWT temporal real y de los textos legales antes de cerrarla. Fase 2 (eventos y descubrimiento) y Fase 3 (participaciones, invitaciones y bloqueos) implementadas el 2026-08-31 con pruebas herméticas de API contra PostGIS que cubren B-01 a B-09, incluida la concurrente B-07. Fase 4 no iniciada. En Fase 5, el frontend movil ha completado M0 (andamiaje Expo) y su contrato visual Radar; M1-M6 no estan implementados. Las notificaciones (registro y entrega push) quedan para la Fase 4.
+**Estado:** Fase 0 completada el 2026-08-31. Fase 1 en curso: pendiente de la prueba con un JWT temporal real y de los textos legales antes de cerrarla. Fase 2 (eventos y descubrimiento) y Fase 3 (participaciones, invitaciones y bloqueos) implementadas el 2026-08-31 con pruebas herméticas de API contra PostGIS que cubren B-01 a B-09, incluida la concurrente B-07. Fase 4 no iniciada. En Fase 5, el frontend movil ha completado y verificado M0 (andamiaje Expo) y M1 (identidad y perfil, registro y alta contra Supabase probados en el emulador el 2026-09-01); M2 (descubrimiento) y M3 (crear y gestionar) estan implementados, con M3 verificado a nivel de contrato de API y pendientes ambos del recorrido manual de aceptacion; M4-M6 y el panel de moderacion no estan implementados. Las notificaciones (registro y entrega push) quedan para la Fase 4.
 
 ## Decisiones de implementación
 
@@ -80,11 +80,11 @@ Antes de crear interfaces, el backend debe ejecutarse en Compose contra PostGIS 
 
 **Verificación:** recorrido manual Android de `docs/14-estrategia-pruebas.md` y moderación manual del panel contra el backend ya validado.
 
-**Estado mobile:** M0 completado y contrato visual Radar aprobado. El avance
-funcional estimado es 14% (un hito completo de siete: M0-M6). Este porcentaje no
-cuenta el prototipo HTML como aplicacion React Native: solo valida el diseno y la
-navegacion esperados. El detalle de avance y el orden de ejecucion estan en
-`docs/18-implementacion-frontend-movil.md`.
+**Estado mobile:** M0 y M1 completados y verificados en el emulador contra el
+backend real; M2 y M3 implementados (M3 verificado a nivel de contrato de API) y
+pendientes del recorrido manual de aceptacion. El avance funcional estimado es
+~40% (dos hitos cerrados de siete y dos mas implementados). El detalle de avance
+y el orden de ejecucion estan en `docs/18-implementacion-frontend-movil.md`.
 
 ## Fase 6: endurecimiento y APK de prueba
 
