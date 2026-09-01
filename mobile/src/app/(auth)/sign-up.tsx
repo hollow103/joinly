@@ -56,7 +56,7 @@ export default function SignUp() {
     }
 
     setIsSubmitting(true);
-    const { error } = await supabase.auth.signUp({
+    const { data, error } = await supabase.auth.signUp({
       email: parsed.data.email,
       password: parsed.data.password,
       options: { data: { alias: parsed.data.alias } },
@@ -68,7 +68,10 @@ export default function SignUp() {
       return;
     }
 
-    replace('./verify-email');
+    // When the project has email confirmation disabled, sign-up already returns a
+    // session; skip the verify screen and go straight to profile setup. Otherwise
+    // there is no session yet and the user must confirm by email first.
+    replace(data.session ? '/profile-setup' : '/verify-email');
   }
 
   return (

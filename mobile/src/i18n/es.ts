@@ -39,6 +39,8 @@ export const es = {
     radius: '3 km',
     radar: 'En tu radar',
     filter: 'Filtros',
+    myEvents: 'Mis planes',
+    createEvent: 'Crear un plan',
     changeSearch: 'Cambiar la zona o el radio de búsqueda',
     locationTitle: 'Empieza por tu zona',
     locationDescription:

@@ -28,11 +28,16 @@ export default function ProfileSetup() {
   });
 
   useEffect(() => {
+    let active = true;
     void supabase.auth.getUser().then(({ data }) => {
+      if (!active) return;
       const storedAlias =
         typeof data.user?.user_metadata.alias === 'string' ? data.user.user_metadata.alias : '';
       setAlias(storedAlias);
     });
+    return () => {
+      active = false;
+    };
   }, []);
 
   return (
