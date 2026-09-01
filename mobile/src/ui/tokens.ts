@@ -2,15 +2,20 @@
 // Spacing in 4 / 8 dp increments and a 48 dp minimum touch target, per docs/18.
 
 export const color = {
-  bg: '#FFFFFF',
-  surface: '#F3F4F6',
-  border: '#D5DAE1',
-  text: '#141922',
-  textMuted: '#586074',
-  primary: '#2452D6',
+  bg: '#F5F7FC',
+  surface: '#FFFFFF',
+  border: '#E2E7F3',
+  text: '#14213D',
+  textMuted: '#65708F',
+  brandNavy: '#101D40',
+  primary: '#3157C9',
+  primarySoft: '#EAF0FF',
+  accent: '#FF9E3D',
   primaryText: '#FFFFFF',
-  danger: '#B3261E',
-  success: '#1E6F45',
+  danger: '#B9344B',
+  success: '#267D61',
+  successSoft: '#E5F5EE',
+  purple: '#7951A7',
   disabled: '#AAB2BF',
 } as const;
 

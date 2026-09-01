@@ -1,21 +1,42 @@
+import { AppState } from 'react-native';
+import type { Session } from '@supabase/supabase-js';
 import { create } from 'zustand';
+import { supabase } from '@/auth/supabase';
 
-export type SessionStatus = 'anonymous' | 'authenticated';
+export type SessionStatus = 'loading' | 'anonymous' | 'authenticated';
 
 type SessionState = {
   token: string | null;
   status: SessionStatus;
-  setToken: (token: string | null) => void;
+  setSession: (session: Session | null) => void;
   clear: () => void;
 };
 
-/**
- * In-memory session for now. M1 wires this to the Supabase session persisted in
- * expo-secure-store.
- */
 export const useSession = create<SessionState>((set) => ({
   token: null,
-  status: 'anonymous',
-  setToken: (token) => set({ token, status: token ? 'authenticated' : 'anonymous' }),
+  status: 'loading',
+  setSession: (session) =>
+    set({ token: session?.access_token ?? null, status: session ? 'authenticated' : 'anonymous' }),
   clear: () => set({ token: null, status: 'anonymous' }),
 }));
+
+export function startSessionLifecycle() {
+  const { setSession } = useSession.getState();
+  const { data } = supabase.auth.onAuthStateChange((_event, session) => setSession(session));
+  const appStateSubscription = AppState.addEventListener('change', (nextState) => {
+    if (nextState === 'active') {
+      supabase.auth.startAutoRefresh();
+    } else {
+      supabase.auth.stopAutoRefresh();
+    }
+  });
+
+  void supabase.auth.getSession().then(({ data: sessionData }) => setSession(sessionData.session));
+  supabase.auth.startAutoRefresh();
+
+  return () => {
+    data.subscription.unsubscribe();
+    appStateSubscription.remove();
+    supabase.auth.stopAutoRefresh();
+  };
+}

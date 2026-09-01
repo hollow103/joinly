@@ -5,7 +5,7 @@ import { color, minTouch, radius, space } from '@/ui/tokens';
 type Props = {
   label: string;
   onPress?: () => void;
-  variant?: 'primary' | 'secondary';
+  variant?: 'primary' | 'secondary' | 'text';
   disabled?: boolean;
   loading?: boolean;
   accessibilityHint?: string;
@@ -30,7 +30,11 @@ export function Button({
       accessibilityHint={accessibilityHint}
       style={({ pressed }) => [
         styles.base,
-        variant === 'primary' ? styles.primary : styles.secondary,
+        variant === 'primary'
+          ? styles.primary
+          : variant === 'secondary'
+            ? styles.secondary
+            : styles.text,
         isDisabled && styles.disabled,
         pressed && !isDisabled && styles.pressed,
       ]}
@@ -40,7 +44,10 @@ export function Button({
           <ActivityIndicator color={variant === 'primary' ? color.primaryText : color.text} />
         ) : null}
         <Text
-          style={[styles.label, { color: variant === 'primary' ? color.primaryText : color.text }]}
+          style={[
+            styles.label,
+            { color: variant === 'primary' ? color.primaryText : color.primary },
+          ]}
         >
           {label}
         </Text>
@@ -57,7 +64,8 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   primary: { backgroundColor: color.primary },
-  secondary: { backgroundColor: color.surface, borderWidth: 1, borderColor: color.border },
+  secondary: { backgroundColor: color.primarySoft, borderWidth: 1, borderColor: color.primarySoft },
+  text: { backgroundColor: 'transparent' },
   disabled: { backgroundColor: color.disabled, borderColor: color.disabled },
   pressed: { opacity: 0.85 },
   content: {

@@ -4,6 +4,8 @@ import { useSession } from '@/auth/session';
 export default function AppLayout() {
   const status = useSession((s) => s.status);
 
+  if (status === 'loading') return null;
+
   if (status !== 'authenticated') {
     return <Redirect href="/sign-in" />;
   }
