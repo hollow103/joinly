@@ -179,3 +179,44 @@ export function revokeInvitation(
     token,
   });
 }
+
+// ---- M5: blocks and settings -------------------------------------------------
+
+export type BlockedUser = { user: PublicProfile; createdAt: string };
+export type BlocksPage = { items: BlockedUser[]; page: { nextCursor: string | null } };
+
+export function getBlocks(
+  token: string | null,
+  params: { cursor?: string | null; limit?: number } = {},
+): Promise<ApiResult<BlocksPage>> {
+  const query = new URLSearchParams();
+  if (params.cursor) query.set('cursor', params.cursor);
+  query.set('limit', String(params.limit ?? 50));
+  return apiFetch<BlocksPage>(`/blocks?${query.toString()}`, { token });
+}
+
+export function createBlock(token: string | null, blockedUserId: string): Promise<ApiResult<null>> {
+  return apiFetch<null>('/blocks', { method: 'POST', body: { blockedUserId }, token });
+}
+
+export function deleteBlock(token: string | null, blockedUserId: string): Promise<ApiResult<null>> {
+  return apiFetch<null>(`/blocks/${blockedUserId}`, { method: 'DELETE', token });
+}
+
+export type PushSettingsInput = {
+  enabled: boolean;
+  expoPushToken?: string;
+  preferences?: Record<string, boolean>;
+};
+
+/**
+ * Best-effort: `PUT /me/push-settings` is in the contract but has no backend
+ * handler yet, so callers keep the source of truth locally and treat a 404/405
+ * as "not persisted server-side" rather than an error.
+ */
+export function updatePushSettings(
+  token: string | null,
+  input: PushSettingsInput,
+): Promise<ApiResult<null>> {
+  return apiFetch<null>('/me/push-settings', { method: 'PUT', body: input, token });
+}

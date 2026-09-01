@@ -96,7 +96,7 @@ export default function EditEvent() {
     onSuccess: async () => {
       await queryClient.invalidateQueries({ queryKey: ['me', 'events'] });
       await queryClient.invalidateQueries({ queryKey: ['events', id] });
-      router.replace('/events/mine');
+      router.replace('/plans');
     },
     onError: (error) => {
       if (error instanceof ApiError) {
@@ -124,7 +124,7 @@ export default function EditEvent() {
     mutationFn: () => cancelEvent(token, id),
     onSuccess: async () => {
       await queryClient.invalidateQueries({ queryKey: ['me', 'events'] });
-      router.replace('/events/mine');
+      router.replace('/plans');
     },
     onError: () => setFormError('No se pudo cancelar el plan.'),
   });
@@ -148,7 +148,7 @@ export default function EditEvent() {
     return (
       <Screen style={styles.center}>
         <Text variant="heading">Este plan ya no está disponible</Text>
-        <Button label="Volver a mis planes" onPress={() => router.replace('/events/mine')} />
+        <Button label="Volver a mis planes" onPress={() => router.replace('/plans')} />
       </Screen>
     );
   }

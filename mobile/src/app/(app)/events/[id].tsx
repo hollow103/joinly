@@ -13,6 +13,7 @@ import {
 } from 'react-native';
 import {
   abandonParticipation,
+  createBlock,
   getEvent,
   getMe,
   joinEvent,
@@ -85,6 +86,28 @@ export default function EventDetailScreen() {
       setActionError(message ?? 'No se pudo completar la acción. Inténtalo de nuevo.');
     },
   });
+
+  const blockMutation = useMutation({
+    mutationFn: () => createBlock(token, event!.creator.id),
+    onSuccess: async () => {
+      await queryClient.invalidateQueries({ queryKey: ['events', 'search'] });
+      await queryClient.invalidateQueries({ queryKey: ['blocks'] });
+      router.replace('/home');
+    },
+    onError: () => setActionError('No se pudo bloquear a esta persona.'),
+  });
+
+  function confirmBlock() {
+    setActionError(null);
+    Alert.alert(
+      `Bloquear a ${event?.creator.alias ?? ''}`,
+      'Dejaréis de ver los planes del otro y no podréis uniros. Es recíproco.',
+      [
+        { text: 'Volver', style: 'cancel' },
+        { text: 'Bloquear', style: 'destructive', onPress: () => blockMutation.mutate() },
+      ],
+    );
+  }
 
   const abandonMutation = useMutation({
     mutationFn: () => abandonParticipation(token, id),
@@ -183,10 +206,20 @@ export default function EventDetailScreen() {
           <View style={styles.avatar}>
             <Text style={styles.avatarText}>{event.creator.alias.charAt(0).toUpperCase()}</Text>
           </View>
-          <View>
+          <View style={styles.creatorMain}>
             <Text variant="heading">Creado por {event.creator.alias}</Text>
             <Text variant="caption">Alias visible; sin datos de contacto</Text>
           </View>
+          {!isCreator ? (
+            <Pressable
+              accessibilityRole="button"
+              accessibilityLabel={`Bloquear a ${event.creator.alias}`}
+              onPress={confirmBlock}
+              style={styles.blockLink}
+            >
+              <Text style={styles.blockLinkText}>Bloquear</Text>
+            </Pressable>
+          ) : null}
         </View>
 
         {actionError ? (
@@ -377,6 +410,9 @@ const styles = StyleSheet.create({
     width: 48,
   },
   avatarText: { color: tokens.color.primary, fontSize: 18, fontWeight: '700' },
+  creatorMain: { flex: 1 },
+  blockLink: { justifyContent: 'center', minHeight: 48, paddingHorizontal: tokens.space.sm },
+  blockLinkText: { color: tokens.color.danger, fontSize: 13, fontWeight: '700' },
   error: { color: tokens.color.danger, fontSize: 13, lineHeight: 18 },
   bottomBar: {
     backgroundColor: tokens.color.bg,

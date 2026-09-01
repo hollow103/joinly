@@ -96,7 +96,7 @@ export default function NewEvent() {
     },
     onSuccess: async () => {
       await queryClient.invalidateQueries({ queryKey: ['me', 'events'] });
-      router.replace('/events/mine');
+      router.replace('/plans');
     },
     onError: (error) => {
       if (error instanceof ApiError) {

@@ -1,12 +1,18 @@
 import { useState } from 'react';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import { useRouter } from 'expo-router';
+import { useRouter, type Href } from 'expo-router';
 import { Alert, Pressable, ScrollView, StyleSheet, View } from 'react-native';
 import { deleteMe, getMe, updateMe } from '@/api/endpoints';
 import { AuthField } from '@/auth/AuthField';
 import { useSession } from '@/auth/session';
 import { supabase } from '@/auth/supabase';
 import { Button, Screen, Text, tokens } from '@/ui';
+
+const HUB_LINKS: { label: string; href: Href }[] = [
+  { label: 'Personas bloqueadas', href: '/blocks' },
+  { label: 'Notificaciones', href: '/notifications' },
+  { label: 'Normas de convivencia', href: '/guidelines' },
+];
 
 export default function Profile() {
   const router = useRouter();
@@ -55,20 +61,14 @@ export default function Profile() {
   return (
     <Screen backgroundColor={tokens.color.bg} edges={['top', 'bottom']} style={styles.screen}>
       <ScrollView contentContainerStyle={styles.content}>
-        <Pressable
-          accessibilityRole="button"
-          accessibilityLabel="Volver al radar"
-          onPress={router.back}
-          style={styles.back}
-        >
-          <Text style={styles.backText}>Volver al radar</Text>
-        </Pressable>
         <Text variant="title">Tu perfil</Text>
         <Text variant="muted">
           Tu alias es visible en los eventos que publiques. Tu correo no se muestra a otras
           personas.
         </Text>
+
         <View style={styles.card}>
+          <Text variant="heading">Editar perfil</Text>
           <AuthField
             label="Alias"
             value={currentAlias}
@@ -87,6 +87,26 @@ export default function Profile() {
             </Text>
           ) : null}
         </View>
+
+        <View style={styles.hub}>
+          {HUB_LINKS.map((link, index) => (
+            <Pressable
+              key={link.label}
+              accessibilityRole="button"
+              accessibilityLabel={link.label}
+              onPress={() => router.push(link.href)}
+              style={({ pressed }) => [
+                styles.hubRow,
+                index > 0 ? styles.hubRowBordered : null,
+                pressed ? styles.pressed : null,
+              ]}
+            >
+              <Text style={styles.hubLabel}>{link.label}</Text>
+              <Text style={styles.chevron}>›</Text>
+            </Pressable>
+          ))}
+        </View>
+
         <View style={styles.card}>
           <Text variant="heading">Cuenta</Text>
           <Text variant="muted">
@@ -113,13 +133,27 @@ export default function Profile() {
 const styles = StyleSheet.create({
   screen: { padding: tokens.space.lg },
   content: { gap: tokens.space.lg, paddingBottom: tokens.space.xxl },
-  back: { alignSelf: 'flex-start', minHeight: 48, justifyContent: 'center' },
-  backText: { color: tokens.color.primary, fontSize: 14, fontWeight: '700' },
   card: {
     backgroundColor: tokens.color.surface,
     borderRadius: tokens.radius.lg,
     gap: tokens.space.md,
     padding: tokens.space.lg,
   },
+  hub: {
+    backgroundColor: tokens.color.surface,
+    borderRadius: tokens.radius.lg,
+    overflow: 'hidden',
+  },
+  hubRow: {
+    alignItems: 'center',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    minHeight: 56,
+    paddingHorizontal: tokens.space.lg,
+  },
+  hubRowBordered: { borderTopColor: tokens.color.border, borderTopWidth: 1 },
+  hubLabel: { color: tokens.color.text, fontSize: 15 },
+  chevron: { color: tokens.color.textMuted, fontSize: 22 },
+  pressed: { opacity: 0.7 },
   error: { color: tokens.color.danger, fontSize: 13 },
 });

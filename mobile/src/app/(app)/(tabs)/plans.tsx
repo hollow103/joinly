@@ -48,7 +48,7 @@ export default function MyEvents() {
           <View style={styles.header}>
             <View style={styles.titleRow}>
               <Text variant="title">Mis planes</Text>
-              <Button label="Crear" onPress={() => router.push('/events/new')} variant="text" />
+              <Button label="Crear" onPress={() => router.push('/create')} variant="text" />
             </View>
             <Text variant="muted">
               Los planes que organizas. Tócalos para editarlos o cancelarlos.
@@ -88,7 +88,7 @@ export default function MyEvents() {
               <Text variant="heading">Nada por aquí</Text>
               <Text variant="muted">No tienes planes en este estado.</Text>
               {status === 'published' ? (
-                <Button label="Crear tu primer plan" onPress={() => router.push('/events/new')} />
+                <Button label="Crear tu primer plan" onPress={() => router.push('/create')} />
               ) : null}
             </View>
           )

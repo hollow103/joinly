@@ -140,24 +140,6 @@ export default function Home() {
             <View style={styles.hero}>
               <View style={styles.topRow}>
                 <Text style={styles.wordmark}>{t('common.appName').toLowerCase()}</Text>
-                <View style={styles.topActions}>
-                  <Pressable
-                    accessibilityLabel={t('home.myEvents')}
-                    accessibilityRole="button"
-                    onPress={() => router.push('/events/mine')}
-                    style={styles.profileButton}
-                  >
-                    <Text style={styles.profileButtonText}>{t('home.myEvents')}</Text>
-                  </Pressable>
-                  <Pressable
-                    accessibilityLabel="Abrir perfil"
-                    accessibilityRole="button"
-                    onPress={() => router.push('/profile')}
-                    style={styles.profileButton}
-                  >
-                    <Text style={styles.profileButtonText}>Perfil</Text>
-                  </Pressable>
-                </View>
               </View>
               <Text style={styles.eyebrow}>{t('home.eyebrow')}</Text>
               <Text style={styles.title}>{t('home.title')}</Text>
@@ -266,14 +248,6 @@ export default function Home() {
           ) : null
         }
       />
-      <Pressable
-        accessibilityRole="button"
-        accessibilityLabel={t('home.createEvent')}
-        onPress={() => router.push('/events/new')}
-        style={({ pressed }) => [styles.fab, pressed ? styles.pressed : null]}
-      >
-        <Text style={styles.fabPlus}>+</Text>
-      </Pressable>
     </Screen>
   );
 }
@@ -284,27 +258,7 @@ const styles = StyleSheet.create({
   content: { paddingBottom: tokens.space.xxl },
   hero: { paddingHorizontal: tokens.space.xl, paddingTop: tokens.space.lg, gap: tokens.space.sm },
   topRow: { alignItems: 'center', flexDirection: 'row', justifyContent: 'space-between' },
-  topActions: { flexDirection: 'row', gap: tokens.space.lg },
   wordmark: { color: tokens.color.primaryText, fontSize: 16, fontWeight: '700' },
-  profileButton: { justifyContent: 'center', minHeight: 48 },
-  profileButtonText: { color: '#B8C7FF', fontSize: 13, fontWeight: '700' },
-  fab: {
-    alignItems: 'center',
-    backgroundColor: tokens.color.accent,
-    borderRadius: 28,
-    bottom: tokens.space.xl,
-    elevation: 4,
-    height: 56,
-    justifyContent: 'center',
-    position: 'absolute',
-    right: tokens.space.xl,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.2,
-    shadowRadius: 6,
-    width: 56,
-  },
-  fabPlus: { color: '#3A1D00', fontSize: 30, fontWeight: '700', lineHeight: 34 },
   eyebrow: { color: '#B8C7FF', fontSize: 11, fontWeight: '700', letterSpacing: 1 },
   title: { color: tokens.color.primaryText, fontSize: 30, fontWeight: '700', lineHeight: 38 },
   location: {
