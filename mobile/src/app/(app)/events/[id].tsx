@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import { useLocalSearchParams, useRouter } from 'expo-router';
+import { useLocalSearchParams, useRouter, type Href } from 'expo-router';
 import {
   ActivityIndicator,
   Alert,
@@ -38,6 +38,11 @@ const abandonErrorMessages: Record<string, string> = {
   participation_not_confirmed: 'Solo puedes abandonar una participación confirmada.',
   event_started: 'El plan ya ha empezado y no puedes abandonarlo.',
 };
+
+function newReportHref(targetType: 'event' | 'user', targetId: string, targetName: string): Href {
+  const params = new URLSearchParams({ targetType, targetId, targetName });
+  return `/reports/new?${params.toString()}` as Href;
+}
 
 export default function EventDetailScreen() {
   const router = useRouter();
@@ -221,6 +226,34 @@ export default function EventDetailScreen() {
             </Pressable>
           ) : null}
         </View>
+
+        {!isCreator ? (
+          <View style={styles.safety}>
+            <Text variant="heading">¿Algo no va bien?</Text>
+            <Text variant="caption">
+              Los reportes se revisan de forma privada. No compartiremos tu identidad con la persona
+              reportada.
+            </Text>
+            <Pressable
+              accessibilityRole="button"
+              accessibilityLabel="Reportar este plan"
+              onPress={() => router.push(newReportHref('event', event.id, event.title))}
+              style={styles.reportLink}
+            >
+              <Text style={styles.reportLinkText}>Reportar este plan</Text>
+            </Pressable>
+            <Pressable
+              accessibilityRole="button"
+              accessibilityLabel={`Reportar a ${event.creator.alias}`}
+              onPress={() =>
+                router.push(newReportHref('user', event.creator.id, event.creator.alias))
+              }
+              style={styles.reportLink}
+            >
+              <Text style={styles.reportLinkText}>Reportar a {event.creator.alias}</Text>
+            </Pressable>
+          </View>
+        ) : null}
 
         {actionError ? (
           <Text accessibilityLiveRegion="polite" style={styles.error}>
@@ -413,6 +446,16 @@ const styles = StyleSheet.create({
   creatorMain: { flex: 1 },
   blockLink: { justifyContent: 'center', minHeight: 48, paddingHorizontal: tokens.space.sm },
   blockLinkText: { color: tokens.color.danger, fontSize: 13, fontWeight: '700' },
+  safety: {
+    backgroundColor: tokens.color.surface,
+    borderColor: tokens.color.border,
+    borderRadius: tokens.radius.md,
+    borderWidth: 1,
+    gap: tokens.space.sm,
+    padding: tokens.space.lg,
+  },
+  reportLink: { alignSelf: 'flex-start', justifyContent: 'center', minHeight: 48 },
+  reportLinkText: { color: tokens.color.danger, fontSize: 14, fontWeight: '700' },
   error: { color: tokens.color.danger, fontSize: 13, lineHeight: 18 },
   bottomBar: {
     backgroundColor: tokens.color.bg,

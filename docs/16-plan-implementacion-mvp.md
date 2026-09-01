@@ -6,7 +6,7 @@ Implementar un piloto pequeño que permita crear, descubrir y participar en even
 
 La implementación comienza solo tras aprobar este documento. Cada fase entrega una porción verificable y mantiene el repositorio ejecutable mediante el entorno local descrito en `docs/15-operacion-del-piloto.md`.
 
-**Estado:** Fases 0 a 3 completadas. Fase 1 se cerró para el MVP controlado tras ejecutar la integración con un JWT real de Supabase y aprobar los textos v1 provisionales; los datos legales ficticios deben sustituirse antes de una apertura pública. Fase 4 implementa reportes, cola administrativa, decisiones auditadas, preferencias push, solicitud de eliminación y retención; quedan pendientes el panel de moderación y la entrega real de notificaciones. En Fase 5, el frontend movil ha completado y verificado M0 (andamiaje Expo) y M1 (identidad y perfil, registro y alta contra Supabase probados en el emulador el 2026-09-01); M2 (descubrimiento) esta implementado y pendiente del recorrido manual completo; M3 (crear y gestionar) y M4 (participar) estan implementados y verificados contra el backend real (M4 incluye union directa/aprobacion/privada, reintento idempotente sin duplicar, aprobar con `If-Match`, abandonar e invitaciones); M5 (bloqueos y ajustes) esta implementado y pendiente de aceptacion manual; M6 y el panel de moderacion no estan implementados. El registro de preferencias push existe; la entrega push queda pendiente de la Fase 4/Fase 6.
+**Estado:** Fases 0 a 3 completadas. Fase 1 se cerró para el MVP controlado tras ejecutar la integración con un JWT real de Supabase y aprobar los textos v1 provisionales; los datos legales ficticios deben sustituirse antes de una apertura pública. Fase 4 implementa reportes, cola administrativa, decisiones auditadas, preferencias push, solicitud de eliminación y retención; quedan pendientes el panel de moderación y la entrega real de notificaciones. En Fase 5, el frontend movil ha completado y verificado M0 (andamiaje Expo) y M1 (identidad y perfil, registro y alta contra Supabase probados en el emulador el 2026-09-01); M2 (descubrimiento) esta implementado y pendiente del recorrido manual completo; M3 (crear y gestionar) y M4 (participar) estan implementados y verificados contra el backend real (M4 incluye union directa/aprobacion/privada, reintento idempotente sin duplicar, aprobar con `If-Match`, abandonar e invitaciones); M5 (bloqueos y ajustes) esta implementado y pendiente de aceptacion manual. El flujo movil de reportes permite reportar un evento o a su creador mediante `POST /reports`; está pendiente de aceptación manual. M6 y el panel de moderacion no estan implementados. El registro de preferencias push existe; la entrega push queda pendiente de la Fase 4/Fase 6.
 
 ## Decisiones de implementación
 
@@ -89,7 +89,8 @@ backend real; M3 y M4 implementados y verificados contra el backend; M2 y M5
 implementados y pendientes del recorrido manual de aceptacion. M2 ya se comprobó
 visualmente en el emulador Android, pero no tiene el recorrido completo cerrado.
 El avance funcional estimado es ~68% (dos hitos cerrados de siete, M3 y M4
-verificados contra el backend, M2 y M5 implementados). Solo falta M6
+verificados contra el backend, M2 y M5 implementados). El reporte movil esta
+implementado y pendiente de aceptación manual. Solo falta M6
 (accesibilidad, pulido y APK). El detalle de avance y el orden de ejecucion estan
 en `docs/18-implementacion-frontend-movil.md`.
 

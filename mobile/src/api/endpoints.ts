@@ -203,17 +203,26 @@ export function deleteBlock(token: string | null, blockedUserId: string): Promis
   return apiFetch<null>(`/blocks/${blockedUserId}`, { method: 'DELETE', token });
 }
 
+export type ReportInput = components['schemas']['ReportInput'];
+
+export function createReport(
+  token: string | null,
+  input: ReportInput,
+): Promise<ApiResult<components['schemas']['ReportCreated']>> {
+  return apiFetch<components['schemas']['ReportCreated']>('/reports', {
+    method: 'POST',
+    body: input,
+    token,
+  });
+}
+
 export type PushSettingsInput = {
   enabled: boolean;
   expoPushToken?: string;
   preferences?: Record<string, boolean>;
 };
 
-/**
- * Best-effort: `PUT /me/push-settings` is in the contract but has no backend
- * handler yet, so callers keep the source of truth locally and treat a 404/405
- * as "not persisted server-side" rather than an error.
- */
+/** Persists notification preferences and an optional Expo push token. */
 export function updatePushSettings(
   token: string | null,
   input: PushSettingsInput,

@@ -24,9 +24,9 @@ el backend, pero el panel no se ha iniciado y se documentará por separado.
   `https://ulxrjlmpzaeouqbjbnjc.supabase.co`) con correo y contraseña y
   validación de correo. El backend valida los JWT y nunca recibe contraseñas.
 - El backend implementa `POST /reports`, acciones administrativas, preferencias
-  push, solicitudes de eliminación y retención. La app todavía no incorpora el
-  flujo de reportes ni el panel de moderación. La entrega y recepción real de push
-  siguen diferidas hasta que exista un emisor.
+  push, solicitudes de eliminación y retención. La app permite reportar un evento
+  o a su creador desde la ficha; el panel de moderación sigue pendiente. La entrega
+  y recepción real de push siguen diferidas hasta que exista un emisor.
 
 ## Estado de avance
 
@@ -38,6 +38,7 @@ no por numero de archivos, lineas de codigo ni artefactos de diseno.
 | Andamiaje tecnico M0 | 100% | Expo SDK 57, TypeScript estricto, Router, cliente API, tipos generados, tokens, i18n y herramientas de calidad estan implementados y verificados |
 | Contrato visual | 100% | El patron Radar de planes, sus pantallas, estados, tokens y criterios de aceptacion estan fijados en `docs/19-diseno-radar-movil.md` y `mobile/design/radar-prototype.html` |
 | Aplicacion movil funcional M0-M6 | ~68% | M0 y M1 completados y verificados en el emulador contra el backend real. M2 (descubrimiento) está implementado y se comprobó visualmente en Android, pendiente de recorrido manual completo. M3 (crear y gestionar) y M4 (participar) están implementados y verificados contra el backend real. M5 (bloqueos y ajustes) está implementado: barra de pestañas inferior, bloqueo desde la ficha y lista en Perfil, pantalla de notificaciones (preferencias locales + `PUT /me/push-settings` + registro de token que se omite de forma segura en Expo Go), normas de convivencia. M5 sigue pendiente de aceptación manual. |
+| Reportes móviles | Implementado; aceptación pendiente | Desde la ficha de un evento visible se puede reportar el evento o a su creador. La pantalla exige uno de los cinco motivos del contrato, acepta contexto opcional y confirma el envío sin revelar datos de moderación. |
 | Integracion Supabase real | 100% | El 2026-09-01 se ejecuto el flujo completo en el emulador: registro de una cuenta nueva con Supabase, alta de perfil (`PUT /me`) y entrada al Radar; el perfil persiste (comprobado en la base de datos). El proyecto Supabase de desarrollo tiene la confirmacion por correo desactivada, por lo que el registro devuelve sesion directa; la ruta "cuenta sin verificar no puede continuar" existe en codigo pero no es ejercitable con esa configuracion |
 | Flujo central crear, descubrir y participar | ~65% | Crear y gestionar (M3) y participar (M4) implementados y verificados contra el backend; descubrir (M2) implementado y pendiente del recorrido manual |
 | Ubicacion en el emulador | Parcial | El manejo en la app se endurecio (`src/lib/location.ts`: cache primero, `getCurrentPositionAsync` con timeout de 15 s y mensajes claros); ya no se cuelga. El emulador `joinly_pixel7_api35` no propaga la posicion via `adb emu geo fix` en la imagen API 35 con Google APIs: hay que fijarla desde Extended Controls → Location del emulador |
@@ -235,7 +236,7 @@ Ya instaladas: `@tanstack/react-query`, `zustand`, `zod`, `i18next`,
 | Resolver solicitud (creador) | `PATCH /events/{eventId}/participations/{participationId}` (`If-Match`) | `confirmed` o `rejected`; una rechazada puede volver a solicitar |
 | Invitaciones (creador, evento privado) | `POST /events/{eventId}/invitations`, `DELETE .../{invitationId}` | El código en claro se muestra una sola vez; compartir vía `expo-clipboard` |
 | Bloqueos | `POST /blocks`, `DELETE /blocks/{blockedUserId}`, `GET /blocks` | Bloquear desde perfil o ficha de evento; recíproco e idempotente |
-| Reportar | `POST /reports` | **Diferido**: el endpoint llega en Fase 4. La entrada de UI se añade entonces |
+| Reportar | `POST /reports` | Desde la ficha se puede reportar el evento o a su creador: motivo obligatorio, descripción opcional y confirmación sin revelar datos de moderación |
 
 ## Reglas de producto que la interfaz debe respetar
 
@@ -380,8 +381,6 @@ participacion confirmada previa y registrar su evidencia. El backend ya implemen
 
 - Panel de moderación React/Vite. Los endpoints de moderación de Fase 4 existen,
   pero la interfaz administrativa no se ha iniciado.
-- La entrada de "reportar" en la app. `POST /reports` existe en el backend, pero
-  el flujo móvil se añade tras decidir su prioridad.
 - Entrega y recepción real de notificaciones push.
 - Publicación en tiendas, soporte de lanzamiento iOS, mapas y geocodificación.
 - Chat, pagos, valoraciones, verificación de identidad, grupos recurrentes y
