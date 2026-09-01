@@ -131,6 +131,37 @@ public class UserRepository {
         == 1;
   }
 
+  public int anonymizeDeletionRequestsBefore(Instant cutoff, Instant now) {
+    return jdbc.sql(
+            """
+            WITH affected AS (
+                UPDATE users
+                SET auth_subject = gen_random_uuid(),
+                    alias = 'Deleted user',
+                    alias_normalized = 'deleted-' || replace(id::text, '-', ''),
+                    email_verified = false,
+                    preferred_search_point = NULL,
+                    preferred_search_label = NULL,
+                    role = 'user',
+                    version = version + 1,
+                    updated_at = :now
+                WHERE status = 'deletion_requested' AND deletion_requested_at <= :cutoff
+                RETURNING id
+            ), hidden_events AS (
+                UPDATE events SET is_hidden = true, status = 'closed', version = version + 1, updated_at = :now
+                WHERE creator_id IN (SELECT id FROM affected)
+                  AND status = 'published' AND starts_at > :now
+            ), removed_devices AS (
+                DELETE FROM push_devices WHERE user_id IN (SELECT id FROM affected)
+            )
+            INSERT INTO account_audit (actor_id, subject_id, action, note, created_at)
+            SELECT NULL, id, 'account_anonymized', 'Retention period elapsed', :now FROM affected
+            """)
+        .param("cutoff", cutoff.atOffset(ZoneOffset.UTC))
+        .param("now", now.atOffset(ZoneOffset.UTC))
+        .update();
+  }
+
   private Optional<AppUser> findById(UUID id) {
     return jdbc.sql(SELECT + " WHERE id = :id").param("id", id).query(this::map).optional();
   }

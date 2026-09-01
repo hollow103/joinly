@@ -73,4 +73,14 @@ public class CurrentUserService {
     }
     return user;
   }
+
+  /** Active internal administrator, required for every moderation operation. */
+  public AppUser requireAdmin(Jwt jwt) {
+    AppUser user = requireActive(jwt);
+    if (!"admin".equals(user.role())) {
+      throw new BusinessException(
+          HttpStatus.FORBIDDEN, "admin_required", "Administrator access is required.");
+    }
+    return user;
+  }
 }

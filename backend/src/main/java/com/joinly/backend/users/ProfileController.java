@@ -29,10 +29,13 @@ public class ProfileController {
 
   private final CurrentUserService currentUsers;
   private final ProfileService profiles;
+  private final PushSettingsService pushSettings;
 
-  public ProfileController(CurrentUserService currentUsers, ProfileService profiles) {
+  public ProfileController(
+      CurrentUserService currentUsers, ProfileService profiles, PushSettingsService pushSettings) {
     this.currentUsers = currentUsers;
     this.profiles = profiles;
+    this.pushSettings = pushSettings;
   }
 
   @GetMapping
@@ -53,6 +56,12 @@ public class ProfileController {
   ResponseEntity<Void> delete(@AuthenticationPrincipal Jwt jwt) {
     profiles.requestDeletion(jwt);
     return ResponseEntity.accepted().build();
+  }
+
+  @PutMapping("/push-settings")
+  ResponseEntity<PushSettingsService.Settings> updatePushSettings(
+      @AuthenticationPrincipal Jwt jwt, @Valid @RequestBody PushSettingsRequest request) {
+    return ResponseEntity.ok(pushSettings.update(jwt, request.toSettings()));
   }
 
   private ResponseEntity<ProfileResponse> response(AppUser user) {
@@ -149,6 +158,19 @@ public class ProfileController {
 
     ManualSearchArea toDomain() {
       return new ManualSearchArea(longitude, latitude, label.trim());
+    }
+  }
+
+  public record PushSettingsRequest(
+      boolean enabled,
+      @Size(max = 512) String expoPushToken,
+      java.util.Map<@NotBlank @Size(max = 64) String, @NotNull Boolean> preferences) {
+
+    PushSettingsService.Settings toSettings() {
+      return new PushSettingsService.Settings(
+          enabled,
+          expoPushToken == null || expoPushToken.isBlank() ? null : expoPushToken.trim(),
+          preferences == null ? java.util.Map.of() : java.util.Map.copyOf(preferences));
     }
   }
 

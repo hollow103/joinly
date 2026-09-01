@@ -160,6 +160,7 @@ No se introducen índices de texto completo, cachés geoespaciales, particionado
 | `V6__user_profile_preferences_and_audit.sql` | Añade versión del perfil, preferencia de búsqueda manual y auditoría de cambios de rol. |
 | `V7__fix_participation_date_constraint.sql` | Relaja `participations_dates_match_status`: `abandoned` solo exige `abandoned_at`. |
 | `V8__account_deletion_requests.sql` | Añade estado `deletion_requested`, fecha de solicitud e índice para el proceso asíncrono de supresión. |
+| `V9__push_settings_and_account_retention.sql` | Permite preferencias push sin token, limita el piloto a un dispositivo por cuenta y audita la anonimización tras retención. |
 
 Las migraciones se aplican de forma automática en un despliegue controlado y nunca se editan después de ejecutarse. Un cambio posterior se expresa en una nueva versión. Antes de aplicar migraciones en Supabase Free se realiza una exportación de PostgreSQL.
 
@@ -173,7 +174,7 @@ Las migraciones se aplican de forma automática en un despliegue controlado y nu
 
 ## Elementos diferidos
 
-- El mecanismo de borrado físico, anonimización y tareas de retención se concretará en la configuración operativa antes del piloto; los plazos de 30 días para eventos y cuentas, y 12 meses para reportes, siguen siendo obligatorios.
+- El job diario anonimiza cuentas en `deletion_requested` después de 30 días: sustituye el sujeto de Auth y el alias, elimina token push y preferencia de zona, oculta eventos futuros y conserva relaciones, reportes y auditorías obligatorias.
 - No hay agenda de trabajos, outbox, cola, analítica de producto, auditoría general de todas las lecturas ni proyecciones de lectura separadas.
 - No se persisten búsquedas por ubicación actual, mapas, rutas ni historial de asistentes.
 - Si el piloto exige mayor complejidad, se añadirá mediante migraciones nuevas y una actualización previa del contrato API.

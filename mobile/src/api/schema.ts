@@ -777,9 +777,12 @@ export interface paths {
                 /** @description Reporte creado */
                 201: {
                     headers: {
+                        ETag: components["headers"]["ETag"];
                         [name: string]: unknown;
                     };
-                    content?: never;
+                    content: {
+                        "application/json": components["schemas"]["ReportCreated"];
+                    };
                 };
             };
         };
@@ -816,7 +819,7 @@ export interface paths {
                         [name: string]: unknown;
                     };
                     content: {
-                        "application/json": components["schemas"]["CursorPage"];
+                        "application/json": components["schemas"]["ReportPage"];
                     };
                 };
                 403: components["responses"]["Forbidden"];
@@ -854,10 +857,11 @@ export interface paths {
                 /** @description Reporte */
                 200: {
                     headers: {
+                        ETag: components["headers"]["ETag"];
                         [name: string]: unknown;
                     };
                     content: {
-                        "application/json": Record<string, never>;
+                        "application/json": components["schemas"]["AdminReport"];
                     };
                 };
                 403: components["responses"]["Forbidden"];
@@ -889,9 +893,12 @@ export interface paths {
                 /** @description Reporte actualizado */
                 200: {
                     headers: {
+                        ETag: components["headers"]["ETag"];
                         [name: string]: unknown;
                     };
-                    content?: never;
+                    content: {
+                        "application/json": components["schemas"]["AdminReport"];
+                    };
                 };
                 403: components["responses"]["Forbidden"];
                 412: components["responses"]["PreconditionFailed"];
@@ -932,7 +939,7 @@ export interface components {
         };
         Profile: components["schemas"]["PublicProfile"] & {
             /** @enum {string} */
-            status: "active" | "suspended";
+            status: "active" | "suspended" | "deletion_requested";
             emailVerified: boolean;
             agreementsAccepted: boolean;
             termsVersion: string;
@@ -1029,8 +1036,10 @@ export interface components {
         };
         PushSettings: {
             enabled: boolean;
-            expoPushToken?: string;
-            preferences?: Record<string, never>;
+            expoPushToken?: string | null;
+            preferences?: {
+                [key: string]: boolean;
+            };
         };
         ReportInput: {
             /** @enum {string} */
@@ -1046,6 +1055,39 @@ export interface components {
             /** @enum {string} */
             action: "none" | "hideEvent" | "warnUser" | "suspendUser";
             note?: string;
+        };
+        ReportCreated: {
+            id: components["schemas"]["Uuid"];
+            /** @enum {string} */
+            status: "pending";
+            /** Format: date-time */
+            createdAt: string;
+        };
+        AdminReport: {
+            id: components["schemas"]["Uuid"];
+            reporterId: components["schemas"]["Uuid"];
+            /** @enum {string} */
+            targetType: "user" | "event";
+            targetId: components["schemas"]["Uuid"];
+            reason: string;
+            description?: string | null;
+            /** @enum {string} */
+            status: "pending" | "archived" | "resolved";
+            action?: string | null;
+            note?: string | null;
+            decidedBy?: components["schemas"]["Uuid"];
+            /** Format: date-time */
+            decidedAt?: string | null;
+            /** Format: date-time */
+            createdAt: string;
+            /** Format: date-time */
+            updatedAt: string;
+        };
+        ReportPage: {
+            items: components["schemas"]["AdminReport"][];
+            page: {
+                nextCursor: string | null;
+            };
         };
         CursorPage: {
             items: Record<string, never>[];

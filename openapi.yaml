@@ -177,26 +177,26 @@ paths:
       requestBody:
         required: true
         content: {application/json: {schema: {$ref: '#/components/schemas/ReportInput'}}}
-      responses: {'201': {description: Reporte creado}}
+      responses: {'201': {description: Reporte creado, headers: {ETag: {$ref: '#/components/headers/ETag'}}, content: {application/json: {schema: {$ref: '#/components/schemas/ReportCreated'}}}}}
   /admin/reports:
     get:
       summary: Lista reportes para moderación
       parameters: [{name: status, in: query, schema: {type: string, enum: [pending, archived, resolved]}}, {$ref: '#/components/parameters/Cursor'}, {$ref: '#/components/parameters/Limit'}]
       responses:
-        '200': {description: Reportes, content: {application/json: {schema: {$ref: '#/components/schemas/CursorPage'}}}}
+        '200': {description: Reportes, content: {application/json: {schema: {$ref: '#/components/schemas/ReportPage'}}}}
         '403': {$ref: '#/components/responses/Forbidden'}
   /admin/reports/{reportId}:
     parameters: [{$ref: '#/components/parameters/ReportId'}]
     get:
       summary: Obtiene un reporte para moderación
-      responses: {'200': {description: Reporte, content: {application/json: {schema: {type: object}}}}, '403': {$ref: '#/components/responses/Forbidden'}}
+      responses: {'200': {description: Reporte, headers: {ETag: {$ref: '#/components/headers/ETag'}}, content: {application/json: {schema: {$ref: '#/components/schemas/AdminReport'}}}}, '403': {$ref: '#/components/responses/Forbidden'}}
     patch:
       summary: Resuelve o archiva un reporte
       parameters: [{$ref: '#/components/parameters/IfMatch'}]
       requestBody:
         required: true
         content: {application/json: {schema: {$ref: '#/components/schemas/ModerationDecision'}}}
-      responses: {'200': {description: Reporte actualizado}, '403': {$ref: '#/components/responses/Forbidden'}, '412': {$ref: '#/components/responses/PreconditionFailed'}, '428': {$ref: '#/components/responses/PreconditionRequired'}}
+      responses: {'200': {description: Reporte actualizado, headers: {ETag: {$ref: '#/components/headers/ETag'}}, content: {application/json: {schema: {$ref: '#/components/schemas/AdminReport'}}}}, '403': {$ref: '#/components/responses/Forbidden'}, '412': {$ref: '#/components/responses/PreconditionFailed'}, '428': {$ref: '#/components/responses/PreconditionRequired'}}
 components:
   securitySchemes:
     bearerAuth: {type: http, scheme: bearer, bearerFormat: JWT}
@@ -229,7 +229,7 @@ components:
     PublicProfile: {type: object, required: [id, alias], properties: {id: {$ref: '#/components/schemas/Uuid'}, alias: {type: string}}}
     ManualSearchArea: {type: object, required: [longitude, latitude, label], properties: {longitude: {type: number, minimum: -180, maximum: 180}, latitude: {type: number, minimum: -90, maximum: 90}, label: {type: string, minLength: 1, maxLength: 160}}}
     ProfileInput: {type: object, required: [alias, adultConfirmed, termsVersion, privacyVersion, guidelinesVersion], properties: {alias: {type: string, minLength: 3, maxLength: 40}, adultConfirmed: {type: boolean, enum: [true]}, termsVersion: {type: string, pattern: '^[A-Za-z0-9._-]{1,32}$'}, privacyVersion: {type: string, pattern: '^[A-Za-z0-9._-]{1,32}$'}, guidelinesVersion: {type: string, pattern: '^[A-Za-z0-9._-]{1,32}$'}, manualSearchArea: {allOf: [{$ref: '#/components/schemas/ManualSearchArea'}], nullable: true, description: Ausente conserva la preferencia actual; null la elimina.}}}
-    Profile: {allOf: [{$ref: '#/components/schemas/PublicProfile'}, {type: object, required: [status, emailVerified, agreementsAccepted, termsVersion, privacyVersion, guidelinesVersion, termsAcceptedAt, privacyAcceptedAt, guidelinesAcceptedAt, role], properties: {status: {type: string, enum: [active, suspended]}, emailVerified: {type: boolean}, agreementsAccepted: {type: boolean}, termsVersion: {type: string}, privacyVersion: {type: string}, guidelinesVersion: {type: string}, termsAcceptedAt: {type: string, format: date-time}, privacyAcceptedAt: {type: string, format: date-time}, guidelinesAcceptedAt: {type: string, format: date-time}, manualSearchArea: {$ref: '#/components/schemas/ManualSearchArea'}, role: {type: string, enum: [user, admin]}}}]}
+    Profile: {allOf: [{$ref: '#/components/schemas/PublicProfile'}, {type: object, required: [status, emailVerified, agreementsAccepted, termsVersion, privacyVersion, guidelinesVersion, termsAcceptedAt, privacyAcceptedAt, guidelinesAcceptedAt, role], properties: {status: {type: string, enum: [active, suspended, deletion_requested]}, emailVerified: {type: boolean}, agreementsAccepted: {type: boolean}, termsVersion: {type: string}, privacyVersion: {type: string}, guidelinesVersion: {type: string}, termsAcceptedAt: {type: string, format: date-time}, privacyAcceptedAt: {type: string, format: date-time}, guidelinesAcceptedAt: {type: string, format: date-time}, manualSearchArea: {$ref: '#/components/schemas/ManualSearchArea'}, role: {type: string, enum: [user, admin]}}}]}
     EventInput: {type: object, required: [title, description, category, startsAt, durationMinutes, exactLocation, accessMode], properties: {title: {type: string, minLength: 3, maxLength: 120}, description: {type: string, maxLength: 4000}, notes: {type: string, maxLength: 4000}, category: {type: string, enum: [sportWellbeing, cultureLeisure, learning, communityVolunteering, pets, networking]}, startsAt: {type: string, format: date-time}, durationMinutes: {type: integer, minimum: 15, maximum: 1440}, exactLocation: {$ref: '#/components/schemas/GeoPoint'}, accessMode: {type: string, enum: [direct, approval, privateInvitation]}, capacity: {type: integer, minimum: 1, nullable: true}}}
     EventPatch: {type: object, minProperties: 1, properties: {title: {type: string, minLength: 3, maxLength: 120}, description: {type: string, maxLength: 4000}, notes: {type: string, maxLength: 4000}, category: {type: string, enum: [sportWellbeing, cultureLeisure, learning, communityVolunteering, pets, networking]}, startsAt: {type: string, format: date-time}, durationMinutes: {type: integer, minimum: 15, maximum: 1440}, exactLocation: {$ref: '#/components/schemas/GeoPoint'}, accessMode: {type: string, enum: [direct, approval, privateInvitation]}, capacity: {type: integer, minimum: 1, nullable: true}}}
     EventSearch: {type: object, required: [origin, radiusMeters], properties: {origin: {$ref: '#/components/schemas/GeoPoint'}, radiusMeters: {type: integer, minimum: 100, maximum: 50000}, categories: {type: array, items: {type: string}}, cursor: {type: string, nullable: true}, limit: {type: integer, minimum: 1, maximum: 50, default: 20}}}
@@ -237,9 +237,12 @@ components:
     EventDetail: {allOf: [{$ref: '#/components/schemas/EventDiscovery'}, {type: object, properties: {notes: {type: string}, updatedAt: {type: string, format: date-time}, myParticipation: {type: string, enum: [pending, confirmed, rejected, abandoned]}, exactLocation: {$ref: '#/components/schemas/GeoPoint'}, confirmedParticipants: {type: array, items: {$ref: '#/components/schemas/PublicProfile'}}}}]}
     Participation: {type: object, required: [id, eventId, status, requestedAt], properties: {id: {$ref: '#/components/schemas/Uuid'}, eventId: {$ref: '#/components/schemas/Uuid'}, status: {type: string, enum: [pending, confirmed, rejected, abandoned]}, requestedAt: {type: string, format: date-time}, resolvedAt: {type: string, format: date-time, nullable: true}}}
     Invitation: {type: object, required: [id, code], properties: {id: {$ref: '#/components/schemas/Uuid'}, code: {type: string}, expiresAt: {type: string, format: date-time, nullable: true}, maxUses: {type: integer, nullable: true}}}
-    PushSettings: {type: object, required: [enabled], properties: {enabled: {type: boolean}, expoPushToken: {type: string}, preferences: {type: object}}}
+    PushSettings: {type: object, required: [enabled], properties: {enabled: {type: boolean}, expoPushToken: {type: string, nullable: true, maxLength: 512}, preferences: {type: object, additionalProperties: {type: boolean}}}}
     ReportInput: {type: object, required: [targetType, targetId, reason], properties: {targetType: {type: string, enum: [user, event]}, targetId: {$ref: '#/components/schemas/Uuid'}, reason: {type: string, enum: [inappropriateContent, abusiveBehavior, fraudulentEvent, misleadingLocation, other]}, description: {type: string}}}
     ModerationDecision: {type: object, required: [status, action], properties: {status: {type: string, enum: [archived, resolved]}, action: {type: string, enum: [none, hideEvent, warnUser, suspendUser]}, note: {type: string}}}
+    ReportCreated: {type: object, required: [id, status, createdAt], properties: {id: {$ref: '#/components/schemas/Uuid'}, status: {type: string, enum: [pending]}, createdAt: {type: string, format: date-time}}}
+    AdminReport: {type: object, required: [id, reporterId, targetType, targetId, reason, status, createdAt, updatedAt], properties: {id: {$ref: '#/components/schemas/Uuid'}, reporterId: {$ref: '#/components/schemas/Uuid'}, targetType: {type: string, enum: [user, event]}, targetId: {$ref: '#/components/schemas/Uuid'}, reason: {type: string}, description: {type: string, nullable: true}, status: {type: string, enum: [pending, archived, resolved]}, action: {type: string, nullable: true}, note: {type: string, nullable: true}, decidedBy: {$ref: '#/components/schemas/Uuid'}, decidedAt: {type: string, format: date-time, nullable: true}, createdAt: {type: string, format: date-time}, updatedAt: {type: string, format: date-time}}}
+    ReportPage: {type: object, required: [items, page], properties: {items: {type: array, items: {$ref: '#/components/schemas/AdminReport'}}, page: {type: object, required: [nextCursor], properties: {nextCursor: {type: string, nullable: true}}}}}
     CursorPage: {type: object, required: [items, page], properties: {items: {type: array, items: {type: object}}, page: {type: object, required: [nextCursor], properties: {nextCursor: {type: string, nullable: true}}}}}
     EventPage: {allOf: [{$ref: '#/components/schemas/CursorPage'}]}
     EventSearchPage: {allOf: [{$ref: '#/components/schemas/CursorPage'}, {type: object, properties: {suggestedRadiusMeters: {type: integer}}}]}

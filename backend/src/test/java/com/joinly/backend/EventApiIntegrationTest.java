@@ -8,6 +8,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.patch;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.header;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -15,6 +16,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.joinly.backend.authentication.SupabaseAuthClient;
+import com.joinly.backend.users.AccountRetentionService;
 import java.time.Duration;
 import java.time.Instant;
 import java.util.LinkedHashMap;
@@ -68,6 +70,7 @@ class EventApiIntegrationTest {
   @Autowired MockMvc mvc;
   @Autowired JdbcTemplate jdbc;
   @Autowired ObjectMapper objectMapper;
+  @Autowired AccountRetentionService accountRetention;
 
   @MockitoBean SupabaseAuthClient supabaseAuth;
 
@@ -76,6 +79,10 @@ class EventApiIntegrationTest {
 
   @BeforeEach
   void resetState() {
+    jdbc.update("DELETE FROM moderation_audit");
+    jdbc.update("DELETE FROM reports");
+    jdbc.update("DELETE FROM push_devices");
+    jdbc.update("DELETE FROM account_audit");
     jdbc.update("DELETE FROM events");
     jdbc.update("DELETE FROM users");
     when(supabaseAuth.emailVerified(any())).thenReturn(true);
@@ -130,6 +137,89 @@ class EventApiIntegrationTest {
         .andExpect(status().isForbidden())
         .andExpect(jsonPath("$.code").value("account_suspended"));
     mvc.perform(authored(delete("/api/v1/me"), subject)).andExpect(status().isAccepted());
+  }
+
+  @Test
+  void persistsPushSettingsWithoutADeviceToken() throws Exception {
+    UUID subject = insertUser("pushSettings", true);
+
+    mvc.perform(
+            authored(put("/api/v1/me/push-settings"), subject)
+                .content("{\"enabled\":true,\"preferences\":{\"requests\":false}}"))
+        .andExpect(status().isOk())
+        .andExpect(jsonPath("$.enabled").value(true))
+        .andExpect(jsonPath("$.expoPushToken").doesNotExist())
+        .andExpect(jsonPath("$.preferences.requests").value(false));
+
+    assertThat(jdbc.queryForObject("SELECT count(*) FROM push_devices", Integer.class))
+        .isEqualTo(1);
+  }
+
+  @Test
+  void anonymizesAccountsWhoseDeletionGracePeriodElapsed() throws Exception {
+    UUID subject = insertUser("retentionUser", true);
+    mvc.perform(authored(delete("/api/v1/me"), subject)).andExpect(status().isAccepted());
+    jdbc.update(
+        "UPDATE users SET deletion_requested_at = now() - interval '31 days' WHERE auth_subject = ?",
+        subject);
+
+    accountRetention.anonymizeDueAccounts();
+
+    assertThat(
+            jdbc.queryForObject(
+                "SELECT count(*) FROM users WHERE auth_subject = ?", Integer.class, subject))
+        .isZero();
+    assertThat(jdbc.queryForObject("SELECT alias FROM users", String.class))
+        .isEqualTo("Deleted user");
+    assertThat(
+            jdbc.queryForObject(
+                "SELECT count(*) FROM account_audit WHERE action = 'account_anonymized'",
+                Integer.class))
+        .isEqualTo(1);
+  }
+
+  @Test
+  void allowsAdminToResolveAnEventReportByHidingTheEvent() throws Exception {
+    UUID reporter = insertUser("reporter", true);
+    UUID creator = insertUser("reportedCreator", true);
+    UUID admin = insertUser("moderator", true);
+    UUID eventId = createEvent(creator, VIGO_LON, VIGO_LAT);
+    jdbc.update("UPDATE users SET role = 'admin' WHERE auth_subject = ?", admin);
+
+    String reportBody =
+        "{\"targetType\":\"event\",\"targetId\":\""
+            + eventId
+            + "\",\"reason\":\"inappropriateContent\"}";
+    String reportId =
+        objectMapper
+            .readTree(
+                mvc.perform(authored(post("/api/v1/reports"), reporter).content(reportBody))
+                    .andExpect(status().isCreated())
+                    .andReturn()
+                    .getResponse()
+                    .getContentAsString())
+            .get("id")
+            .asText();
+
+    mvc.perform(authored(get("/api/v1/admin/reports"), reporter)).andExpect(status().isForbidden());
+    mvc.perform(authored(get("/api/v1/admin/reports/" + reportId), admin))
+        .andExpect(status().isOk())
+        .andExpect(header().string(HttpHeaders.ETAG, "\"report-0\""));
+    mvc.perform(
+            authored(patch("/api/v1/admin/reports/" + reportId), admin)
+                .header(HttpHeaders.IF_MATCH, "\"report-0\"")
+                .content("{\"status\":\"resolved\",\"action\":\"hideEvent\"}"))
+        .andExpect(status().isOk())
+        .andExpect(header().string(HttpHeaders.ETAG, "\"report-1\""));
+
+    assertThat(
+            jdbc.queryForObject(
+                "SELECT is_hidden FROM events WHERE id = ?", Boolean.class, eventId))
+        .isTrue();
+    assertThat(
+            jdbc.queryForObject(
+                "SELECT status::text FROM events WHERE id = ?", String.class, eventId))
+        .isEqualTo("published");
   }
 
   @Test
