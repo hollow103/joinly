@@ -1,0 +1,33 @@
+# El backend/Dockerfile solo necesita backend/pom.xml, backend/src y openapi.yaml.
+# Todo lo demás se excluye para que el contexto de build sea pequeño y rápido
+# (importa en Render, que sube el contexto a su builder).
+.git
+.github
+.agents
+.opencode
+.playwright-mcp
+.claude
+
+mobile
+admin
+infra
+docs
+scripts
+
+**/node_modules
+**/target
+**/build
+**/.gradle
+**/dist
+**/dist-ssr
+
+*.md
+.env
+.env.*
+*.log
+.DS_Store
+compose.yaml
+compose.override.yaml
+redocly.yaml
+skills-lock.json
+opencode.json

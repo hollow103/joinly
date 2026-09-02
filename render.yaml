@@ -1,0 +1,55 @@
+# Render Blueprint para el backend de Joinly (piloto, plan Free).
+# Deploy: Render → New → Blueprint → seleccionar este repo y la rama
+# feature/mvp-integration (es la única con el backend implementado; main solo tiene specs).
+# Render pedirá los valores de las variables marcadas con `sync: false` al crear el servicio.
+services:
+  - type: web
+    name: joinly-backend
+    runtime: docker
+    plan: free
+    region: frankfurt
+    branch: feature/mvp-integration
+    dockerfilePath: ./backend/Dockerfile
+    dockerContext: .
+    healthCheckPath: /actuator/health/readiness
+    envVars:
+      # --- Ajuste para 512 MB de RAM del plan Free ---
+      - key: JAVA_TOOL_OPTIONS
+        value: "-XX:MaxRAMPercentage=70 -XX:+UseSerialGC -Xss512k -XX:+ExitOnOutOfMemoryError"
+      - key: SPRING_DATASOURCE_HIKARI_MAXIMUM_POOL_SIZE
+        value: "5"
+      - key: SERVER_TOMCAT_THREADS_MAX
+        value: "30"
+      # --- Constantes de la aplicación ---
+      - key: SUPABASE_AUDIENCE
+        value: authenticated
+      - key: JOINLY_TERMS_VERSION
+        value: v1
+      - key: JOINLY_PRIVACY_VERSION
+        value: v1
+      - key: JOINLY_GUIDELINES_VERSION
+        value: v1
+      # --- Se rellenan en el dashboard de Render al desplegar (no se guardan en el repo) ---
+      # DB_URL: jdbc:postgresql://aws-0-<region>.pooler.supabase.com:5432/postgres?sslmode=require
+      - key: DB_URL
+        sync: false
+      # DB_USERNAME: postgres.<ref-del-proyecto-supabase>
+      - key: DB_USERNAME
+        sync: false
+      - key: DB_PASSWORD
+        sync: false
+      # SUPABASE_ISSUER: https://<ref>.supabase.co/auth/v1
+      - key: SUPABASE_ISSUER
+        sync: false
+      # SUPABASE_JWK_SET_URI: https://<ref>.supabase.co/auth/v1/.well-known/jwks.json
+      - key: SUPABASE_JWK_SET_URI
+        sync: false
+      # SUPABASE_API_KEY: anon / publishable key del proyecto
+      - key: SUPABASE_API_KEY
+        sync: false
+      # SUPABASE_USER_INFO_URI: https://<ref>.supabase.co/auth/v1/user
+      - key: SUPABASE_USER_INFO_URI
+        sync: false
+      # Opcional: token de Expo para notificaciones push con Enhanced Security
+      - key: JOINLY_EXPO_ACCESS_TOKEN
+        sync: false

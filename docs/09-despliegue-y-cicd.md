@@ -38,3 +38,34 @@ La aplicacion interna de moderacion se construira con React, TypeScript y Vite y
 - Supabase Free tiene limites de capacidad, puede pausar proyectos inactivos y no proporciona SLA ni copias de seguridad administradas. Se exportara la base de datos periodicamente.
 - Render se usa exclusivamente para el sitio estatico del panel interno, no para el backend ni la base de datos.
 - El piloto se distribuira mediante APK de pruebas para Android, sin publicacion inicial en Google Play ni App Store. iOS se difiere hasta asumir la cuota de Apple Developer.
+
+## Preparacion para el APK de prueba (hosting del backend pendiente)
+
+Un APK o IPA de prueba es una build de tipo release: se ejecuta sin Metro y necesita el backend en una URL publica con HTTPS. La eleccion del proveedor de hosting del backend esta **pendiente de decision**; el resto ya esta preparado en el repositorio.
+
+### Ya preparado en el repositorio
+
+- `backend/.../application.yml`: `server.port` toma `${PORT:8080}`, de modo que Cloud Run o Render pueden inyectar su puerto. Todas las demas opciones de configuracion ya se leen de variables de entorno.
+- `mobile/eas.json`: perfiles `development`, `preview` (APK de distribucion interna) y `production` (app bundle), con un bloque `env` de marcadores `REEMPLAZAR` para las variables `EXPO_PUBLIC_*`.
+- `mobile/.env.example`: bloque comentado con las variables que hay que fijar para una build de prueba y el recordatorio de que `EXPO_PUBLIC_*` se hornea en el bundle al compilar.
+
+### Decision pendiente
+
+| Opcion | Coste | Contrapartida |
+| --- | --- | --- |
+| Google Cloud Run (region europea, escala a cero) | Nivel gratuito, pero exige asociar cuenta de facturacion con presupuesto y alertas | Cold start de unos segundos |
+| Render (free web service) | Gratuito sin tarjeta | Se suspende tras 15 min de inactividad; cold start de ~50 s; 512 MB de RAM |
+
+En ambos casos la base de datos PostgreSQL/PostGIS y la autenticacion siguen en Supabase Free; el backend se conecta al pooler de sesion de Supabase.
+
+### Independiente de la decision
+
+- Supabase Free provee Postgres con PostGIS, Auth de correo/contrasena y el JWKS. La migracion `V1` crea la extension PostGIS.
+- El backend expone HTTPS a traves del proveedor elegido; no se habilita ATS permisivo en iOS ni CORS permisivo.
+- Variables de entorno del backend: `PORT` (la pone la plataforma), `DB_URL`, `DB_USERNAME`, `DB_PASSWORD`, `SUPABASE_ISSUER`, `SUPABASE_JWK_SET_URI`, `SUPABASE_AUDIENCE`, `SUPABASE_API_KEY`, `SUPABASE_USER_INFO_URI`, `JOINLY_TERMS_VERSION`, `JOINLY_PRIVACY_VERSION`, `JOINLY_GUIDELINES_VERSION` y, opcional, `JOINLY_EXPO_ACCESS_TOKEN`.
+- Flyway aplica `V1..V9` al arrancar contra la base de datos vacia de Supabase.
+- La app apunta al backend mediante `EXPO_PUBLIC_API_BASE_URL` (`https://<host>/api/v1`), fijado en el momento del build. `EXPO_PUBLIC_SUPABASE_URL` y `SUPABASE_ISSUER` del backend deben ser el mismo proyecto Supabase.
+
+### Guía operativa
+
+`docs/21-despliegue-piloto.md` tiene el paso a paso: Supabase Free, despliegue del backend en Render Free (sin tarjeta) o Cloud Run, generación del APK con EAS `preview` o Gradle local, orquestación app↔backend y checklist de smoke test. La elección de proveedor sigue pendiente; el documento cubre ambos.
