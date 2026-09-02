@@ -237,7 +237,13 @@ public class EventService {
     int limit = Math.clamp(cmd.limit(), 1, 50);
     List<String> sortedCategories = cmd.categories().stream().sorted().toList();
     int scopeHash =
-        Objects.hash(cmd.longitude(), cmd.latitude(), cmd.radiusMeters(), sortedCategories);
+        Objects.hash(
+            cmd.longitude(),
+            cmd.latitude(),
+            cmd.radiusMeters(),
+            sortedCategories,
+            cmd.startsAfter(),
+            cmd.startsBefore());
     KeysetCursor cursor =
         cmd.cursor() == null ? null : KeysetCursor.decode(cmd.cursor(), scopeHash);
     List<String> dbCategories =
@@ -250,6 +256,8 @@ public class EventService {
             cmd.latitude(),
             cmd.radiusMeters(),
             dbCategories,
+            cmd.startsAfter(),
+            cmd.startsBefore(),
             cursor,
             limit + 1,
             now);
@@ -381,6 +389,8 @@ public class EventService {
       double latitude,
       int radiusMeters,
       List<String> categories,
+      Instant startsAfter,
+      Instant startsBefore,
       String cursor,
       int limit) {}
 

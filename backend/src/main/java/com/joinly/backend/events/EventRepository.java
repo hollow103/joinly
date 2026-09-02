@@ -197,6 +197,8 @@ public class EventRepository {
       double originLat,
       int radiusMeters,
       List<String> dbCategories,
+      Instant startsAfter,
+      Instant startsBefore,
       KeysetCursor cursor,
       int limit,
       Instant now) {
@@ -224,6 +226,12 @@ public class EventRepository {
     if (!dbCategories.isEmpty()) {
       sql.append(" AND e.category::text IN (:categories)");
     }
+    if (startsAfter != null) {
+      sql.append(" AND e.starts_at >= :startsAfter");
+    }
+    if (startsBefore != null) {
+      sql.append(" AND e.starts_at <= :startsBefore");
+    }
     if (cursor != null) {
       sql.append(" AND (ST_Distance(e.location, ")
           .append(ORIGIN)
@@ -241,6 +249,12 @@ public class EventRepository {
             .param("limit", limit);
     if (!dbCategories.isEmpty()) {
       spec = spec.param("categories", dbCategories);
+    }
+    if (startsAfter != null) {
+      spec = spec.param("startsAfter", ts(startsAfter));
+    }
+    if (startsBefore != null) {
+      spec = spec.param("startsBefore", ts(startsBefore));
     }
     if (cursor != null) {
       spec =

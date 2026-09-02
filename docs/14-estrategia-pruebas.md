@@ -37,6 +37,7 @@ Se implementarán junto con cada módulo, no como una fase separada. El conjunto
 | B-12 | Cierre programado de un evento terminado | Pasa a `closed` una vez, deja de descubrirse y devuelve `404` a terceros; el creador conserva acceso y lo lista con `status=closed` |
 | B-13 | Reducir capacidad por debajo de participaciones confirmadas | Rechazo con `capacity_below_confirmed`; conserva capacidad, participantes y ETag |
 | B-14 | Entrega de notificaciones push | Solicitud, decisión, cambio y cancelación registran una notificación `pending` para el destinatario correcto; el proceso de despacho la envía una vez a Expo y la marca `sent`; un tipo silenciado o un dispositivo deshabilitado no envía; `DeviceNotRegistered` la marca `failed` y borra el token; una segunda ejecución no reenvía |
+| B-15 | Descubrimiento con ventana de tiempo | `POST /events/search` con `startsAfter`/`startsBefore` devuelve solo los eventos cuyo `startsAt` cae dentro de la ventana; sin ventana devuelve todos los activos en el radio |
 
 La prueba B-07 usa dos transacciones o peticiones concurrentes reales contra PostgreSQL. Las demás pueden empezar como pruebas de servicio y autorización con la mínima infraestructura necesaria.
 

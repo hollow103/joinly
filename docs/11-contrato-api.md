@@ -165,12 +165,14 @@ En una actualización, `manualSearchArea` ausente conserva la preferencia actual
   "origin": { "type": "Point", "coordinates": [-8.7207, 42.2383] },
   "radiusMeters": 5000,
   "categories": ["sportWellbeing", "cultureLeisure"],
+  "startsAfter": null,
+  "startsBefore": null,
   "cursor": null,
   "limit": 20
 }
 ```
 
-`radiusMeters` admite de 100 a 50000 metros y `limit` de 1 a 50 (por defecto 20); el orden es distancia ascendente y, a igual distancia, `startsAt` ascendente e `id`. El cursor es opaco, va ligado a los filtros y al orden de la petición y se rechaza con `400 validation_error` si se altera o se reutiliza con otros filtros. `distanceMeters` se redondea a la centena de metros para dificultar la trilateración. Una colección vacía en la primera página incluye `suggestedRadiusMeters` (el doble del radio, hasta 50000) cuando es razonable ampliar el radio. Los eventos `privateInvitation` y los ya finalizados (`startsAt + durationMinutes` en el pasado) no aparecen en descubrimiento.
+`radiusMeters` admite de 100 a 50000 metros y `limit` de 1 a 50 (por defecto 20); el orden es distancia ascendente y, a igual distancia, `startsAt` ascendente e `id`. `startsAfter` y `startsBefore` (instantes ISO-8601, opcionales) acotan `startsAt` en el servidor y forman parte del ámbito del cursor; se usan para filtros de tiempo del cliente ("esta tarde", "este finde") sin romper la paginación. El cursor es opaco, va ligado a los filtros y al orden de la petición y se rechaza con `400 validation_error` si se altera o se reutiliza con otros filtros. `distanceMeters` se redondea a la centena de metros para dificultar la trilateración. Una colección vacía en la primera página incluye `suggestedRadiusMeters` (el doble del radio, hasta 50000) cuando es razonable ampliar el radio. Los eventos `privateInvitation` y los ya finalizados (`startsAt + durationMinutes` en el pasado) no aparecen en descubrimiento.
 
 El cuerpo de creación exige `title`, `description`, `category`, `startsAt`, `durationMinutes`, `exactLocation` y `accessMode`; admite `capacity` y `notes`. `startsAt` debe ser futuro, `capacity` es positiva si existe y el creador no puede tener tres eventos activos. La API calcula `approximateArea`; no acepta este valor del cliente. El piloto lo deriva redondeando la ubicación exacta a una rejilla de ~1,1 km (dos decimales) y presentándola como texto, sin geocodificación externa; se sustituirá por una etiqueta legible cuando exista un origen de datos sin coste.
 

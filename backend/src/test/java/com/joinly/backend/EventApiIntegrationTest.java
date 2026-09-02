@@ -623,6 +623,43 @@ class EventApiIntegrationTest {
                 .value(org.hamcrest.Matchers.not(org.hamcrest.Matchers.in(firstIds.split(",")))));
   }
 
+  @Test
+  void filtersDiscoveryByAStartTimeWindow() throws Exception {
+    UUID creator = insertUser("scheduler", true);
+    Instant soon = Instant.now().plus(Duration.ofDays(2));
+    Instant later = Instant.now().plus(Duration.ofDays(10));
+    UUID soonId = createEventAt(creator, VIGO_LON, VIGO_LAT, soon);
+    UUID laterId = createEventAt(creator, VIGO_LON + 0.01, VIGO_LAT, later);
+    UUID viewer = insertUser("timeBrowser", true);
+
+    // Sin ventana: ambos.
+    mvc.perform(
+            authored(post("/api/v1/events/search"), viewer)
+                .content(searchJson(VIGO_LON, VIGO_LAT, 10000)))
+        .andExpect(status().isOk())
+        .andExpect(jsonPath("$.items.length()").value(2));
+
+    // startsBefore recorta al primero.
+    mvc.perform(
+            authored(post("/api/v1/events/search"), viewer)
+                .content(
+                    searchJsonWithWindow(
+                        VIGO_LON, VIGO_LAT, 10000, null, Instant.now().plus(Duration.ofDays(5)))))
+        .andExpect(status().isOk())
+        .andExpect(jsonPath("$.items.length()").value(1))
+        .andExpect(jsonPath("$.items[0].id").value(soonId.toString()));
+
+    // startsAfter recorta al segundo.
+    mvc.perform(
+            authored(post("/api/v1/events/search"), viewer)
+                .content(
+                    searchJsonWithWindow(
+                        VIGO_LON, VIGO_LAT, 10000, Instant.now().plus(Duration.ofDays(5)), null)))
+        .andExpect(status().isOk())
+        .andExpect(jsonPath("$.items.length()").value(1))
+        .andExpect(jsonPath("$.items[0].id").value(laterId.toString()));
+  }
+
   // --- helpers -------------------------------------------------------------
 
   private MockHttpServletRequestBuilder authored(
@@ -709,6 +746,37 @@ class EventApiIntegrationTest {
     event.put("accessMode", "direct");
     event.put("capacity", 12);
     return event;
+  }
+
+  private UUID createEventAt(UUID creatorSubject, double lon, double lat, Instant startsAt)
+      throws Exception {
+    Map<String, Object> event = eventMap(lon, lat);
+    event.put("startsAt", startsAt.toString());
+    String body =
+        mvc.perform(
+                authored(post("/api/v1/events"), creatorSubject)
+                    .content(objectMapper.writeValueAsString(event)))
+            .andExpect(status().isCreated())
+            .andReturn()
+            .getResponse()
+            .getContentAsString();
+    return UUID.fromString(objectMapper.readTree(body).get("id").asText());
+  }
+
+  private String searchJsonWithWindow(
+      double lon, double lat, int radius, Instant startsAfter, Instant startsBefore)
+      throws Exception {
+    Map<String, Object> search = new LinkedHashMap<>();
+    search.put("origin", Map.of("type", "Point", "coordinates", List.of(lon, lat)));
+    search.put("radiusMeters", radius);
+    search.put("limit", 20);
+    if (startsAfter != null) {
+      search.put("startsAfter", startsAfter.toString());
+    }
+    if (startsBefore != null) {
+      search.put("startsBefore", startsBefore.toString());
+    }
+    return objectMapper.writeValueAsString(search);
   }
 
   private String searchJson(double lon, double lat, int radius) throws Exception {

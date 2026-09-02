@@ -341,6 +341,8 @@ public class EventController {
       @NotNull @Valid GeoPointPayload origin,
       @NotNull @Min(100) @Max(50000) Integer radiusMeters,
       List<@Pattern(regexp = CATEGORY_PATTERN) String> categories,
+      Instant startsAfter,
+      Instant startsBefore,
       String cursor,
       Integer limit) {
 
@@ -350,6 +352,8 @@ public class EventController {
           origin.latitude(),
           radiusMeters,
           categories == null ? List.of() : categories,
+          startsAfter,
+          startsBefore,
           cursor == null || cursor.isBlank() ? null : cursor,
           limit == null ? 20 : limit);
     }
