@@ -12,6 +12,13 @@ services:
     dockerfilePath: ./backend/Dockerfile
     dockerContext: .
     healthCheckPath: /actuator/health/readiness
+    # Solo redespliega cuando cambia algo que afecta a la imagen del backend.
+    # Un cambio en mobile/, admin/ o docs/ no gasta un build.
+    buildFilter:
+      paths:
+        - backend/**
+        - openapi.yaml
+        - render.yaml
     envVars:
       # --- Ajuste para 512 MB de RAM del plan Free ---
       - key: JAVA_TOOL_OPTIONS
