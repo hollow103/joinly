@@ -79,6 +79,7 @@ class ParticipationApiIntegrationTest {
 
   @BeforeEach
   void resetState() {
+    jdbc.update("DELETE FROM notifications");
     jdbc.update("DELETE FROM idempotency_records");
     jdbc.update("DELETE FROM participations");
     jdbc.update("DELETE FROM invitations");
@@ -222,6 +223,30 @@ class ParticipationApiIntegrationTest {
         .andExpect(status().isOk())
         .andExpect(jsonPath("$.items").isEmpty());
     join(joiner, eventId, "k1", null).andExpect(status().isNotFound());
+  }
+
+  @Test
+  void blockingAfterConfirmationHidesTheEventButStillAllowsAbandonment() throws Exception {
+    UUID creator = insertUser("confirmedHost", true);
+    UUID participant = insertUser("confirmedGuest", true);
+    UUID eventId = createEvent(creator, "direct", 1);
+    join(participant, eventId, "confirmed-block", null).andExpect(status().isCreated());
+    UUID creatorId =
+        jdbc.queryForObject("SELECT id FROM users WHERE auth_subject = ?", UUID.class, creator);
+
+    mvc.perform(
+            authored(post("/api/v1/blocks"), participant)
+                .content("{\"blockedUserId\":\"" + creatorId + "\"}"))
+        .andExpect(status().isCreated());
+    mvc.perform(authored(get("/api/v1/events/" + eventId), participant))
+        .andExpect(status().isNotFound());
+    mvc.perform(authored(get("/api/v1/events/" + eventId + "/participations"), creator))
+        .andExpect(status().isOk())
+        .andExpect(jsonPath("$.items.length()").value(1))
+        .andExpect(jsonPath("$.items[0].user.alias").value("confirmedGuest"));
+
+    mvc.perform(authored(delete("/api/v1/events/" + eventId + "/participation"), participant))
+        .andExpect(status().isNoContent());
   }
 
   @Test

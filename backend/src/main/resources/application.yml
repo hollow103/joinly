@@ -31,6 +31,14 @@ joinly:
     connect-timeout: ${SUPABASE_CONNECT_TIMEOUT:2s}
     read-timeout: ${SUPABASE_READ_TIMEOUT:3s}
     user-info-uri: ${SUPABASE_USER_INFO_URI:https://ulxrjlmpzaeouqbjbnjc.supabase.co/auth/v1/user}
+  notifications:
+    dispatch-cron: ${JOINLY_NOTIFICATIONS_DISPATCH_CRON:0 * * * * *}
+    dispatch-enabled: ${JOINLY_NOTIFICATIONS_DISPATCH_ENABLED:true}
+    batch-size: ${JOINLY_NOTIFICATIONS_BATCH_SIZE:50}
+    expo-endpoint: ${JOINLY_EXPO_ENDPOINT:https://exp.host/--/api/v2/push/send}
+    expo-access-token: ${JOINLY_EXPO_ACCESS_TOKEN:}
+    expo-connect-timeout: ${JOINLY_EXPO_CONNECT_TIMEOUT:2s}
+    expo-read-timeout: ${JOINLY_EXPO_READ_TIMEOUT:5s}
 management:
   endpoints:
     web:

@@ -34,6 +34,7 @@
 - Creacion de grupos recurrentes.
 - Descarga automatizada de datos personales.
 - Inicio de sesion con Google o Facebook.
+- Historial de notificaciones dentro de la aplicacion (`GET /me/notifications`); la entrega del MVP es solo push.
 
 ## Criterios de salida
 

@@ -24,7 +24,7 @@ Se implementarán junto con cada módulo, no como una fase separada. El conjunto
 | ID | Caso | Resultado esperado |
 | --- | --- | --- |
 | B-01 | Crear evento futuro con datos válidos | Evento publicado y creador dentro del límite de tres activos |
-| B-02 | Crear un cuarto evento activo | Rechazo con `active_event_limit_reached` |
+| B-02 | Crear un cuarto evento activo, incluso con dos solicitudes concurrentes desde dos eventos activos | Como máximo se crean tres; una solicitud recibe `active_event_limit_reached` |
 | B-03 | Buscar o consultar un evento sin participación | Solo zona aproximada y distancia; nunca `exactLocation` ni asistentes |
 | B-04 | Consultar evento como participante confirmado | Recibe `exactLocation`; no recibe lista de asistentes |
 | B-05 | Consultar participantes como creador y como participante | Solo el creador recibe participantes confirmados |
@@ -35,10 +35,14 @@ Se implementarán junto con cada módulo, no como una fase separada. El conjunto
 | B-10 | Acceso a moderación sin rol `admin` | `403 Forbidden` |
 | B-11 | Suspender una cuenta | Sus eventos dejan de descubrirse y su JWT ya no permite operaciones |
 | B-12 | Cierre programado de un evento terminado | Pasa a `closed` una vez, deja de descubrirse y devuelve `404` a terceros; el creador conserva acceso y lo lista con `status=closed` |
+| B-13 | Reducir capacidad por debajo de participaciones confirmadas | Rechazo con `capacity_below_confirmed`; conserva capacidad, participantes y ETag |
+| B-14 | Entrega de notificaciones push | Solicitud, decisión, cambio y cancelación registran una notificación `pending` para el destinatario correcto; el proceso de despacho la envía una vez a Expo y la marca `sent`; un tipo silenciado o un dispositivo deshabilitado no envía; `DeviceNotRegistered` la marca `failed` y borra el token; una segunda ejecución no reenvía |
 
 La prueba B-07 usa dos transacciones o peticiones concurrentes reales contra PostgreSQL. Las demás pueden empezar como pruebas de servicio y autorización con la mínima infraestructura necesaria.
 
-B-12 se ejecuta de extremo a extremo contra PostGIS real: crea el evento por API, verifica su descubrimiento, simula que terminó, invoca el proceso programado, verifica sus proyecciones posteriores y repite el proceso para comprobar idempotencia.
+B-12 se ejecuta de extremo a extremo contra PostGIS real: crea el evento por API, verifica su descubrimiento, simula que terminó, invoca el proceso programado, verifica sus proyecciones posteriores y repite el proceso para comprobar idempotencia. B-02 usa creaciones concurrentes reales para comprobar el bloqueo del creador; B-13 bloquea la fila de evento durante la edición para serializarla con participaciones.
+
+B-14 recorre por API la unión, la resolución del creador, la edición y la cancelación, comprueba las filas registradas en `notifications` y luego invoca el proceso de despacho con un cliente Expo simulado; verifica el estado final de cada fila, el respeto de las preferencias por tipo, el borrado del token ante `DeviceNotRegistered` y que una segunda ejecución no reenvía.
 
 ## Validación manual antes del APK
 

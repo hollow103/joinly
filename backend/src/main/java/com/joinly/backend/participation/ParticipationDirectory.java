@@ -45,4 +45,9 @@ public class ParticipationDirectory implements EventParticipation {
   public List<PublicProfile> confirmedParticipants(UUID eventId) {
     return participations.confirmedProfiles(eventId);
   }
+
+  @Override
+  public List<UUID> confirmedParticipantIds(UUID eventId) {
+    return participations.confirmedUserIds(eventId);
+  }
 }

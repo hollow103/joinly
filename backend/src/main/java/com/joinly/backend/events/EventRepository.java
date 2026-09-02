@@ -73,6 +73,14 @@ public class EventRepository {
         .single();
   }
 
+  /** Serializes event creation for one creator while its active-event limit is checked. */
+  public void lockCreator(UUID creatorId) {
+    jdbc.sql("SELECT id FROM users WHERE id = :creatorId FOR UPDATE")
+        .param("creatorId", creatorId)
+        .query(UUID.class)
+        .single();
+  }
+
   public Event insert(NewEvent data, Instant now) {
     UUID id =
         jdbc.sql(

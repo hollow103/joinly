@@ -24,4 +24,7 @@ public interface EventParticipation {
 
   /** Confirmed participants of the event, for the creator's detail view. */
   List<PublicProfile> confirmedParticipants(UUID eventId);
+
+  /** User ids of the event's confirmed participants, for change and cancellation notifications. */
+  List<UUID> confirmedParticipantIds(UUID eventId);
 }

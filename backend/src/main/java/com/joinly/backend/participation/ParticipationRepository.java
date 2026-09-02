@@ -94,6 +94,18 @@ public class ParticipationRepository {
         .optional();
   }
 
+  public List<UUID> confirmedUserIds(UUID eventId) {
+    return jdbc.sql(
+            """
+            SELECT user_id FROM participations
+            WHERE event_id = :eventId AND status = 'confirmed'
+            ORDER BY resolved_at ASC, id ASC
+            """)
+        .param("eventId", eventId)
+        .query((rs, rowNum) -> rs.getObject("user_id", UUID.class))
+        .list();
+  }
+
   public List<PublicProfile> confirmedProfiles(UUID eventId) {
     return jdbc.sql(
             """

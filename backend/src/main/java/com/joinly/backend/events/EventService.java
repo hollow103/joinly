@@ -1,5 +1,6 @@
 package com.joinly.backend.events;
 
+import com.joinly.backend.notifications.NotificationRecorder;
 import com.joinly.backend.shared.BusinessException;
 import com.joinly.backend.shared.KeysetCursor;
 import com.joinly.backend.users.AppUser;
@@ -32,6 +33,8 @@ public class EventService {
   private final CurrentUserService currentUsers;
   private final ApproximateArea approximateArea;
   private final EventVisibility visibility;
+  private final EventParticipation participation;
+  private final NotificationRecorder notifications;
   private final Clock clock;
 
   public EventService(
@@ -39,11 +42,15 @@ public class EventService {
       CurrentUserService currentUsers,
       ApproximateArea approximateArea,
       EventVisibility visibility,
+      EventParticipation participation,
+      NotificationRecorder notifications,
       Clock clock) {
     this.events = events;
     this.currentUsers = currentUsers;
     this.approximateArea = approximateArea;
     this.visibility = visibility;
+    this.participation = participation;
+    this.notifications = notifications;
     this.clock = clock;
   }
 
@@ -54,6 +61,7 @@ public class EventService {
     if (!cmd.startsAt().isAfter(now)) {
       throw invalidField("startsAt", "must be in the future");
     }
+    events.lockCreator(creator.id());
     if (events.countActiveByCreator(creator.id(), now) >= MAX_ACTIVE_EVENTS) {
       throw new BusinessException(
           HttpStatus.CONFLICT,
@@ -107,7 +115,7 @@ public class EventService {
   public EventView update(Jwt jwt, UUID id, PatchCommand cmd, String ifMatch) {
     AppUser editor = currentUsers.requireEligibleForEvents(jwt);
     Instant now = Instant.now(clock);
-    Event current = events.findById(id).orElseThrow(visibility::notFound);
+    Event current = events.lockById(id).orElseThrow(visibility::notFound);
     if (!visibility.isCreator(current, editor.id())) {
       throw visibility.notFound();
     }
@@ -162,8 +170,12 @@ public class EventService {
     if (!startsAt.equals(current.startsAt()) && !startsAt.isAfter(now)) {
       throw invalidField("startsAt", "must be in the future");
     }
-    // Phase 3: reject a capacity below the confirmed participation count (409
-    // capacity_below_confirmed).
+    if (capacity != null && capacity < participation.confirmedCount(id)) {
+      throw new BusinessException(
+          HttpStatus.CONFLICT,
+          "capacity_below_confirmed",
+          "Capacity cannot be lower than the number of confirmed participants.");
+    }
 
     String area =
         locationChanged ? approximateArea.describe(longitude, latitude) : current.approximateArea();
@@ -192,6 +204,9 @@ public class EventService {
                         HttpStatus.PRECONDITION_FAILED,
                         "concurrent_update",
                         "The event has changed since it was retrieved."));
+    if (mainFieldsChanged) {
+      notifications.eventChanged(participation.confirmedParticipantIds(id), id, now);
+    }
     return new EventView(updated, editor.id());
   }
 
@@ -213,7 +228,7 @@ public class EventService {
           "concurrent_update",
           "The event has changed since it was retrieved.");
     }
-    // Phase 3/4: notify confirmed participants of the cancellation.
+    notifications.eventCancelled(participation.confirmedParticipantIds(id), id, now);
   }
 
   public SearchResult search(Jwt jwt, SearchCommand cmd) {

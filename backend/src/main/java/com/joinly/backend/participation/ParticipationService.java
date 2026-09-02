@@ -4,6 +4,7 @@ import com.joinly.backend.blocks.BlockService;
 import com.joinly.backend.events.AccessMode;
 import com.joinly.backend.events.Event;
 import com.joinly.backend.events.EventService;
+import com.joinly.backend.notifications.NotificationRecorder;
 import com.joinly.backend.shared.BusinessException;
 import com.joinly.backend.shared.KeysetCursor;
 import com.joinly.backend.shared.PublicProfile;
@@ -35,6 +36,7 @@ public class ParticipationService {
   private final EventService events;
   private final CurrentUserService currentUsers;
   private final BlockService blocks;
+  private final NotificationRecorder notifications;
   private final Clock clock;
 
   public ParticipationService(
@@ -45,6 +47,7 @@ public class ParticipationService {
       EventService events,
       CurrentUserService currentUsers,
       BlockService blocks,
+      NotificationRecorder notifications,
       Clock clock) {
     this.participations = participations;
     this.invitations = invitations;
@@ -53,6 +56,7 @@ public class ParticipationService {
     this.events = events;
     this.currentUsers = currentUsers;
     this.blocks = blocks;
+    this.notifications = notifications;
     this.clock = clock;
   }
 
@@ -125,7 +129,9 @@ public class ParticipationService {
       invitations.incrementUsedCount(invitation.id(), now);
     }
     idempotency.record(user.id(), idempotencyKey, requestHash, saved.id(), now);
-    // Phase 4: record a notification for the creator when status == PENDING.
+    if (status == ParticipationStatus.PENDING) {
+      notifications.participationRequested(event.creatorId(), eventId, saved.id(), now);
+    }
     return saved;
   }
 
@@ -188,7 +194,8 @@ public class ParticipationService {
                         HttpStatus.PRECONDITION_FAILED,
                         "concurrent_update",
                         "The request has changed since it was retrieved."));
-    // Phase 4: record a notification for the requester.
+    notifications.participationDecided(
+        resolved.userId(), eventId, resolved.id(), target == ParticipationStatus.CONFIRMED, now);
     return resolved;
   }
 

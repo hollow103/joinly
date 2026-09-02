@@ -130,7 +130,7 @@ Los errores siguen RFC 9457 y añaden un código estable de producto:
 }
 ```
 
-`fields` solo aparece para errores de validación. Códigos previstos: `validation_error`, `not_found`, `email_not_verified`, `agreements_not_accepted`, `event_full`, `event_not_joinable`, `event_not_editable`, `event_not_cancellable`, `event_not_approval`, `event_not_private`, `event_started`, `active_event_limit_reached`, `cannot_join_own_event`, `participation_exists`, `participation_not_confirmed`, `participation_not_pending`, `if_match_required`, `idempotency_key_conflict`, `invitation_invalid`, `cannot_block_self` y `concurrent_update`.
+`fields` solo aparece para errores de validación. Códigos previstos: `validation_error`, `not_found`, `email_not_verified`, `agreements_not_accepted`, `event_full`, `event_not_joinable`, `event_not_editable`, `event_not_cancellable`, `event_not_approval`, `event_not_private`, `event_started`, `active_event_limit_reached`, `capacity_below_confirmed`, `cannot_join_own_event`, `participation_exists`, `participation_not_confirmed`, `participation_not_pending`, `if_match_required`, `idempotency_key_conflict`, `invitation_invalid`, `cannot_block_self` y `concurrent_update`.
 
 ## Recursos de la persona usuaria
 
@@ -225,8 +225,12 @@ El cuerpo de decisión contiene `status` (`archived` o `resolved`), `action` (`n
 ## Notificaciones y efectos secundarios
 
 - El backend registra notificaciones de solicitud, aprobación, rechazo, cambio y cancelación; Expo Push Service se usa para su entrega según `push-settings`.
+- El registro ocurre dentro de la transacción del caso de uso; un proceso programado (`joinly.notifications.dispatch-cron`) reclama en lote las notificaciones pendientes, resuelve el dispositivo del destinatario y las envía a Expo. Cada notificación tiene un único intento: el envío la marca `sent`, cualquier error de Expo la marca `failed` sin reintento y una respuesta `DeviceNotRegistered` además borra el token caducado.
+- Se respeta la preferencia por tipo de `push-settings`: un destinatario sin dispositivo, con la entrega deshabilitada o con el tipo silenciado se completa sin enviar nada.
+- La solicitud de unión solo notifica al creador en eventos con aprobación; la unión directa no genera aviso. El cambio y la cancelación de un evento notifican únicamente a los participantes confirmados; editar solo las notas u observaciones no notifica.
 - La entrega de una notificación no modifica la respuesta síncrona de la operación que la originó.
 - Las operaciones de cierre de eventos, retención, supresión de cuentas y envío de notificaciones son asíncronas, repetibles e idempotentes.
+- El historial de notificaciones dentro de la aplicación (`GET /me/notifications`) queda diferido; la entrega del MVP es solo push y la tabla `notifications` es un registro interno.
 
 ## Estados HTTP
 

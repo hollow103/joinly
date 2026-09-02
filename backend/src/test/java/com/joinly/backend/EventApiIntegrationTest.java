@@ -24,6 +24,12 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
+import java.util.concurrent.Callable;
+import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
+import java.util.concurrent.TimeUnit;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -83,6 +89,11 @@ class EventApiIntegrationTest {
   void resetState() {
     jdbc.update("DELETE FROM moderation_audit");
     jdbc.update("DELETE FROM reports");
+    jdbc.update("DELETE FROM notifications");
+    jdbc.update("DELETE FROM idempotency_records");
+    jdbc.update("DELETE FROM participations");
+    jdbc.update("DELETE FROM invitations");
+    jdbc.update("DELETE FROM blocks");
     jdbc.update("DELETE FROM push_devices");
     jdbc.update("DELETE FROM account_audit");
     jdbc.update("DELETE FROM events");
@@ -296,6 +307,9 @@ class EventApiIntegrationTest {
             authored(post("/api/v1/events/" + eventId + "/participations"), reporter)
                 .header("Idempotency-Key", "suspension-test"))
         .andExpect(status().isNotFound());
+    mvc.perform(authored(get("/api/v1/me"), target))
+        .andExpect(status().isForbidden())
+        .andExpect(jsonPath("$.code").value("account_suspended"));
   }
 
   @Test
@@ -378,6 +392,67 @@ class EventApiIntegrationTest {
         .andExpect(status().isOk())
         .andExpect(header().string(HttpHeaders.ETAG, "\"event-1\""))
         .andExpect(jsonPath("$.title").value("Nuevo titulo"));
+  }
+
+  @Test
+  void rejectsReducingCapacityBelowConfirmedParticipants() throws Exception {
+    UUID creator = insertUser("capacityHost", true);
+    UUID firstParticipant = insertUser("capacityGuestOne", true);
+    UUID secondParticipant = insertUser("capacityGuestTwo", true);
+    UUID eventId = createEvent(creator, VIGO_LON, VIGO_LAT);
+
+    mvc.perform(
+            authored(patch("/api/v1/events/" + eventId), creator)
+                .header(HttpHeaders.IF_MATCH, "\"event-0\"")
+                .content("{\"capacity\":2}"))
+        .andExpect(status().isOk())
+        .andExpect(header().string(HttpHeaders.ETAG, "\"event-1\""));
+    mvc.perform(
+            authored(post("/api/v1/events/" + eventId + "/participations"), firstParticipant)
+                .header("Idempotency-Key", "capacity-guest-one"))
+        .andExpect(status().isCreated());
+    mvc.perform(
+            authored(post("/api/v1/events/" + eventId + "/participations"), secondParticipant)
+                .header("Idempotency-Key", "capacity-guest-two"))
+        .andExpect(status().isCreated());
+
+    mvc.perform(
+            authored(patch("/api/v1/events/" + eventId), creator)
+                .header(HttpHeaders.IF_MATCH, "\"event-1\"")
+                .content("{\"capacity\":1}"))
+        .andExpect(status().isConflict())
+        .andExpect(jsonPath("$.code").value("capacity_below_confirmed"));
+    mvc.perform(authored(get("/api/v1/events/" + eventId), creator))
+        .andExpect(status().isOk())
+        .andExpect(header().string(HttpHeaders.ETAG, "\"event-1\""))
+        .andExpect(jsonPath("$.capacity").value(2))
+        .andExpect(jsonPath("$.confirmedCount").value(2));
+  }
+
+  @Test
+  void concurrentCreatesCannotExceedThreeActiveEvents() throws Exception {
+    UUID creator = insertUser("raceCreator", true);
+    createEvent(creator, VIGO_LON, VIGO_LAT);
+    createEvent(creator, VIGO_LON, VIGO_LAT);
+
+    ExecutorService pool = Executors.newFixedThreadPool(2);
+    CountDownLatch ready = new CountDownLatch(2);
+    CountDownLatch go = new CountDownLatch(1);
+    Future<Integer> first = pool.submit(createAttempt(creator, ready, go));
+    Future<Integer> second = pool.submit(createAttempt(creator, ready, go));
+    ready.await(5, TimeUnit.SECONDS);
+    go.countDown();
+    int firstStatus = first.get(15, TimeUnit.SECONDS);
+    int secondStatus = second.get(15, TimeUnit.SECONDS);
+    pool.shutdown();
+
+    assertThat(List.of(firstStatus, secondStatus)).containsExactlyInAnyOrder(201, 409);
+    assertThat(
+            jdbc.queryForObject(
+                "SELECT count(*) FROM events WHERE creator_id = ? AND status = 'published'",
+                Integer.class,
+                userId(creator)))
+        .isEqualTo(3);
   }
 
   @Test
@@ -583,6 +658,18 @@ class EventApiIntegrationTest {
             .getResponse()
             .getContentAsString();
     return UUID.fromString(objectMapper.readTree(body).get("id").asText());
+  }
+
+  private Callable<Integer> createAttempt(UUID creator, CountDownLatch ready, CountDownLatch go) {
+    return () -> {
+      ready.countDown();
+      go.await(5, TimeUnit.SECONDS);
+      return mvc.perform(
+              authored(post("/api/v1/events"), creator).content(eventJson(VIGO_LON, VIGO_LAT)))
+          .andReturn()
+          .getResponse()
+          .getStatus();
+    };
   }
 
   private UUID userId(UUID authSubject) {

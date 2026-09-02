@@ -8,8 +8,8 @@ Objetivo: validar el ciclo automatizado disponible del backend, desde las migrac
 
 | Comprobación | Comando | Resultado |
 | --- | --- | --- |
-| Suite backend | `./backend/mvnw -f backend/pom.xml test` | Correcta: 34 pruebas ejecutadas, 33 correctas, 0 fallos, 0 errores y 1 omitida |
-| Formato Java | `./backend/mvnw -f backend/pom.xml spotless:check` | Correcto: 57 archivos Java cumplen el formato |
+| Suite backend | `./backend/mvnw -f backend/pom.xml test` | Correcta: 44 pruebas ejecutadas, 43 correctas, 0 fallos, 0 errores y 1 omitida |
+| Formato Java | `./backend/mvnw -f backend/pom.xml spotless:check` | Correcto: 65 archivos Java cumplen el formato |
 | Contrato API | `npx --yes @redocly/cli lint openapi.yaml` | Correcto: contrato OpenAPI valido |
 | Artefacto ejecutable | `docker compose up --build --detach` | Correcto: imagen `joinly-backend` reconstruida |
 | Disponibilidad local | `curl --fail --silent --show-error http://localhost:8080/actuator/health/readiness` | Correcto: `{"status":"UP"}` |
@@ -22,13 +22,14 @@ La suite usa Testcontainers con `postgis/postgis:16-3.4`. Cada clase de integrac
 | --- | --- | --- |
 | Arranque y migraciones | `BackendBootstrapIntegrationTest` | La aplicacion inicia y Flyway migra una base PostGIS vacia |
 | Perfil y validacion | `ProfileRequestTest` | La validacion del payload de perfil rechaza entradas invalidas |
-| Eventos y descubrimiento | `EventApiIntegrationTest` | Creacion, limite de tres activos, edicion con ETag, cancelacion, horario futuro y proyeccion privada de ubicacion y participantes |
+| Eventos y descubrimiento | `EventApiIntegrationTest` | Creacion concurrente con limite de tres activos, capacidad nunca inferior a participantes confirmados, edicion con ETag, cancelacion, horario futuro y proyeccion privada de ubicacion y participantes |
 | Participacion | `ParticipationApiIntegrationTest` | Union directa, aprobacion, invitaciones privadas, abandono e idempotencia de solicitudes |
 | Capacidad concurrente | `ParticipationApiIntegrationTest` | Dos solicitudes simultaneas por la ultima plaza producen exactamente una confirmacion |
-| Bloqueos | `ParticipationApiIntegrationTest` | El bloqueo reciproco oculta el evento, impide unirse y sus operaciones son idempotentes |
+| Bloqueos | `ParticipationApiIntegrationTest` | El bloqueo reciproco oculta el evento, impide unirse y sus operaciones son idempotentes; tras confirmar, permite abandonar sin volver a revelar el evento |
 | Moderacion y suspension | `EventApiIntegrationTest` | Solo administracion resuelve reportes; ocultar y suspender retiran eventos y bloquean operaciones |
 | Retencion y ajustes push | `EventApiIntegrationTest` | Solicitud de eliminacion, anonimizado tras el periodo de gracia y persistencia de preferencias push |
 | Cierre programado | `EventApiIntegrationTest` B-12 | Un evento descubierto pasa a `closed` al terminar, desaparece para terceros, el creador conserva acceso y una segunda ejecucion no altera su version |
+| Entrega de notificaciones | `NotificationDeliveryIntegrationTest` B-14 | Solicitud, decision, cambio y cancelacion registran una notificacion `pending` para el destinatario correcto; el despacho la envia una vez por Expo y la marca `sent`; la union directa no notifica al creador; un tipo silenciado o un dispositivo deshabilitado no envia; `DeviceNotRegistered` la marca `failed` y borra el token; una segunda ejecucion no reenvia |
 
 El escenario B-12 recorre por API la creacion y el descubrimiento, modifica el tiempo solo para simular el final del evento, invoca el servicio de cierre y comprueba las proyecciones resultantes. La consulta SQL condicional se valida mediante la version persistida: pasa de `0` a `1` en el primer cierre y se mantiene en `1` al repetirlo.
 
@@ -43,14 +44,14 @@ Los 23 endpoints declarados en `openapi.yaml` tienen al menos un recorrido princ
 | `DELETE /me` | Solicita borrado, revoca acceso y admite repeticion | `EventApiIntegrationTest.acceptsAccountDeletionAndRevokesProductAccessImmediately` |
 | `PUT /me/push-settings` | Guarda preferencias sin token de dispositivo | `EventApiIntegrationTest.persistsPushSettingsWithoutADeviceToken` |
 | `GET /me/events` | Lista eventos propios publicados y cerrados | `EventApiIntegrationTest.createsPublishedEventAndReturnsItAmongOwnEvents`; `closesEndedPublishedEventsIdempotently` |
-| `POST /events` | Publica un evento con ETag; impone fecha futura, correo validado y limite de activos | `EventApiIntegrationTest.createsPublishedEventAndReturnsItAmongOwnEvents`; `rejectsAFourthActiveEvent`; `rejectsAnEventThatStartsInThePast`; `refusesEventCreationWhenTheEmailIsNotVerified` |
+| `POST /events` | Publica un evento con ETag; impone fecha futura, correo validado y limite de activos incluso bajo concurrencia | `EventApiIntegrationTest.createsPublishedEventAndReturnsItAmongOwnEvents`; `rejectsAFourthActiveEvent`; `concurrentCreatesCannotExceedThreeActiveEvents`; `rejectsAnEventThatStartsInThePast`; `refusesEventCreationWhenTheEmailIsNotVerified` |
 | `POST /events/search` | Descubre, pagina, limita datos privados y excluye cancelados, privados, bloqueados, suspendidos y cerrados | `EventApiIntegrationTest.neverExposesExactLocationOrParticipantsToANonParticipant`; `paginatesDiscoveryByAStableCursor`; `closesEndedPublishedEventsIdempotently`; `ParticipationApiIntegrationTest.reciprocalBlockHidesTheEventAndDeniesJoining` |
-| `GET /events/{eventId}` | Proyecta detalle para creador, participante y tercero; oculta recursos cancelados, privados, bloqueados y cerrados | `EventApiIntegrationTest.neverExposesExactLocationOrParticipantsToANonParticipant`; `keepsPrivateInvitationEventsOutOfDiscoveryAndOtherUsersDetail`; `closesEndedPublishedEventsIdempotently`; `ParticipationApiIntegrationTest.directJoinConfirmsAndRevealsExactLocationToTheParticipantOnly` |
-| `PATCH /events/{eventId}` | Edita con ETag y rechaza version ausente, obsoleta o evento ya iniciado | `EventApiIntegrationTest.enforcesTheIfMatchContractOnEdits`; `refusesMainFieldEditsAndCancellationOnceTheEventHasStarted` |
+| `GET /events/{eventId}` | Proyecta detalle para creador, participante y tercero; oculta recursos cancelados, privados, bloqueados y cerrados, incluido un bloqueo posterior a confirmar | `EventApiIntegrationTest.neverExposesExactLocationOrParticipantsToANonParticipant`; `keepsPrivateInvitationEventsOutOfDiscoveryAndOtherUsersDetail`; `closesEndedPublishedEventsIdempotently`; `ParticipationApiIntegrationTest.directJoinConfirmsAndRevealsExactLocationToTheParticipantOnly`; `blockingAfterConfirmationHidesTheEventButStillAllowsAbandonment` |
+| `PATCH /events/{eventId}` | Edita con ETag y rechaza version ausente, obsoleta, evento ya iniciado o capacidad inferior a participantes confirmados | `EventApiIntegrationTest.enforcesTheIfMatchContractOnEdits`; `refusesMainFieldEditsAndCancellationOnceTheEventHasStarted`; `rejectsReducingCapacityBelowConfirmedParticipants` |
 | `POST /events/{eventId}/cancellation` | Cancela y retira de descubrimiento; rechaza tras el inicio | `EventApiIntegrationTest.cancellationRemovesTheEventFromDiscoveryAndDetail`; `refusesMainFieldEditsAndCancellationOnceTheEventHasStarted` |
 | `GET /events/{eventId}/participations` | Creador lista confirmados y solicitudes; participante no enumera asistentes | `ParticipationApiIntegrationTest.directJoinConfirmsAndRevealsExactLocationToTheParticipantOnly`; `approvalFlowLetsTheCreatorConfirmOrRejectAndReRequest` |
 | `POST /events/{eventId}/participations` | Union directa, solicitud, invitacion privada, idempotencia, bloqueo y carrera por la ultima plaza | `ParticipationApiIntegrationTest.directJoinConfirmsAndRevealsExactLocationToTheParticipantOnly`; `approvalFlowLetsTheCreatorConfirmOrRejectAndReRequest`; `privateInvitationJoinConsumesTheCodeAndRejectsRevokedOrExhaustedOnes`; `idempotencyKeyReplaysTheParticipationAndConflictsOnAReusedKey`; `concurrentJoinsToTheLastPlaceConfirmAtMostOne` |
-| `DELETE /events/{eventId}/participation` | Abandona de forma idempotente y libera capacidad | `ParticipationApiIntegrationTest.abandoningBeforeStartFreesThePlace` |
+| `DELETE /events/{eventId}/participation` | Abandona de forma idempotente y libera capacidad, tambien tras bloquear al creador | `ParticipationApiIntegrationTest.abandoningBeforeStartFreesThePlace`; `blockingAfterConfirmationHidesTheEventButStillAllowsAbandonment` |
 | `PATCH /events/{eventId}/participations/{participationId}` | Creador confirma o rechaza solicitudes con ETag | `ParticipationApiIntegrationTest.approvalFlowLetsTheCreatorConfirmOrRejectAndReRequest` |
 | `POST /events/{eventId}/invitations` | Creador genera codigo privado de un solo uso | `ParticipationApiIntegrationTest.privateInvitationJoinConsumesTheCodeAndRejectsRevokedOrExhaustedOnes` |
 | `DELETE /events/{eventId}/invitations/{invitationId}` | Creador revoca una invitacion y bloquea su uso posterior | `ParticipationApiIntegrationTest.privateInvitationJoinConsumesTheCodeAndRejectsRevokedOrExhaustedOnes` |
@@ -69,7 +70,7 @@ Los 23 endpoints declarados en `openapi.yaml` tienen al menos un recorrido princ
 ## Limites de esta ejecucion
 
 - No sustituye el recorrido manual Android contra preproduccion definido en `docs/14-estrategia-pruebas.md`.
-- No prueba la entrega real de notificaciones push, pendiente de implementacion operativa.
+- B-14 valida el registro y el despacho de notificaciones con un cliente Expo simulado; no ejercita la llamada HTTP real a Expo Push Service ni la recepcion en un dispositivo.
 - No cubre el panel de moderacion, que todavia no esta implementado.
 - El readiness confirma que el backend local reconstruido esta disponible; no equivale a una prueba de despliegue productivo.
 
