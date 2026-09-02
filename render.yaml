@@ -21,35 +21,32 @@ services:
       - key: SERVER_TOMCAT_THREADS_MAX
         value: "30"
       # --- Constantes de la aplicación ---
-      - key: SUPABASE_AUDIENCE
-        value: authenticated
       - key: JOINLY_TERMS_VERSION
         value: v1
       - key: JOINLY_PRIVACY_VERSION
         value: v1
       - key: JOINLY_GUIDELINES_VERSION
         value: v1
-      # --- Se rellenan en el dashboard de Render al desplegar (no se guardan en el repo) ---
+      # --- Supabase (proyecto ulxrjlmpzaeouqbjbnjc). URLs y publishable key son
+      #     públicas y ya viven en application.yml / la app móvil ---
+      - key: SUPABASE_AUDIENCE
+        value: authenticated
+      - key: SUPABASE_ISSUER
+        value: https://ulxrjlmpzaeouqbjbnjc.supabase.co/auth/v1
+      - key: SUPABASE_JWK_SET_URI
+        value: https://ulxrjlmpzaeouqbjbnjc.supabase.co/auth/v1/.well-known/jwks.json
+      - key: SUPABASE_USER_INFO_URI
+        value: https://ulxrjlmpzaeouqbjbnjc.supabase.co/auth/v1/user
+      - key: SUPABASE_API_KEY
+        value: sb_publishable_TEBaRu7TbvpJ075XD-B_kA_3m_aosAd
+      # --- Base de datos: se rellenan en el dashboard de Render al desplegar.
+      #     Usar el SESSION POOLER de Supabase (IPv4, puerto 5432), NO la conexión
+      #     directa db.<ref>.supabase.co (solo IPv6, no llega desde Render Free). ---
       # DB_URL: jdbc:postgresql://aws-0-<region>.pooler.supabase.com:5432/postgres?sslmode=require
       - key: DB_URL
         sync: false
-      # DB_USERNAME: postgres.<ref-del-proyecto-supabase>
+      # DB_USERNAME: postgres.ulxrjlmpzaeouqbjbnjc
       - key: DB_USERNAME
         sync: false
       - key: DB_PASSWORD
-        sync: false
-      # SUPABASE_ISSUER: https://<ref>.supabase.co/auth/v1
-      - key: SUPABASE_ISSUER
-        sync: false
-      # SUPABASE_JWK_SET_URI: https://<ref>.supabase.co/auth/v1/.well-known/jwks.json
-      - key: SUPABASE_JWK_SET_URI
-        sync: false
-      # SUPABASE_API_KEY: anon / publishable key del proyecto
-      - key: SUPABASE_API_KEY
-        sync: false
-      # SUPABASE_USER_INFO_URI: https://<ref>.supabase.co/auth/v1/user
-      - key: SUPABASE_USER_INFO_URI
-        sync: false
-      # Opcional: token de Expo para notificaciones push con Enhanced Security
-      - key: JOINLY_EXPO_ACCESS_TOKEN
         sync: false
