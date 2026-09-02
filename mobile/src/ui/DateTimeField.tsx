@@ -1,5 +1,4 @@
 import DateTimePicker, { DateTimePickerAndroid } from '@react-native-community/datetimepicker';
-import { useState } from 'react';
 import { Platform, Pressable, StyleSheet, View } from 'react-native';
 import { Text } from '@/ui/Text';
 import { color, radius, space } from '@/ui/tokens';
@@ -22,13 +21,11 @@ type Props = {
 };
 
 /**
- * Native date + time picker. iOS shows an inline picker under the field; Android
- * opens the platform date dialog followed by the time dialog. Replaces the old
- * free-text DD/MM/AAAA + HH:MM inputs.
+ * Native date + time picker. iOS renders the compact pill (tap to open the
+ * system date+time popover); Android opens the platform date dialog followed by
+ * the time dialog. Replaces the old free-text DD/MM/AAAA + HH:MM inputs.
  */
 export function DateTimeField({ label, value, onChange, minimumDate, disabled }: Props) {
-  const [iosOpen, setIosOpen] = useState(false);
-
   function openAndroid() {
     DateTimePickerAndroid.open({
       value: value ?? nextHour(),
@@ -51,10 +48,28 @@ export function DateTimeField({ label, value, onChange, minimumDate, disabled }:
     });
   }
 
-  function open() {
-    if (disabled) return;
-    if (Platform.OS === 'android') openAndroid();
-    else setIosOpen((current) => !current);
+  if (Platform.OS === 'ios') {
+    return (
+      <View style={styles.field}>
+        <Text style={styles.label}>{label}</Text>
+        <View style={[styles.iosRow, disabled ? styles.disabled : null]}>
+          {value ? null : (
+            <Text style={styles.placeholder}>Elige la fecha y la hora →</Text>
+          )}
+          <DateTimePicker
+            value={value ?? nextHour()}
+            mode="datetime"
+            display="compact"
+            minimumDate={minimumDate}
+            disabled={disabled}
+            accessibilityLabel={label}
+            onChange={(_event, next) => {
+              if (next) onChange(next);
+            }}
+          />
+        </View>
+      </View>
+    );
   }
 
   return (
@@ -63,25 +78,16 @@ export function DateTimeField({ label, value, onChange, minimumDate, disabled }:
       <Pressable
         accessibilityRole="button"
         accessibilityLabel={label}
-        accessibilityState={{ disabled: Boolean(disabled), expanded: iosOpen }}
-        onPress={open}
-        style={[styles.input, disabled ? styles.inputDisabled : null]}
+        accessibilityState={{ disabled: Boolean(disabled) }}
+        onPress={() => {
+          if (!disabled) openAndroid();
+        }}
+        style={[styles.input, disabled ? styles.disabled : null]}
       >
         <Text style={value ? styles.value : styles.placeholder}>
           {value ? formatter.format(value) : 'Elegir fecha y hora'}
         </Text>
       </Pressable>
-      {Platform.OS === 'ios' && iosOpen && !disabled ? (
-        <DateTimePicker
-          value={value ?? nextHour()}
-          mode="datetime"
-          display="inline"
-          minimumDate={minimumDate}
-          onChange={(_event, next) => {
-            if (next) onChange(next);
-          }}
-        />
-      ) : null}
     </View>
   );
 }
@@ -89,6 +95,13 @@ export function DateTimeField({ label, value, onChange, minimumDate, disabled }:
 const styles = StyleSheet.create({
   field: { gap: space.xs },
   label: { fontSize: 13, fontWeight: '600', color: color.text },
+  iosRow: {
+    minHeight: 48,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    gap: space.sm,
+  },
   input: {
     minHeight: 48,
     justifyContent: 'center',
@@ -98,7 +111,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: space.md,
     backgroundColor: color.surface,
   },
-  inputDisabled: { opacity: 0.5 },
+  disabled: { opacity: 0.5 },
   value: { color: color.text, fontSize: 15 },
   placeholder: { color: color.textMuted, fontSize: 15 },
 });
