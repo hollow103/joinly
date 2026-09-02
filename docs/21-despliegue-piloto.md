@@ -5,6 +5,14 @@ y generar un APK que se instale en un móvil Android real y se conecte a ese bac
 Complementa `docs/09-despliegue-y-cicd.md` (que fija Cloud Run + Supabase como
 plataforma prevista) con pasos concretos y una alternativa sin tarjeta de crédito.
 
+**Estado actual del piloto:** backend desplegado en Render Free desde
+`feature/mvp-integration` vía `render.yaml`, en
+`https://joinly-backend-v3xz.onrender.com` (base de datos y Auth en el proyecto
+Supabase `ulxrjlmpzaeouqbjbnjc`, Session pooler `aws-0-eu-central-1`). Verificado:
+`readiness` UP, migraciones `V1..V9` aplicadas, validación de JWT y consulta a la
+base correctas (`GET /me` con token real devuelve `profile_required` porque la
+base está vacía). Pendiente: generar el APK y el recorrido de aceptación.
+
 ## 0. Cómo encajan las piezas (orquestación)
 
 ```
