@@ -34,8 +34,11 @@ Se implementarán junto con cada módulo, no como una fase separada. El conjunto
 | B-09 | Abandonar antes del inicio | Participación `abandoned` y plaza liberada |
 | B-10 | Acceso a moderación sin rol `admin` | `403 Forbidden` |
 | B-11 | Suspender una cuenta | Sus eventos dejan de descubrirse y su JWT ya no permite operaciones |
+| B-12 | Cierre programado de un evento terminado | Pasa a `closed` una vez, deja de descubrirse y devuelve `404` a terceros; el creador conserva acceso y lo lista con `status=closed` |
 
 La prueba B-07 usa dos transacciones o peticiones concurrentes reales contra PostgreSQL. Las demás pueden empezar como pruebas de servicio y autorización con la mínima infraestructura necesaria.
+
+B-12 se ejecuta de extremo a extremo contra PostGIS real: crea el evento por API, verifica su descubrimiento, simula que terminó, invoca el proceso programado, verifica sus proyecciones posteriores y repite el proceso para comprobar idempotencia.
 
 ## Validación manual antes del APK
 

@@ -16,6 +16,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.joinly.backend.authentication.SupabaseAuthClient;
+import com.joinly.backend.events.EventClosingService;
 import com.joinly.backend.users.AccountRetentionService;
 import java.time.Duration;
 import java.time.Instant;
@@ -71,6 +72,7 @@ class EventApiIntegrationTest {
   @Autowired JdbcTemplate jdbc;
   @Autowired ObjectMapper objectMapper;
   @Autowired AccountRetentionService accountRetention;
+  @Autowired EventClosingService eventClosing;
 
   @MockitoBean SupabaseAuthClient supabaseAuth;
 
@@ -220,6 +222,40 @@ class EventApiIntegrationTest {
             jdbc.queryForObject(
                 "SELECT status::text FROM events WHERE id = ?", String.class, eventId))
         .isEqualTo("published");
+  }
+
+  @Test
+  void listsPendingReportsForAnAdmin() throws Exception {
+    UUID reporter = insertUser("queueReporter", true);
+    UUID creator = insertUser("queueCreator", true);
+    UUID admin = insertUser("queueAdmin", true);
+    UUID eventId = createEvent(creator, VIGO_LON, VIGO_LAT);
+    jdbc.update("UPDATE users SET role = 'admin' WHERE auth_subject = ?", admin);
+
+    String reportId =
+        objectMapper
+            .readTree(
+                mvc.perform(
+                        authored(post("/api/v1/reports"), reporter)
+                            .content(
+                                "{\"targetType\":\"event\",\"targetId\":\""
+                                    + eventId
+                                    + "\",\"reason\":\"misleadingLocation\"}"))
+                    .andExpect(status().isCreated())
+                    .andExpect(header().string(HttpHeaders.ETAG, "\"report-0\""))
+                    .andReturn()
+                    .getResponse()
+                    .getContentAsString())
+            .get("id")
+            .asText();
+
+    mvc.perform(authored(get("/api/v1/admin/reports?status=pending&limit=1"), admin))
+        .andExpect(status().isOk())
+        .andExpect(jsonPath("$.items.length()").value(1))
+        .andExpect(jsonPath("$.items[0].id").value(reportId))
+        .andExpect(jsonPath("$.items[0].status").value("pending"))
+        .andExpect(jsonPath("$.items[0].targetType").value("event"))
+        .andExpect(jsonPath("$.page.nextCursor").doesNotExist());
   }
 
   @Test
@@ -381,6 +417,49 @@ class EventApiIntegrationTest {
     mvc.perform(authored(get("/api/v1/events/" + eventId), viewer))
         .andExpect(status().isNotFound())
         .andExpect(jsonPath("$.code").value("not_found"));
+  }
+
+  @Test
+  void closesEndedPublishedEventsIdempotently() throws Exception {
+    UUID creator = insertUser("pastHost", true);
+    UUID viewer = insertUser("pastViewer", true);
+    UUID eventId = createEvent(creator, VIGO_LON, VIGO_LAT);
+
+    mvc.perform(
+            authored(post("/api/v1/events/search"), viewer)
+                .content(searchJson(VIGO_LON, VIGO_LAT, 5000)))
+        .andExpect(status().isOk())
+        .andExpect(jsonPath("$.items[0].id").value(eventId.toString()));
+    jdbc.update(
+        "UPDATE events SET starts_at = now() - interval '2 hours', duration_minutes = 60 WHERE id = ?",
+        eventId);
+
+    eventClosing.closeEndedEvents();
+
+    assertThat(
+            jdbc.queryForObject(
+                "SELECT status::text FROM events WHERE id = ?", String.class, eventId))
+        .isEqualTo("closed");
+    assertThat(jdbc.queryForObject("SELECT version FROM events WHERE id = ?", Long.class, eventId))
+        .isEqualTo(1L);
+    mvc.perform(
+            authored(post("/api/v1/events/search"), viewer)
+                .content(searchJson(VIGO_LON, VIGO_LAT, 5000)))
+        .andExpect(status().isOk())
+        .andExpect(jsonPath("$.items").isEmpty());
+    mvc.perform(authored(get("/api/v1/events/" + eventId), viewer))
+        .andExpect(status().isNotFound());
+    mvc.perform(authored(get("/api/v1/events/" + eventId), creator))
+        .andExpect(status().isOk())
+        .andExpect(header().string(HttpHeaders.ETAG, "\"event-1\""));
+    mvc.perform(authored(get("/api/v1/me/events?status=closed"), creator))
+        .andExpect(status().isOk())
+        .andExpect(jsonPath("$.items[0].id").value(eventId.toString()));
+
+    eventClosing.closeEndedEvents();
+
+    assertThat(jdbc.queryForObject("SELECT version FROM events WHERE id = ?", Long.class, eventId))
+        .isEqualTo(1L);
   }
 
   @Test

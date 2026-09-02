@@ -159,6 +159,18 @@ public class EventRepository {
         > 0;
   }
 
+  public int closeEndedEvents(Instant now) {
+    return jdbc.sql(
+            """
+            UPDATE events
+            SET status = 'closed', version = version + 1, updated_at = :now
+            WHERE status = 'published'
+              AND starts_at + duration_minutes * INTERVAL '1 minute' <= :now
+            """)
+        .param("now", ts(now))
+        .update();
+  }
+
   private static final String CONFIRMED_COUNT_SUBQUERY =
       "(SELECT count(*) FROM participations p WHERE p.event_id = e.id AND p.status = 'confirmed')";
 
