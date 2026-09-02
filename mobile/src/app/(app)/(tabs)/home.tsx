@@ -10,6 +10,7 @@ import {
   categoryLabel,
   distanceLabel,
   eventDate,
+  timeFilterWindow,
   type TimeFilter,
 } from '@/events/discovery';
 import { useEventSearch } from '@/events/search-store';
@@ -21,21 +22,6 @@ const timeFilters: [TimeFilter, string][] = [
   ['tomorrow', 'Mañana'],
   ['weekend', 'Este finde'],
 ];
-
-function matchesTimeFilter(event: EventDiscovery, filter: TimeFilter) {
-  if (filter === 'any') return true;
-  const startsAt = new Date(event.startsAt);
-  const now = new Date();
-  if (filter === 'afternoon')
-    return startsAt.toDateString() === now.toDateString() && startsAt.getHours() >= 12;
-  if (filter === 'tomorrow') {
-    const tomorrow = new Date(now);
-    tomorrow.setDate(now.getDate() + 1);
-    return startsAt.toDateString() === tomorrow.toDateString();
-  }
-  const day = startsAt.getDay();
-  return day === 0 || day === 6;
-}
 
 function Radar({ events }: { events: EventDiscovery[] }) {
   const blipPositions = [styles.blip0, styles.blip1, styles.blip2];
@@ -69,13 +55,16 @@ export default function Home() {
   const setRadiusMeters = useEventSearch((state) => state.setRadiusMeters);
   const setTimeFilter = useEventSearch((state) => state.setTimeFilter);
   const profileQuery = useQuery({ queryKey: ['me', token], queryFn: () => getMe(token) });
+  const timeWindow = timeFilterWindow(timeFilter);
   const eventsQuery = useInfiniteQuery({
-    queryKey: ['events', 'search', origin, radiusMeters, categories],
+    queryKey: ['events', 'search', origin, radiusMeters, categories, timeFilter],
     queryFn: ({ pageParam }) =>
       searchEvents(token, {
         origin: { type: 'Point', coordinates: [origin!.longitude, origin!.latitude] },
         radiusMeters,
         categories: categories.length === 0 ? undefined : categories,
+        startsAfter: timeWindow.startsAfter,
+        startsBefore: timeWindow.startsBefore,
         cursor: pageParam,
         limit: 20,
       }),
@@ -84,8 +73,7 @@ export default function Home() {
     enabled: Boolean(token && origin),
   });
 
-  const allEvents = eventsQuery.data?.pages.flatMap((page) => page.data.items) ?? [];
-  const events = allEvents.filter((event) => matchesTimeFilter(event, timeFilter));
+  const events = eventsQuery.data?.pages.flatMap((page) => page.data.items) ?? [];
   const suggestedRadius = eventsQuery.data?.pages[0]?.data.suggestedRadiusMeters;
 
   if (profileQuery.isLoading) {

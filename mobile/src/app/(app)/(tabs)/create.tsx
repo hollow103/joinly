@@ -12,12 +12,11 @@ import {
   accessModeOptions,
   categoryOptions,
   durationOptions,
-  parseLocalDateTime,
   validateEventForm,
   type AccessMode,
   type EventFormErrors,
 } from '@/events/form';
-import { Button, Screen, Text, tokens } from '@/ui';
+import { Button, DateTimeField, Screen, Text, tokens } from '@/ui';
 
 export default function NewEvent() {
   const router = useRouter();
@@ -29,8 +28,7 @@ export default function NewEvent() {
   const [description, setDescription] = useState('');
   const [notes, setNotes] = useState('');
   const [category, setCategory] = useState('');
-  const [dateText, setDateText] = useState('');
-  const [timeText, setTimeText] = useState('');
+  const [startsAt, setStartsAt] = useState<Date | null>(null);
   const [durationMinutes, setDurationMinutes] = useState(60);
   const [accessMode, setAccessMode] = useState<AccessMode>('direct');
   const [unlimitedCapacity, setUnlimitedCapacity] = useState(true);
@@ -49,8 +47,7 @@ export default function NewEvent() {
       description,
       notes,
       category,
-      dateText,
-      timeText,
+      startsAt,
       durationMinutes,
       accessMode,
       unlimitedCapacity,
@@ -64,8 +61,7 @@ export default function NewEvent() {
       description,
       notes,
       category,
-      dateText,
-      timeText,
+      startsAt,
       durationMinutes,
       accessMode,
       unlimitedCapacity,
@@ -77,14 +73,13 @@ export default function NewEvent() {
 
   const mutation = useMutation({
     mutationFn: () => {
-      const startsAt = parseLocalDateTime(dateText, timeText)!;
       const parsedCapacity = unlimitedCapacity ? undefined : Number(capacity);
       return createEvent(token, {
         title: title.trim(),
         description: description.trim(),
         notes: notes.trim() ? notes.trim() : undefined,
         category: category as EventInput['category'],
-        startsAt: startsAt.toISOString(),
+        startsAt: startsAt!.toISOString(),
         durationMinutes,
         exactLocation: {
           type: 'Point',
@@ -195,26 +190,12 @@ export default function NewEvent() {
           />
           {errors.description ? <Text style={styles.fieldError}>{errors.description}</Text> : null}
 
-          <View style={styles.row}>
-            <View style={styles.rowItem}>
-              <AuthField
-                label="Fecha"
-                value={dateText}
-                onChangeText={setDateText}
-                placeholder="DD/MM/AAAA"
-                keyboardType="numbers-and-punctuation"
-              />
-            </View>
-            <View style={styles.rowItem}>
-              <AuthField
-                label="Hora"
-                value={timeText}
-                onChangeText={setTimeText}
-                placeholder="HH:MM"
-                keyboardType="numbers-and-punctuation"
-              />
-            </View>
-          </View>
+          <DateTimeField
+            label="Fecha y hora"
+            value={startsAt}
+            onChange={setStartsAt}
+            minimumDate={new Date()}
+          />
           {errors.startsAt ? <Text style={styles.fieldError}>{errors.startsAt}</Text> : null}
 
           <Text style={styles.groupLabel}>Duración</Text>
@@ -341,8 +322,6 @@ const styles = StyleSheet.create({
     marginTop: tokens.space.xs,
   },
   multiline: { minHeight: 88, paddingTop: tokens.space.sm, textAlignVertical: 'top' },
-  row: { flexDirection: 'row', gap: tokens.space.md },
-  rowItem: { flex: 1 },
   chips: { flexDirection: 'row', flexWrap: 'wrap', gap: tokens.space.sm },
   chip: {
     borderColor: tokens.color.border,

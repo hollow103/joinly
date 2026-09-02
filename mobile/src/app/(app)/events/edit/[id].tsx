@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { useLocalSearchParams, useRouter } from 'expo-router';
-import { format } from 'date-fns';
 import { ActivityIndicator, Alert, Pressable, ScrollView, StyleSheet, View } from 'react-native';
 import {
   cancelEvent,
@@ -13,20 +12,14 @@ import {
 import { ApiError } from '@/api/problem';
 import { AuthField } from '@/auth/AuthField';
 import { useSession } from '@/auth/session';
-import {
-  accessModeOptions,
-  durationOptions,
-  parseLocalDateTime,
-  type AccessMode,
-} from '@/events/form';
-import { Button, Screen, Text, tokens } from '@/ui';
+import { accessModeOptions, durationOptions, type AccessMode } from '@/events/form';
+import { Button, DateTimeField, Screen, Text, tokens } from '@/ui';
 
 type Draft = {
   title: string;
   description: string;
   notes: string;
-  dateText: string;
-  timeText: string;
+  startsAt: Date;
   durationMinutes: number;
   accessMode: AccessMode;
   unlimitedCapacity: boolean;
@@ -34,13 +27,11 @@ type Draft = {
 };
 
 function draftFromEvent(event: EventDetail): Draft {
-  const startsAt = new Date(event.startsAt);
   return {
     title: event.title,
     description: event.description,
     notes: event.notes ?? '',
-    dateText: format(startsAt, 'dd/MM/yyyy'),
-    timeText: format(startsAt, 'HH:mm'),
+    startsAt: new Date(event.startsAt),
     durationMinutes: event.durationMinutes,
     accessMode: event.accessMode as AccessMode,
     unlimitedCapacity: event.capacity == null,
@@ -83,9 +74,8 @@ export default function EditEvent() {
       if (draft.description.trim() !== event.description)
         patch.description = draft.description.trim();
       if (draft.notes.trim() !== (event.notes ?? '')) patch.notes = draft.notes.trim();
-      const startsAt = parseLocalDateTime(draft.dateText, draft.timeText);
-      if (startsAt && startsAt.toISOString() !== new Date(event.startsAt).toISOString())
-        patch.startsAt = startsAt.toISOString();
+      if (draft.startsAt.toISOString() !== new Date(event.startsAt).toISOString())
+        patch.startsAt = draft.startsAt.toISOString();
       if (draft.durationMinutes !== event.durationMinutes)
         patch.durationMinutes = draft.durationMinutes;
       if (draft.accessMode !== event.accessMode) patch.accessMode = draft.accessMode;
@@ -195,28 +185,13 @@ export default function EditEvent() {
             style={styles.multiline}
             editable={!started}
           />
-          <View style={styles.row}>
-            <View style={styles.rowItem}>
-              <AuthField
-                label="Fecha"
-                value={draft.dateText}
-                onChangeText={(value) => set('dateText', value)}
-                placeholder="DD/MM/AAAA"
-                editable={!started}
-                keyboardType="numbers-and-punctuation"
-              />
-            </View>
-            <View style={styles.rowItem}>
-              <AuthField
-                label="Hora"
-                value={draft.timeText}
-                onChangeText={(value) => set('timeText', value)}
-                placeholder="HH:MM"
-                editable={!started}
-                keyboardType="numbers-and-punctuation"
-              />
-            </View>
-          </View>
+          <DateTimeField
+            label="Fecha y hora"
+            value={draft.startsAt}
+            onChange={(value) => set('startsAt', value)}
+            minimumDate={new Date()}
+            disabled={started}
+          />
 
           {!started ? (
             <>
@@ -352,8 +327,6 @@ const styles = StyleSheet.create({
     marginTop: tokens.space.xs,
   },
   multiline: { minHeight: 88, paddingTop: tokens.space.sm, textAlignVertical: 'top' },
-  row: { flexDirection: 'row', gap: tokens.space.md },
-  rowItem: { flex: 1 },
   chips: { flexDirection: 'row', flexWrap: 'wrap', gap: tokens.space.sm },
   chip: {
     borderColor: tokens.color.border,

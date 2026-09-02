@@ -987,6 +987,16 @@ export interface components {
             origin: components["schemas"]["GeoPoint"];
             radiusMeters: number;
             categories?: string[];
+            /**
+             * Format: date-time
+             * @description Solo eventos que empiezan en o después de este instante.
+             */
+            startsAfter?: string | null;
+            /**
+             * Format: date-time
+             * @description Solo eventos que empiezan en o antes de este instante.
+             */
+            startsBefore?: string | null;
             cursor?: string | null;
             /** @default 20 */
             limit: number;

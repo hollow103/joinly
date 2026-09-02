@@ -1,4 +1,3 @@
-import { isValid, parse } from 'date-fns';
 import { categoryOptions } from '@/events/discovery';
 
 export { categoryOptions };
@@ -21,25 +20,6 @@ export const durationOptions: readonly [number, string][] = [
   [240, '4 h'],
 ];
 
-export const DATE_FORMAT = 'dd/MM/yyyy';
-export const TIME_FORMAT = 'HH:mm';
-
-/**
- * Parses the two text fields ("31/12/2026" + "19:30") into a local Date, or
- * null when either is malformed. The caller still checks it is in the future.
- */
-export function parseLocalDateTime(dateText: string, timeText: string): Date | null {
-  const trimmedDate = dateText.trim();
-  const trimmedTime = timeText.trim();
-  if (!trimmedDate || !trimmedTime) return null;
-  const parsed = parse(
-    `${trimmedDate} ${trimmedTime}`,
-    `${DATE_FORMAT} ${TIME_FORMAT}`,
-    new Date(),
-  );
-  return isValid(parsed) ? parsed : null;
-}
-
 export type EventFormErrors = Partial<
   Record<'title' | 'description' | 'category' | 'startsAt' | 'location', string>
 >;
@@ -49,8 +29,7 @@ export type EventFormValues = {
   description: string;
   notes: string;
   category: string;
-  dateText: string;
-  timeText: string;
+  startsAt: Date | null;
   durationMinutes: number;
   accessMode: AccessMode;
   unlimitedCapacity: boolean;
@@ -67,9 +46,9 @@ export function validateEventForm(values: EventFormValues, now: Date): EventForm
   if (values.description.trim().length === 0) errors.description = 'Añade una descripción.';
   if (!categoryOptions.some(([value]) => value === values.category))
     errors.category = 'Elige una categoría.';
-  const startsAt = parseLocalDateTime(values.dateText, values.timeText);
-  if (!startsAt) errors.startsAt = 'Usa el formato DD/MM/AAAA y HH:MM.';
-  else if (startsAt.getTime() <= now.getTime()) errors.startsAt = 'La fecha debe ser futura.';
+  if (!values.startsAt) errors.startsAt = 'Elige la fecha y la hora del plan.';
+  else if (values.startsAt.getTime() <= now.getTime())
+    errors.startsAt = 'La fecha debe ser futura.';
   if (values.latitude === null || values.longitude === null)
     errors.location = 'Marca la ubicación del plan para poder publicarlo.';
   return errors;
