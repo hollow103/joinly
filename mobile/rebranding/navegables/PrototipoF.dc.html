@@ -1,0 +1,248 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Unbounded:wght@500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap">
+  <style>
+    * { box-sizing: border-box; }
+    body { margin: 0; }
+    .ff { font-family: "Space Grotesk", ui-sans-serif, system-ui, sans-serif; color: #F2F2F7; -webkit-font-smoothing: antialiased;
+          width: 390px; height: 860px; background: #0B0B12; overflow-y: auto; scroll-behavior: smooth; position: relative; }
+    .ff .disp { font-family: "Unbounded", "Space Grotesk", system-ui, sans-serif; }
+    .ff a { color: inherit; text-decoration: none; }
+    .ff .bg { position: fixed; inset: 0; z-index: 0; pointer-events: none; }
+    .ff section { position: relative; z-index: 1; min-height: 800px; padding: 0 20px 40px; }
+    .ff .navpad { height: 96px; }
+    .ff .kick { font-size: 9px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; }
+    .ff .lab { font-size: 10px; font-weight: 700; letter-spacing: 2.4px; text-transform: uppercase; color: #7C7C92; margin: 26px 0 10px; }
+    .ff .card { background: #15151F; border: 1px solid rgba(255,255,255,0.07); border-radius: 18px; padding: 15px 16px; display: block; }
+    .ff .meta { font-size: 11.5px; color: #9A9AB0; margin-top: 4px; }
+    .ff .glowlime { box-shadow: 0 0 26px -8px #C6FF3D; }
+    .ff .glowmag { box-shadow: 0 0 26px -8px #FF3D8A; }
+    .ff .glowcy { box-shadow: 0 0 26px -8px #3DE0FF; }
+    .ff .cta { display: flex; align-items: center; justify-content: center; margin: 22px 4px 0; height: 54px; border-radius: 999px;
+               background: #C6FF3D; color: #0B0B12; font-size: 15px; font-weight: 700; box-shadow: 0 0 34px -4px #C6FF3D; letter-spacing: 0.2px; }
+    .ff .seg { display: flex; background: #15151F; border: 1px solid rgba(255,255,255,0.08); border-radius: 999px; padding: 4px; margin-top: 14px; }
+    .ff .seg span { flex: 1; text-align: center; font-size: 12px; font-weight: 600; padding: 9px 0; border-radius: 999px; color: #9A9AB0; }
+    .ff .seg span.on { background: #C6FF3D; color: #0B0B12; box-shadow: 0 0 18px -4px #C6FF3D; }
+    .ff .chip { display: inline-block; font-size: 12px; padding: 8px 13px; border-radius: 999px; border: 1px solid rgba(255,255,255,0.14); color: #C7C7D6; }
+    .ff .chip.on { border-color: #3DE0FF; color: #3DE0FF; box-shadow: 0 0 16px -6px #3DE0FF; }
+    .ff .frow { display: flex; justify-content: space-between; align-items: baseline; padding: 13px 4px; border-top: 1px solid rgba(255,255,255,0.06); }
+    .ff .frow .l { font-size: 11px; color: #7C7C92; }
+    .ff .frow .v { font-size: 14px; }
+    .ff .navbar { position: sticky; bottom: 14px; margin: 0 20px; height: 62px; background: rgba(17,17,26,0.92); border: 1px solid rgba(255,255,255,0.08);
+                  border-radius: 22px; box-shadow: 0 16px 44px -12px rgba(0,0,0,0.7); display: flex; align-items: center; justify-content: space-around; z-index: 9; backdrop-filter: blur(12px); }
+    .ff .nv { display: flex; flex-direction: column; align-items: center; gap: 3px; font-size: 9px; font-weight: 600; color: #6C6C82; }
+    .ff #joinF { display: none; }
+    .ff .lbl-in { display: none; }
+    .ff #joinF:checked ~ #ficha .lbl-join { display: none; }
+    .ff #joinF:checked ~ #ficha .lbl-in { display: inline; }
+    .ff #joinF:checked ~ #ficha .cta { background: #3DE0FF; box-shadow: 0 0 34px -4px #3DE0FF; }
+    .ff #joinF:checked ~ #ficha .exact-row { display: flex; }
+    .ff .exact-row { display: none; }
+    @keyframes ffpulse { 0%,100% { opacity: 0.9; transform: scale(1); } 50% { opacity: 0.4; transform: scale(1.04); } }
+    .ff .ring-anim { animation: ffpulse 2.6s ease-in-out infinite; transform-origin: 195px 150px; }
+  </style>
+</helmet>
+
+<div class="ff">
+  <input type="checkbox" id="joinF">
+  <div class="bg">
+    <svg width="390" height="860" viewBox="0 0 390 860" preserveAspectRatio="none" style="width:100%;height:100%;">
+      <defs>
+        <radialGradient id="fg1" cx="18%" cy="10%" r="60%"><stop offset="0%" stop-color="#FF3D8A" stop-opacity="0.28"/><stop offset="100%" stop-color="#FF3D8A" stop-opacity="0"/></radialGradient>
+        <radialGradient id="fg2" cx="90%" cy="80%" r="65%"><stop offset="0%" stop-color="#3DE0FF" stop-opacity="0.22"/><stop offset="100%" stop-color="#3DE0FF" stop-opacity="0"/></radialGradient>
+        <radialGradient id="fg3" cx="50%" cy="45%" r="55%"><stop offset="0%" stop-color="#C6FF3D" stop-opacity="0.08"/><stop offset="100%" stop-color="#C6FF3D" stop-opacity="0"/></radialGradient>
+        <pattern id="fdot" width="26" height="26" patternUnits="userSpaceOnUse"><circle cx="1.5" cy="1.5" r="1.1" fill="#FFFFFF" fill-opacity="0.05"/></pattern>
+        <filter id="fnoise"><feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="2" stitchTiles="stitch"/><feColorMatrix type="saturate" values="0"/><feComponentTransfer><feFuncA type="linear" slope="0.04"/></feComponentTransfer></filter>
+      </defs>
+      <rect width="390" height="860" fill="#0B0B12"/>
+      <rect width="390" height="860" fill="url(#fg1)"/>
+      <rect width="390" height="860" fill="url(#fg2)"/>
+      <rect width="390" height="860" fill="url(#fg3)"/>
+      <rect width="390" height="860" fill="url(#fdot)"/>
+      <rect width="390" height="860" filter="url(#fnoise)"/>
+    </svg>
+  </div>
+
+  <!-- ============ RADAR ============ -->
+  <section id="radar">
+    <div style="display: flex; align-items: center; gap: 8px; padding: 20px 0 4px;">
+      <span class="disp" style="font-size: 18px; font-weight: 700; color: #C6FF3D;">joinly</span>
+      <a href="#filtros" style="margin-left: auto; display: flex; align-items: center; gap: 6px; font-size: 12px; font-weight: 600; color: #3DE0FF; border: 1px solid rgba(61,224,255,0.35); border-radius: 999px; padding: 7px 12px;">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#3DE0FF" stroke-width="1.8"><path d="M12 21s-7-6.2-7-11a7 7 0 0 1 14 0c0 4.8-7 11-7 11Z"/><circle cx="12" cy="10" r="2.4"/></svg> Vigo · 3 km
+      </a>
+    </div>
+    <h1 class="disp" style="margin: 12px 0 0; font-size: 27px; font-weight: 700; letter-spacing: -1px; line-height: 1.05;">Cerca<br>ahora</h1>
+
+    <div style="margin-top: 14px; border-radius: 22px; overflow: hidden; border: 1px solid rgba(255,255,255,0.08);">
+      <svg width="350" height="230" viewBox="0 0 350 230" style="display: block;">
+        <circle class="ring-anim" cx="175" cy="130" r="96" fill="none" stroke="#C6FF3D" stroke-width="1.5" stroke-opacity="0.5"/>
+        <circle cx="175" cy="130" r="62" fill="none" stroke="#3DE0FF" stroke-width="1.5" stroke-opacity="0.55"/>
+        <circle cx="175" cy="130" r="30" fill="none" stroke="#3DE0FF" stroke-width="1.5" stroke-opacity="0.8"/>
+        <circle cx="175" cy="130" r="6" fill="#C6FF3D"/>
+        <circle cx="175" cy="130" r="12" fill="none" stroke="#C6FF3D" stroke-width="1" stroke-opacity="0.6"/>
+        <g><circle cx="120" cy="82" r="5" fill="#FF3D8A"/><text x="66" y="72" font-family="Space Grotesk" font-size="10" fill="#FF9DC4">Casco Vello · 3</text></g>
+        <g><circle cx="252" cy="104" r="5" fill="#FF3D8A"/><text x="200" y="94" font-family="Space Grotesk" font-size="10" fill="#FF9DC4">O Areal · 4</text></g>
+        <g><circle cx="196" cy="196" r="5" fill="#FF3D8A"/><text x="150" y="216" font-family="Space Grotesk" font-size="10" fill="#FF9DC4">Teis · 2</text></g>
+      </svg>
+    </div>
+
+    <div class="seg">
+      <span class="on">Ahora</span><span>Tarde</span><span>Mañana</span><span>Finde</span>
+    </div>
+
+    <div class="lab">6 planes cerca</div>
+    <a href="#ficha" class="card glowmag" style="border-left: 3px solid #FF3D8A;">
+      <div class="kick" style="color: #FF3D8A;">Aprendizaje</div>
+      <div class="disp" style="font-size: 15px; font-weight: 600; margin-top: 4px;">Café e conversa ES/EN</div>
+      <div class="meta">Hoy 18:00 · Zona Centro · 0,3 km · 10 plazas</div>
+    </a>
+    <div style="height: 12px;"></div>
+    <a href="#ficha" class="card glowcy" style="border-left: 3px solid #3DE0FF;">
+      <div class="kick" style="color: #3DE0FF;">Cultura y ocio</div>
+      <div class="disp" style="font-size: 15px; font-weight: 600; margin-top: 4px;">Club de lectura: novela galega</div>
+      <div class="meta">Dom 19:00 · O Areal · 1,4 km · con aprobación</div>
+    </a>
+    <div style="height: 12px;"></div>
+    <a href="#ficha" class="card glowlime" style="border-left: 3px solid #C6FF3D;">
+      <div class="kick" style="color: #C6FF3D;">Bienestar</div>
+      <div class="disp" style="font-size: 15px; font-weight: 600; margin-top: 4px;">Quedada para correr 5K</div>
+      <div class="meta">Sáb 09:00 · Bouzas · 3,3 km</div>
+    </a>
+    <div style="height: 12px;"></div>
+    <a href="#ficha" class="card" style="border-left: 3px solid #FF3D8A;">
+      <div class="kick" style="color: #FF3D8A;">Mascotas</div>
+      <div class="disp" style="font-size: 15px; font-weight: 600; margin-top: 4px;">Paseo de cans polo monte de Teis</div>
+      <div class="meta">Lun 11:00 · Teis · 2,9 km</div>
+    </a>
+    <div class="navpad"></div>
+  </section>
+
+  <!-- ============ FICHA ============ -->
+  <section id="ficha">
+    <a href="#radar" style="display: inline-flex; align-items: center; gap: 6px; padding: 20px 0 0; font-size: 13px; font-weight: 600; color: #3DE0FF;"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#3DE0FF" stroke-width="2"><path d="M15 5l-7 7 7 7"/></svg> Radar</a>
+    <div class="kick" style="color: #3DE0FF; margin-top: 18px;">Cultura y ocio</div>
+    <h1 class="disp" style="margin: 8px 0 0; font-size: 26px; font-weight: 700; line-height: 1.08; letter-spacing: -0.8px;">Club de lectura: novela galega</h1>
+    <div style="display: flex; flex-wrap: wrap; gap: 7px; margin-top: 16px;">
+      <span class="chip on">Dom 6 · 19:00</span><span class="chip">O Areal</span><span class="chip">1,4 km</span><span class="chip">con aprobación</span>
+    </div>
+    <div class="card" style="margin-top: 16px;">
+      <div class="frow" style="border-top: 0;"><span class="l">Organiza</span><span class="v">andrea.c</span></div>
+      <div class="frow"><span class="l">Alias visible</span><span class="v">sin datos de contacto</span></div>
+      <div class="frow exact-row" style="justify-content: flex-start; gap: 10px;"><span class="l" style="color:#C6FF3D;">Ubicación exacta</span><span class="v disp" style="font-size: 13px;">Rúa do Areal 42</span></div>
+    </div>
+    <p style="font-size: 14px; line-height: 1.55; color: #C7C7D6; margin-top: 16px;">Comentamos la novela del mes. Hay sitio para quien llegue sin haberla terminado.</p>
+    <p style="font-size: 11.5px; color: #7C7C92; margin-top: 10px;">La ubicación exacta se muestra al confirmar tu plaza.</p>
+    <label for="joinF" class="cta" style="cursor: pointer;"><span class="lbl-join">Unirme al plan</span><span class="lbl-in">Estás dentro · abandonar</span></label>
+    <div class="navpad"></div>
+  </section>
+
+  <!-- ============ FILTROS ============ -->
+  <section id="filtros">
+    <a href="#radar" style="display: inline-flex; align-items: center; gap: 6px; padding: 20px 0 0; font-size: 13px; font-weight: 600; color: #3DE0FF;"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#3DE0FF" stroke-width="2"><path d="M15 5l-7 7 7 7"/></svg> Radar</a>
+    <h1 class="disp" style="margin: 16px 0 0; font-size: 24px; font-weight: 700; letter-spacing: -0.8px;">Ajusta</h1>
+    <div class="lab">Radio</div>
+    <div class="seg"><span>3</span><span class="on">10</span><span>25</span><span>50 km</span></div>
+    <div class="lab">Cuándo</div>
+    <div style="display: flex; flex-wrap: wrap; gap: 8px;">
+      <span class="chip on">Cualquier momento</span><span class="chip">Esta tarde</span><span class="chip">Mañana</span><span class="chip">Este finde</span>
+    </div>
+    <div class="lab">Categorías · 4 de 6</div>
+    <div style="display: flex; flex-wrap: wrap; gap: 8px;">
+      <span class="chip on">Bienestar</span><span class="chip on">Cultura y ocio</span><span class="chip on">Aprendizaje</span><span class="chip">Comunidad</span><span class="chip on">Mascotas</span><span class="chip">Conexiones</span>
+    </div>
+    <a href="#radar" class="cta">Ver 6 planes</a>
+    <div class="navpad"></div>
+  </section>
+
+  <!-- ============ CREAR ============ -->
+  <section id="crear">
+    <h1 class="disp" style="margin: 24px 0 0; font-size: 24px; font-weight: 700; letter-spacing: -0.8px;">Nuevo plan</h1>
+    <p style="font-size: 12px; color: #9A9AB0; line-height: 1.45; margin-top: 6px;">Solo se verá la zona aproximada hasta confirmar la plaza.</p>
+    <div class="lab">Categoría</div>
+    <div style="display: flex; flex-wrap: wrap; gap: 8px;">
+      <span class="chip on">Cultura y ocio</span><span class="chip">Bienestar</span><span class="chip">Aprendizaje</span><span class="chip">Mascotas</span>
+    </div>
+    <div class="card" style="margin-top: 18px;">
+      <div class="frow" style="border-top: 0;"><span class="l">Título</span><span class="v" style="color:#7C7C92;">Escribe un título</span></div>
+      <div class="frow"><span class="l">Fecha y hora</span><span class="v">Jue 4 sep · 19:00</span></div>
+      <div class="frow"><span class="l">Zona aproximada</span><span class="v">O Areal</span></div>
+      <div class="frow"><span class="l">Nº de plazas</span><span class="v">8</span></div>
+      <div class="frow"><span class="l">Acceso</span><span class="v">Abierto</span></div>
+    </div>
+    <a href="#planes" class="cta">Publicar plan</a>
+    <div class="navpad"></div>
+  </section>
+
+  <!-- ============ MIS PLANES ============ -->
+  <section id="planes">
+    <div style="display: flex; align-items: baseline; justify-content: space-between; padding: 24px 0 0;">
+      <h1 class="disp" style="margin: 0; font-size: 24px; font-weight: 700; letter-spacing: -0.8px;">Mis planes</h1>
+      <a href="#crear" style="font-size: 12px; font-weight: 600; color: #C6FF3D;">+ Crear</a>
+    </div>
+    <div class="seg" style="margin-top: 14px;"><span class="on">Publicados</span><span>Cancelados</span><span>Pasados</span></div>
+    <a href="#ficha" class="card glowcy" style="margin-top: 16px; border-left: 3px solid #3DE0FF;">
+      <div style="display: flex; justify-content: space-between; align-items: center;"><span class="kick" style="color:#3DE0FF;">Cultura y ocio</span><span style="font-size: 9px; font-weight: 700; color: #C6FF3D; border: 1px solid rgba(198,255,61,0.4); border-radius: 999px; padding: 2px 7px;">PUBLICADO</span></div>
+      <div class="disp" style="font-size: 15px; font-weight: 600; margin-top: 4px;">Club de lectura: novela galega</div>
+      <div class="meta">Jue 19:00 · 1 de 2 plazas · 3 solicitudes</div>
+    </a>
+    <div style="height: 12px;"></div>
+    <div class="card" style="border-left: 3px solid #FF3D8A;">
+      <div class="kick" style="color:#FF3D8A;">Comunidad</div>
+      <div class="disp" style="font-size: 15px; font-weight: 600; margin-top: 4px;">Limpieza de playa en Alcabre</div>
+      <div class="meta">Sáb 11:00 · plazas abiertas</div>
+    </div>
+    <div class="navpad"></div>
+  </section>
+
+  <!-- ============ PERFIL ============ -->
+  <section id="perfil">
+    <h1 class="disp" style="margin: 24px 0 0; font-size: 24px; font-weight: 700; letter-spacing: -0.8px;">Perfil</h1>
+    <div class="card" style="margin-top: 16px; display: flex; align-items: center; gap: 12px;">
+      <div style="width: 44px; height: 44px; border-radius: 14px; background: linear-gradient(135deg,#C6FF3D,#3DE0FF); display: grid; place-items: center;"><span class="disp" style="color: #0B0B12; font-size: 18px; font-weight: 700;">a</span></div>
+      <div><div style="font-size: 15px; font-weight: 600;">andrea.c</div><div style="font-size: 11px; color: #C6FF3D; display: flex; align-items: center; gap: 4px;"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#C6FF3D" stroke-width="3"><path d="M5 13l4 4L19 7"/></svg> Correo verificado</div></div>
+    </div>
+    <div class="lab">Ajustes</div>
+    <div class="card" style="padding: 0;">
+      <div class="frow" style="border-top: 0; padding: 15px 16px;"><span class="v">Notificaciones</span><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#6C6C82" stroke-width="2"><path d="M9 6l6 6-6 6"/></svg></div>
+      <div class="frow" style="padding: 15px 16px;"><span class="v">Ubicación de búsqueda</span><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#6C6C82" stroke-width="2"><path d="M9 6l6 6-6 6"/></svg></div>
+      <div class="frow" style="padding: 15px 16px;"><span class="v">Personas bloqueadas</span><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#6C6C82" stroke-width="2"><path d="M9 6l6 6-6 6"/></svg></div>
+      <div class="frow" style="padding: 15px 16px;"><span class="v">Normas de convivencia</span><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#6C6C82" stroke-width="2"><path d="M9 6l6 6-6 6"/></svg></div>
+    </div>
+    <div style="margin-top: 22px;"><span style="font-size: 13px; font-weight: 600; color: #FF3D8A;">Cerrar sesión</span></div>
+    <div class="navpad"></div>
+  </section>
+
+  <!-- ============ NAV ============ -->
+  <div class="navbar">
+    <a href="#radar" class="nv">
+      <svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="#C6FF3D" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="4"/><circle cx="12" cy="12" r="1" fill="#C6FF3D" stroke="none"/></svg>
+      <span style="color: #C6FF3D;">Radar</span>
+    </a>
+    <a href="#planes" class="nv">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#6C6C82" stroke-width="1.8"><rect x="4" y="5" width="16" height="16" rx="2"/><path d="M4 10h16M9 3v4M15 3v4"/></svg>
+      <span>Planes</span>
+    </a>
+    <a href="#crear" class="nv">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#6C6C82" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="M12 8v8M8 12h8"/></svg>
+      <span>Crear</span>
+    </a>
+    <a href="#perfil" class="nv">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#6C6C82" stroke-width="1.8"><circle cx="12" cy="8" r="3.4"/><path d="M5.5 20c1.3-3.6 4-5 6.5-5s5.2 1.4 6.5 5"/></svg>
+      <span>Perfil</span>
+    </a>
+  </div>
+
+</div>
+</x-dc>
+<script data-dc-script data-props='{"$preview":{"width":390,"height":860}}'>
+class Component extends DCLogic {}
+</script>
+</body>
+</html>

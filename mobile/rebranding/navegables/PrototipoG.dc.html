@@ -1,0 +1,234 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,700;12..96,800&family=Hanken+Grotesk:wght@400;500;600;700&display=swap">
+  <style>
+    * { box-sizing: border-box; }
+    body { margin: 0; }
+    .gg { font-family: "Hanken Grotesk", ui-sans-serif, system-ui, sans-serif; color: #1A1A17; -webkit-font-smoothing: antialiased;
+          width: 390px; height: 860px; background: #FBF3E4; overflow-y: auto; scroll-behavior: smooth; position: relative; }
+    .gg .disp { font-family: "Bricolage Grotesque", "Hanken Grotesk", system-ui, sans-serif; }
+    .gg a { color: inherit; text-decoration: none; }
+    .gg .bg { position: fixed; inset: 0; z-index: 0; pointer-events: none; }
+    .gg section { position: relative; z-index: 1; min-height: 800px; padding: 0 20px 40px; }
+    .gg .navpad { height: 90px; }
+    .gg .kick { font-size: 9px; font-weight: 700; letter-spacing: 1.4px; text-transform: uppercase; }
+    .gg .lab { font-size: 10px; font-weight: 700; letter-spacing: 1.6px; text-transform: uppercase; color: #6B6A5E; margin: 24px 0 10px; }
+    .gg .card { display: block; background: #FFFCF5; border: 2px solid #1A1A17; border-radius: 10px; padding: 14px; box-shadow: 4px 4px 0 #1A1A17; }
+    .gg .card.blue { box-shadow: 4px 4px 0 #2B3A8C; }
+    .gg .card.mus { box-shadow: 4px 4px 0 #E8B23A; }
+    .gg .meta { font-size: 11.5px; color: #6B6A5E; margin-top: 4px; }
+    .gg .tag { display: inline-block; font-size: 9px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.8px; border: 2px solid #1A1A17; border-radius: 999px; padding: 3px 9px; background: #FBF3E4; }
+    .gg .tag.coral { background: #F0533A; color: #FFF; border-color: #1A1A17; }
+    .gg .tag.blue { background: #2B3A8C; color: #FFF; }
+    .gg .btnrow { display: flex; gap: 8px; margin-top: 14px; }
+    .gg .tgl { flex: 1; text-align: center; font-size: 12px; font-weight: 700; border: 2px solid #1A1A17; border-radius: 8px; padding: 9px 0; background: #FFFCF5; box-shadow: 3px 3px 0 #1A1A17; }
+    .gg .tgl.on { background: #F0533A; color: #FFF; }
+    .gg .cta { display: flex; align-items: center; justify-content: center; margin: 22px 4px 0; height: 54px; border: 2px solid #1A1A17; border-radius: 10px;
+               background: #F0533A; color: #FFF; font-family: "Bricolage Grotesque", sans-serif; font-size: 16px; font-weight: 700; box-shadow: 5px 5px 0 #1A1A17; }
+    .gg .frow { display: flex; justify-content: space-between; align-items: baseline; padding: 12px 0; border-top: 2px solid #EBE2CE; }
+    .gg .frow .l { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.6px; color: #6B6A5E; }
+    .gg .frow .v { font-size: 14px; font-weight: 500; }
+    .gg .navbar { position: sticky; bottom: 0; margin: 0; height: 66px; background: #FFFCF5; border-top: 2px solid #1A1A17; display: flex; align-items: center; justify-content: space-around; z-index: 9; }
+    .gg .nv { display: flex; flex-direction: column; align-items: center; gap: 2px; font-size: 9px; font-weight: 700; color: #9A9788; }
+    .gg .nv.on { color: #1A1A17; }
+    .gg .nv.on .box { background: #F0533A; }
+    .gg .box { width: 34px; height: 26px; border: 2px solid #1A1A17; border-radius: 7px; display: grid; place-items: center; box-shadow: 2px 2px 0 #1A1A17; }
+    .gg #joinG { display: none; }
+    .gg .lbl-in { display: none; }
+    .gg #joinG:checked ~ #ficha .lbl-join { display: none; }
+    .gg #joinG:checked ~ #ficha .lbl-in { display: inline; }
+    .gg #joinG:checked ~ #ficha .cta { background: #2B3A8C; transform: translate(3px,3px); box-shadow: 2px 2px 0 #1A1A17; }
+    .gg #joinG:checked ~ #ficha .exact-row { display: flex; }
+    .gg .exact-row { display: none; }
+  </style>
+</helmet>
+
+<div class="gg">
+  <input type="checkbox" id="joinG">
+  <div class="bg">
+    <svg width="390" height="860" viewBox="0 0 390 860" preserveAspectRatio="none" style="width:100%;height:100%;">
+      <defs>
+        <pattern id="ghalf" width="14" height="14" patternUnits="userSpaceOnUse"><circle cx="3" cy="3" r="1.6" fill="#F0533A" fill-opacity="0.09"/></pattern>
+        <filter id="ggrain"><feTurbulence type="fractalNoise" baseFrequency="0.85" numOctaves="2" stitchTiles="stitch"/><feColorMatrix type="saturate" values="0"/><feComponentTransfer><feFuncA type="linear" slope="0.05"/></feComponentTransfer></filter>
+      </defs>
+      <rect width="390" height="860" fill="#FBF3E4"/>
+      <rect x="-40" y="120" width="360" height="360" rx="40" fill="#2B3A8C" fill-opacity="0.06" transform="rotate(-8 150 300)"/>
+      <rect x="130" y="520" width="320" height="320" rx="40" fill="#E8B23A" fill-opacity="0.08" transform="rotate(10 290 680)"/>
+      <rect width="390" height="860" fill="url(#ghalf)"/>
+      <rect width="390" height="860" filter="url(#ggrain)"/>
+    </svg>
+  </div>
+
+  <!-- ============ RADAR ============ -->
+  <section id="radar">
+    <div style="display: flex; align-items: center; gap: 8px; padding: 20px 0 4px;">
+      <span class="disp" style="font-size: 20px; font-weight: 800;">joinly</span>
+      <a href="#filtros" style="margin-left: auto; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.6px; border: 2px solid #1A1A17; border-radius: 999px; padding: 6px 11px; box-shadow: 2px 2px 0 #1A1A17;">Vigo · 3 km</a>
+    </div>
+    <h1 class="disp" style="margin: 12px 0 0; font-size: 34px; font-weight: 800; letter-spacing: -1.4px; line-height: 0.95;">CERCA<br>DE TI</h1>
+
+    <div style="margin-top: 16px; border: 2px solid #1A1A17; border-radius: 12px; background: #FFFCF5; box-shadow: 5px 5px 0 #E8B23A; overflow: hidden;">
+      <svg width="346" height="220" viewBox="0 0 346 220" style="display: block;">
+        <g transform="rotate(-1.5 173 120)">
+          <circle cx="173" cy="120" r="92" fill="none" stroke="#F0533A" stroke-width="2.5"/>
+          <circle cx="176" cy="118" r="92" fill="none" stroke="#2B3A8C" stroke-width="1.5" stroke-opacity="0.4"/>
+          <circle cx="173" cy="120" r="58" fill="none" stroke="#F0533A" stroke-width="2.5"/>
+          <circle cx="173" cy="120" r="26" fill="none" stroke="#F0533A" stroke-width="2.5"/>
+        </g>
+        <rect x="163" y="110" width="20" height="20" fill="#2B3A8C" transform="rotate(12 173 120)"/>
+        <text x="150" y="98" font-family="Hanken Grotesk" font-size="8" font-weight="700" fill="#FFF" transform="rotate(12 173 120)">TÚ</text>
+        <g transform="rotate(-6 110 70)"><rect x="70" y="56" width="82" height="30" fill="#FFFCF5" stroke="#1A1A17" stroke-width="2"/><text x="78" y="76" font-family="Hanken Grotesk" font-size="10" font-weight="700" fill="#1A1A17">Casco V. · 3</text></g>
+        <g transform="rotate(5 256 130)"><rect x="214" y="116" width="76" height="30" fill="#F0533A" stroke="#1A1A17" stroke-width="2"/><text x="222" y="136" font-family="Hanken Grotesk" font-size="10" font-weight="700" fill="#FFF">O Areal · 4</text></g>
+        <g transform="rotate(-4 180 192)"><rect x="150" y="180" width="60" height="28" fill="#E8B23A" stroke="#1A1A17" stroke-width="2"/><text x="158" y="199" font-family="Hanken Grotesk" font-size="10" font-weight="700" fill="#1A1A17">Teis · 2</text></g>
+      </svg>
+    </div>
+
+    <div class="btnrow">
+      <span class="tgl on">Ahora</span><span class="tgl">Tarde</span><span class="tgl">Mañana</span><span class="tgl">Finde</span>
+    </div>
+
+    <div class="lab">6 planes cerca</div>
+    <a href="#ficha" class="card" style="position: relative;">
+      <span class="tag coral" style="position: absolute; top: -12px; left: 12px; transform: rotate(-3deg);">Aprendizaje</span>
+      <div class="disp" style="font-size: 16px; font-weight: 700; margin-top: 6px;">Café e conversa ES/EN</div>
+      <div class="meta">Hoy 18:00 · Zona Centro · 0,3 km · 10 plazas</div>
+    </a>
+    <div style="height: 20px;"></div>
+    <a href="#ficha" class="card blue" style="position: relative;">
+      <span class="tag blue" style="position: absolute; top: -12px; left: 12px; transform: rotate(2deg);">Cultura y ocio</span>
+      <div class="disp" style="font-size: 16px; font-weight: 700; margin-top: 6px;">Club de lectura: novela galega</div>
+      <div class="meta">Dom 19:00 · O Areal · 1,4 km · con aprobación</div>
+    </a>
+    <div style="height: 20px;"></div>
+    <a href="#ficha" class="card mus" style="position: relative;">
+      <span class="tag" style="position: absolute; top: -12px; left: 12px; transform: rotate(-2deg); background: #E8B23A;">Bienestar</span>
+      <div class="disp" style="font-size: 16px; font-weight: 700; margin-top: 6px;">Quedada para correr 5K</div>
+      <div class="meta">Sáb 09:00 · Bouzas · 3,3 km</div>
+    </a>
+    <div class="navpad"></div>
+  </section>
+
+  <!-- ============ FICHA ============ -->
+  <section id="ficha">
+    <a href="#radar" style="display: inline-flex; align-items: center; gap: 6px; padding: 20px 0 0; font-size: 12px; font-weight: 700; text-transform: uppercase;"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#1A1A17" stroke-width="2.5"><path d="M15 5l-7 7 7 7"/></svg> Radar</a>
+    <span class="tag blue" style="margin-top: 18px; display: inline-block; transform: rotate(-2deg);">Cultura y ocio</span>
+    <h1 class="disp" style="margin: 12px 0 0; font-size: 30px; font-weight: 800; line-height: 1.02; letter-spacing: -1.2px;">Club de lectura: novela galega</h1>
+    <div style="display: flex; flex-wrap: wrap; gap: 8px; margin-top: 16px;">
+      <span class="tag">Dom 6 · 19:00</span><span class="tag">O Areal</span><span class="tag">1,4 km</span><span class="tag">con aprobación</span>
+    </div>
+    <div class="card" style="margin-top: 18px;">
+      <div class="frow" style="border-top: 0;"><span class="l">Organiza</span><span class="v">andrea.c</span></div>
+      <div class="frow"><span class="l">Contacto</span><span class="v">alias visible, sin datos</span></div>
+      <div class="frow exact-row" style="justify-content: flex-start; gap: 10px;"><span class="l" style="color:#2B3A8C;">Ubicación exacta</span><span class="v disp">Rúa do Areal 42</span></div>
+    </div>
+    <p style="font-size: 14px; line-height: 1.55; color: #33322C; margin-top: 16px;">Comentamos la novela del mes. Hay sitio para quien llegue sin haberla terminado.</p>
+    <p style="font-size: 11px; font-weight: 600; color: #6B6A5E; margin-top: 10px;">La ubicación exacta se muestra al confirmar tu plaza.</p>
+    <label for="joinG" class="cta" style="cursor: pointer;"><span class="lbl-join">Unirme al plan</span><span class="lbl-in">Estás dentro · abandonar</span></label>
+    <div class="navpad"></div>
+  </section>
+
+  <!-- ============ FILTROS ============ -->
+  <section id="filtros">
+    <a href="#radar" style="display: inline-flex; align-items: center; gap: 6px; padding: 20px 0 0; font-size: 12px; font-weight: 700; text-transform: uppercase;"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#1A1A17" stroke-width="2.5"><path d="M15 5l-7 7 7 7"/></svg> Radar</a>
+    <h1 class="disp" style="margin: 16px 0 0; font-size: 28px; font-weight: 800; letter-spacing: -1px;">AJUSTA</h1>
+    <div class="lab">Radio</div>
+    <div class="btnrow"><span class="tgl">3</span><span class="tgl on">10</span><span class="tgl">25</span><span class="tgl">50 km</span></div>
+    <div class="lab">Cuándo</div>
+    <div style="display: flex; flex-wrap: wrap; gap: 8px;"><span class="tag coral">Cualquier momento</span><span class="tag">Esta tarde</span><span class="tag">Mañana</span><span class="tag">Este finde</span></div>
+    <div class="lab">Categorías · 4 de 6</div>
+    <div style="display: flex; flex-wrap: wrap; gap: 8px;"><span class="tag coral">Bienestar</span><span class="tag coral">Cultura y ocio</span><span class="tag coral">Aprendizaje</span><span class="tag">Comunidad</span><span class="tag coral">Mascotas</span><span class="tag">Conexiones</span></div>
+    <a href="#radar" class="cta">Ver 6 planes</a>
+    <div class="navpad"></div>
+  </section>
+
+  <!-- ============ CREAR ============ -->
+  <section id="crear">
+    <h1 class="disp" style="margin: 24px 0 0; font-size: 28px; font-weight: 800; letter-spacing: -1px;">NUEVO PLAN</h1>
+    <p style="font-size: 12px; font-weight: 500; color: #6B6A5E; line-height: 1.45; margin-top: 6px;">Solo se verá la zona aproximada hasta confirmar la plaza.</p>
+    <div class="lab">Categoría</div>
+    <div style="display: flex; flex-wrap: wrap; gap: 8px;"><span class="tag coral">Cultura y ocio</span><span class="tag">Bienestar</span><span class="tag">Aprendizaje</span><span class="tag">Mascotas</span></div>
+    <div class="card" style="margin-top: 18px;">
+      <div class="frow" style="border-top: 0;"><span class="l">Título</span><span class="v" style="color:#9A9788;">Escribe un título</span></div>
+      <div class="frow"><span class="l">Fecha y hora</span><span class="v">Jue 4 sep · 19:00</span></div>
+      <div class="frow"><span class="l">Zona aprox.</span><span class="v">O Areal</span></div>
+      <div class="frow"><span class="l">Plazas</span><span class="v">8</span></div>
+      <div class="frow"><span class="l">Acceso</span><span class="v">Abierto</span></div>
+    </div>
+    <a href="#planes" class="cta">Publicar plan</a>
+    <div class="navpad"></div>
+  </section>
+
+  <!-- ============ MIS PLANES ============ -->
+  <section id="planes">
+    <div style="display: flex; align-items: baseline; justify-content: space-between; padding: 24px 0 0;">
+      <h1 class="disp" style="margin: 0; font-size: 28px; font-weight: 800; letter-spacing: -1px;">MIS PLANES</h1>
+      <a href="#crear" style="font-size: 11px; font-weight: 700; text-transform: uppercase;">+ Crear</a>
+    </div>
+    <div class="btnrow"><span class="tgl on">Publicados</span><span class="tgl">Cancelados</span><span class="tgl">Pasados</span></div>
+    <a href="#ficha" class="card blue" style="margin-top: 22px; position: relative;">
+      <span class="tag blue" style="position: absolute; top: -12px; left: 12px;">Cultura y ocio</span>
+      <span class="tag coral" style="position: absolute; top: -12px; right: 12px;">Publicado</span>
+      <div class="disp" style="font-size: 16px; font-weight: 700; margin-top: 6px;">Club de lectura: novela galega</div>
+      <div class="meta">Jue 19:00 · 1 de 2 plazas · 3 solicitudes</div>
+    </a>
+    <div style="height: 20px;"></div>
+    <div class="card mus" style="position: relative;">
+      <span class="tag" style="position: absolute; top: -12px; left: 12px; background: #E8B23A;">Comunidad</span>
+      <div class="disp" style="font-size: 16px; font-weight: 700; margin-top: 6px;">Limpieza de playa en Alcabre</div>
+      <div class="meta">Sáb 11:00 · plazas abiertas</div>
+    </div>
+    <div class="navpad"></div>
+  </section>
+
+  <!-- ============ PERFIL ============ -->
+  <section id="perfil">
+    <h1 class="disp" style="margin: 24px 0 0; font-size: 28px; font-weight: 800; letter-spacing: -1px;">PERFIL</h1>
+    <div class="card" style="margin-top: 16px; display: flex; align-items: center; gap: 12px;">
+      <div style="width: 44px; height: 44px; border: 2px solid #1A1A17; border-radius: 10px; background: #F0533A; display: grid; place-items: center;"><span class="disp" style="color: #FFF; font-size: 20px; font-weight: 800;">a</span></div>
+      <div><div class="disp" style="font-size: 16px; font-weight: 700;">andrea.c</div><div style="font-size: 11px; font-weight: 600; color: #2B3A8C; display: flex; align-items: center; gap: 4px;"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#2B3A8C" stroke-width="3"><path d="M5 13l4 4L19 7"/></svg> Correo verificado</div></div>
+    </div>
+    <div class="lab">Ajustes</div>
+    <div class="card" style="padding: 0;">
+      <div class="frow" style="border-top: 0; padding: 14px;"><span class="v">Notificaciones</span><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#9A9788" stroke-width="2"><path d="M9 6l6 6-6 6"/></svg></div>
+      <div class="frow" style="padding: 14px;"><span class="v">Ubicación de búsqueda</span><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#9A9788" stroke-width="2"><path d="M9 6l6 6-6 6"/></svg></div>
+      <div class="frow" style="padding: 14px;"><span class="v">Personas bloqueadas</span><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#9A9788" stroke-width="2"><path d="M9 6l6 6-6 6"/></svg></div>
+      <div class="frow" style="padding: 14px;"><span class="v">Normas de convivencia</span><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#9A9788" stroke-width="2"><path d="M9 6l6 6-6 6"/></svg></div>
+    </div>
+    <div style="margin-top: 22px;"><span class="disp" style="font-size: 14px; font-weight: 700; color: #F0533A;">Cerrar sesión</span></div>
+    <div class="navpad"></div>
+  </section>
+
+  <!-- ============ NAV ============ -->
+  <div class="navbar">
+    <a href="#radar" class="nv on">
+      <span class="box"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#FFF" stroke-width="2"><circle cx="12" cy="12" r="8"/><circle cx="12" cy="12" r="3"/></svg></span>
+      <span>Radar</span>
+    </a>
+    <a href="#planes" class="nv">
+      <span class="box" style="box-shadow: none;"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#1A1A17" stroke-width="2"><path d="M4 6h16M4 12h16M4 18h10"/></svg></span>
+      <span>Planes</span>
+    </a>
+    <a href="#crear" class="nv">
+      <span class="box" style="box-shadow: none;"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#1A1A17" stroke-width="2.4"><path d="M12 6v12M6 12h12"/></svg></span>
+      <span>Crear</span>
+    </a>
+    <a href="#perfil" class="nv">
+      <span class="box" style="box-shadow: none;"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#1A1A17" stroke-width="2"><circle cx="12" cy="8" r="3.4"/><path d="M5.5 20c1.3-3.6 4-5 6.5-5s5.2 1.4 6.5 5"/></svg></span>
+      <span>Perfil</span>
+    </a>
+  </div>
+
+</div>
+</x-dc>
+<script data-dc-script data-props='{"$preview":{"width":390,"height":860}}'>
+class Component extends DCLogic {}
+</script>
+</body>
+</html>

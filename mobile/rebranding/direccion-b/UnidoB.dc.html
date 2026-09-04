@@ -1,0 +1,83 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=DM+Mono:wght@400;500&display=swap">
+  <style>
+    * { box-sizing: border-box; }
+    body { margin: 0; }
+    .bB { font-family: "Space Grotesk", ui-sans-serif, system-ui, sans-serif; color: #111111; -webkit-font-smoothing: antialiased; }
+    .bB .mono { font-family: "DM Mono", ui-monospace, "SFMono-Regular", monospace; }
+    .bB a { color: #3B2EFF; } .bB a:hover { color: #2A1FCC; }
+    .bB .lbl { font-size: 10px; font-weight: 700; letter-spacing: 1.4px; text-transform: uppercase; }
+    .bB .chip { font-family: "DM Mono", ui-monospace, monospace; font-size: 11px; font-weight: 500; border: 2px solid #111111; border-radius: 6px; padding: 5px 9px; }
+  </style>
+</helmet>
+
+<div class="bB" style="width: 390px; height: 844px; background: #F2F1EC; position: relative; overflow: hidden;">
+
+  <div style="padding: 18px 20px 0;">
+    <a href="#" style="font-family: 'DM Mono', monospace; font-size: 12px; font-weight: 500; text-decoration: none; display: inline-flex; align-items: center; gap: 6px; border: 2px solid #111111; border-radius: 6px; padding: 5px 10px; color: #111111;">
+      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#111111" stroke-width="3"><path d="M15 5l-7 7 7 7"/></svg> HOY
+    </a>
+  </div>
+
+  <!-- confirmed banner -->
+  <div style="margin: 16px 20px 0; background: #D6FF3D; border: 2px solid #111111; border-radius: 12px; padding: 20px; box-shadow: 5px 5px 0 #111111;">
+    <div style="display: flex; align-items: center; gap: 10px;">
+      <div style="width: 26px; height: 26px; border: 2px solid #111111; border-radius: 50%; display: grid; place-items: center; background: #FFFFFF;">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#111111" stroke-width="3"><path d="M5 13l4 4L19 7"/></svg>
+      </div>
+      <span class="lbl" style="font-size: 13px;">Estás dentro</span>
+    </div>
+    <div class="mono" style="font-size: 12px; color: #2E2E1A; margin-top: 8px;">añadido a tu agenda · jue 4 sep · 19:00</div>
+  </div>
+
+  <!-- recap -->
+  <div style="padding: 20px 20px 0;">
+    <div class="lbl" style="color: #7A1F33;">Cultura y ocio</div>
+    <h1 style="margin: 6px 0 0; font-size: 24px; font-weight: 700; letter-spacing: -0.8px; line-height: 1.1;">Club de lectura: novela gallega</h1>
+  </div>
+
+  <!-- exact location -->
+  <div style="margin: 18px 20px 0; border: 2px solid #111111; border-radius: 10px; background: #FFFFFF; padding: 16px; box-shadow: 4px 4px 0 #111111;">
+    <div style="display: flex; align-items: center; justify-content: space-between;">
+      <span class="lbl" style="color: #7A1F33;">Ubicación exacta</span>
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#8A877E" stroke-width="2"><rect x="9" y="9" width="11" height="11" rx="1.5"/><path d="M5 15V6a2 2 0 0 1 2-2h9"/></svg>
+    </div>
+    <div style="font-size: 17px; font-weight: 700; margin-top: 8px;">Rúa do Areal 42, Vigo</div>
+    <div class="mono" style="font-size: 11px; color: #55524B; margin-top: 3px;">planta baja · Librería A Reixa</div>
+  </div>
+
+  <div style="display: flex; flex-wrap: wrap; gap: 8px; padding: 16px 20px 0;">
+    <span class="chip">JUE 4 SEP · 19:00</span>
+    <span class="chip">ORGANIZA ANDREA.C</span>
+  </div>
+
+  <!-- reminder -->
+  <div style="margin: 18px 20px 0; border: 2px solid #111111; border-radius: 10px; background: #FFFFFF; padding: 12px 14px; display: flex; gap: 11px;">
+    <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#111111" stroke-width="2.2" style="flex-shrink: 0; margin-top: 1px;"><path d="M6 9a6 6 0 0 1 12 0c0 5 2 6 2 6H4s2-1 2-6Z"/><path d="M10 19a2 2 0 0 0 4 0"/></svg>
+    <div>
+      <div style="font-size: 13px; font-weight: 700;">Aviso si algo cambia</div>
+      <div class="mono" style="font-size: 10.5px; line-height: 1.5; color: #55524B; margin-top: 3px;">te avisamos si andrea.c mueve la hora o el lugar · recordatorio la vispera</div>
+    </div>
+  </div>
+
+  <!-- actions -->
+  <div style="position: absolute; left: 0; right: 0; bottom: 0; background: #F2F1EC; border-top: 2px solid #111111; padding: 14px 20px 20px; display: flex; flex-direction: column; gap: 12px;">
+    <div style="background: #FFFFFF; border: 2px solid #111111; border-radius: 10px; height: 48px; display: grid; place-items: center; font-size: 14px; font-weight: 700; box-shadow: 3px 3px 0 #111111;">Guardar en el calendario</div>
+    <a href="#" style="text-align: center; font-family: 'DM Mono', monospace; font-size: 12px; font-weight: 500; text-decoration: none; color: #111111;">Abandonar plan</a>
+  </div>
+
+</div>
+</x-dc>
+<script data-dc-script data-props='{"$preview":{"width":390,"height":844}}'>
+class Component extends DCLogic {}
+</script>
+</body>
+</html>

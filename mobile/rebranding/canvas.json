@@ -1,0 +1,33 @@
+{
+  "pages": [
+    { "id": "resumen", "name": "Resumen" },
+    { "id": "dir-a", "name": "A · Cerca" },
+    { "id": "dir-b", "name": "B · Hoy" },
+    { "id": "dir-c", "name": "C · Mazo" }
+  ],
+  "artboards": [
+    { "file": "Main.dc.html", "page": "resumen", "x": 0, "y": 0, "w": 1200, "h": 1000 },
+
+    { "file": "MapaA.dc.html", "page": "dir-a", "x": 0, "y": 0, "w": 390, "h": 844 },
+    { "file": "FichaA.dc.html", "page": "dir-a", "x": 470, "y": 0, "w": 390, "h": 844 },
+    { "file": "UnidoA.dc.html", "page": "dir-a", "x": 940, "y": 0, "w": 390, "h": 844 },
+    { "file": "MarcaA.dc.html", "page": "dir-a", "x": 1410, "y": 0, "w": 820, "h": 1340 },
+
+    { "file": "HoyB.dc.html", "page": "dir-b", "x": 0, "y": 0, "w": 390, "h": 844 },
+    { "file": "FichaB.dc.html", "page": "dir-b", "x": 470, "y": 0, "w": 390, "h": 844 },
+    { "file": "UnidoB.dc.html", "page": "dir-b", "x": 940, "y": 0, "w": 390, "h": 844 },
+    { "file": "MarcaB.dc.html", "page": "dir-b", "x": 1410, "y": 0, "w": 820, "h": 1340 },
+
+    { "file": "MazoC.dc.html", "page": "dir-c", "x": 0, "y": 0, "w": 390, "h": 844 },
+    { "file": "FichaC.dc.html", "page": "dir-c", "x": 470, "y": 0, "w": 390, "h": 844 },
+    { "file": "UnidoC.dc.html", "page": "dir-c", "x": 940, "y": 0, "w": 390, "h": 844 },
+    { "file": "MarcaC.dc.html", "page": "dir-c", "x": 1410, "y": 0, "w": 820, "h": 1340 }
+  ],
+  "annotations": [
+    { "id": "brief", "page": "resumen", "x": -330, "y": 0, "w": 280, "text": "Rebranding joinly — 3 direcciones para negocio.\n\nCada página de arriba es una dirección a tamaño real: Descubrimiento -> Ficha -> Confirmacion, mas la hoja de marca (logo, iconos, tipografia, paleta, voz).\n\nLas 3 rompen con el radar y muestran el mismo plan para poder compararlas." },
+    { "id": "flow-a", "page": "dir-a", "x": 0, "y": -80, "w": 1330, "text": "A · Cerca — Recorrido: Descubrimiento (mapa de zonas aproximadas + tarjetas editoriales)  ->  tocar el plan  ->  Ficha  ->  Unirme al plan  ->  Confirmacion.        La 4ª mesa es la hoja de marca (logo, iconos, tipografia, paleta, voz)." },
+    { "id": "flow-b", "page": "dir-b", "x": 0, "y": -80, "w": 1330, "text": "B · Hoy — Recorrido: Descubrimiento (agenda por horas)  ->  tocar el plan  ->  Ficha  ->  Unirme al plan  ->  Confirmacion.        La 4ª mesa es la hoja de marca (logo, iconos, tipografia, paleta, voz)." },
+    { "id": "flow-c", "page": "dir-c", "x": 0, "y": -80, "w": 1330, "text": "C · Mazo — Recorrido: Descubrimiento (una tarjeta)  ->  Me interesa  ->  Ficha  ->  Unirme al plan  ->  Confirmacion.        La 4ª mesa es la hoja de marca (logo, iconos, tipografia, paleta, voz)." }
+  ],
+  "launch": { "view": "canvas", "page": "resumen" }
+}

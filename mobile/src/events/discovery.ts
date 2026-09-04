@@ -65,6 +65,24 @@ export function categoryLabel(category: string) {
   return categoryOptions.find(([value]) => value === category)?.[1] ?? category;
 }
 
+/**
+ * Un color por categoría, dentro de la paleta luminosa de la Dirección H:
+ * saturación media, todos conviven sobre el fondo aurora. "Comunidad" lleva
+ * el burdeos de marca.
+ */
+const CATEGORY_COLORS: Record<string, string> = {
+  sportWellbeing: '#2FA985', // menta — bienestar
+  cultureLeisure: '#8A6BFF', // lila — cultura y ocio
+  learning: '#E0854D', // ámbar cálido — aprendizaje
+  communityVolunteering: '#9E4B63', // burdeos — comunidad
+  pets: '#3FB6C9', // turquesa — mascotas
+  networking: '#6B7CFF', // periwinkle — conexiones
+};
+
+export function categoryColor(category: string): string {
+  return CATEGORY_COLORS[category] ?? '#6B7CFF';
+}
+
 export function availabilityLabel(event: EventDiscovery) {
   if (event.availability === 'full') return 'Completo';
   if (event.accessMode === 'approval') return 'Con aprobación';

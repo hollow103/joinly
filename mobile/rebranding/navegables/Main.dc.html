@@ -1,0 +1,89 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Unbounded:wght@500;700&family=Space+Grotesk:wght@400;500;600;700&display=swap">
+  <style>
+    * { box-sizing: border-box; }
+    body { margin: 0; font-family: "Space Grotesk", ui-sans-serif, system-ui, sans-serif; color: #171720; }
+    .disp { font-family: "Unbounded", "Space Grotesk", system-ui, sans-serif; }
+    a { color: #171720; }
+    .eb { font-size: 10px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: #8A8A9A; }
+  </style>
+</helmet>
+
+<div style="width: 1240px; min-height: 1000px; background: #F4F4F6; padding: 56px; display: flex; flex-direction: column; gap: 30px;">
+
+  <div style="max-width: 820px;">
+    <span class="eb">joinly · radar — direcciones F · G · H</span>
+    <h1 class="disp" style="margin: 12px 0 0; font-size: 40px; font-weight: 700; letter-spacing: -1.4px; line-height: 1.05;">Tres mundos, no tres versiones</h1>
+    <p style="margin: 14px 0 0; font-size: 15px; line-height: 1.6; color: #4A4A58;">Cada dirección tiene su <strong>propio color, tipografía, fondo, sombra y forma de botón</strong> — pensadas para atraer a público joven sin dejar fuera a la mediana edad. Las tres conservan un <strong>radar</strong> como patrón de descubrimiento, cada una con un enfoque distinto (anillos, sellos, orbe). Cada una es un <strong>prototipo navegable</strong> con las seis pantallas conectadas, y trae una hoja de sistema con su fondo, sus sombras y sus componentes. Se respeta lo intocable: alias, zona aproximada, sin mapa de calles, objetivos de 48&nbsp;px.</p>
+  </div>
+
+  <div style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 22px;">
+
+    <div style="background: #0B0B12; border-radius: 20px; padding: 26px; display: flex; flex-direction: column; gap: 12px; color: #F2F2F7; box-shadow: 0 0 44px -10px rgba(198,255,61,0.35);">
+      <div class="eb" style="color: #C6FF3D;">Dirección F</div>
+      <div class="disp" style="font-size: 22px; font-weight: 700;">Neón nocturno</div>
+      <p style="margin: 0; font-size: 13px; line-height: 1.55; color: #A6A6BC;">Fondo oscuro con degradados de malla y ruido. Lima, magenta y cian eléctricos. Sombras de <strong>brillo de color</strong>, tarjetas que flotan y se solapan. El radar late.</p>
+      <div style="display: flex; gap: 6px; margin-top: 4px;">
+        <span style="width: 22px; height: 22px; border-radius: 6px; background: #0B0B12; border: 1px solid #333;"></span>
+        <span style="width: 22px; height: 22px; border-radius: 6px; background: #C6FF3D;"></span>
+        <span style="width: 22px; height: 22px; border-radius: 6px; background: #FF3D8A;"></span>
+        <span style="width: 22px; height: 22px; border-radius: 6px; background: #3DE0FF;"></span>
+      </div>
+      <div style="font-size: 11px; color: #8A8A9A;">Unbounded · Space Grotesk</div>
+    </div>
+
+    <div style="background: #FBF3E4; border: 2px solid #1A1A17; border-radius: 12px; padding: 26px; display: flex; flex-direction: column; gap: 12px; box-shadow: 6px 6px 0 #1A1A17;">
+      <div class="eb" style="color: #F0533A;">Dirección G</div>
+      <div style="font-family: 'Space Grotesk'; font-size: 22px; font-weight: 700; letter-spacing: -0.6px;">Risografía</div>
+      <p style="margin: 0; font-size: 13px; line-height: 1.55; color: #4A473C;">Estética de fanzine impreso: tramas de puntos, grano de papel, tintas coral / azul / mostaza con leve desregistro. Contornos de 2&nbsp;px y <strong>sombras planas duras</strong>. Collage y sellos.</p>
+      <div style="display: flex; gap: 6px; margin-top: 4px;">
+        <span style="width: 22px; height: 22px; border-radius: 4px; background: #FBF3E4; border: 2px solid #1A1A17;"></span>
+        <span style="width: 22px; height: 22px; border-radius: 4px; background: #F0533A;"></span>
+        <span style="width: 22px; height: 22px; border-radius: 4px; background: #2B3A8C;"></span>
+        <span style="width: 22px; height: 22px; border-radius: 4px; background: #E8B23A;"></span>
+      </div>
+      <div style="font-size: 11px; color: #8A8578;">Bricolage Grotesque · Hanken Grotesk</div>
+    </div>
+
+    <div style="background: linear-gradient(135deg, #EEEBFF, #E7F4FF 55%, #ECFFF6); border: 1px solid rgba(255,255,255,0.8); border-radius: 24px; padding: 26px; display: flex; flex-direction: column; gap: 12px; box-shadow: 0 2px 12px rgba(70,60,130,0.08), 0 24px 50px -18px rgba(70,60,130,0.2);">
+      <div class="eb" style="color: #6B7CFF;">Dirección H</div>
+      <div style="font-family: 'Space Grotesk'; font-size: 22px; font-weight: 700; letter-spacing: -0.6px; color: #1D1B2E;">Aurora / cristal</div>
+      <p style="margin: 0; font-size: 13px; line-height: 1.55; color: #4C4A63;">Luz suave: manchas de aurora difuminadas sobre casi-blanco. Superficies de <strong>cristal esmerilado</strong> con desenfoque y <strong>sombras suaves multicapa</strong>. Radios amplios, calma fresca.</p>
+      <div style="display: flex; gap: 6px; margin-top: 4px;">
+        <span style="width: 22px; height: 22px; border-radius: 7px; background: #F3F1FF; border: 1px solid #DDD;"></span>
+        <span style="width: 22px; height: 22px; border-radius: 7px; background: #6B7CFF;"></span>
+        <span style="width: 22px; height: 22px; border-radius: 7px; background: #FF8A7A;"></span>
+        <span style="width: 22px; height: 22px; border-radius: 7px; background: #4FD6A6;"></span>
+      </div>
+      <div style="font-size: 11px; color: #8A8798;">Manrope</div>
+    </div>
+
+  </div>
+
+  <div style="background: #FFFFFF; border-radius: 16px; padding: 24px 26px;">
+    <div class="eb" style="margin-bottom: 12px;">Cómo está organizado el lienzo</div>
+    <div style="display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 20px; font-size: 12.5px; line-height: 1.5; color: #4A4A58;">
+      <div><strong style="color:#171720;">Contexto</strong><br>Esta portada y la comparativa. La idea: cada dirección es una identidad completa, no un tema de color.</div>
+      <div><strong style="color:#171720;">F · Neón</strong><br>Hoja de sistema (fondo, sombras, botones) + prototipo navegable de las 6 pantallas.</div>
+      <div><strong style="color:#171720;">G · Riso</strong><br>Igual: sistema + prototipo navegable.</div>
+      <div><strong style="color:#171720;">H · Aurora</strong><br>Igual: sistema + prototipo navegable.</div>
+    </div>
+  </div>
+
+  <p style="margin: 0; font-size: 12.5px; color: #8A8A9A; line-height: 1.5;">Prototipos navegables (pulsa Play en la mesa del móvil; se mueve tocando planes, filtros y pestañas). Datos de ejemplo de los planes de Vigo. Referentes de aire fresco: Partiful, Timeleft, BeReal, Airbnb, Arc. Carpeta: <code style="background:#EEE;padding:1px 5px;border-radius:5px;">mobile/rebranding/navegables/</code>.</p>
+
+</div>
+</x-dc>
+<script data-dc-script data-props='{"$preview":{"width":1240,"height":1000}}'>
+class Component extends DCLogic {}
+</script>
+</body>
+</html>

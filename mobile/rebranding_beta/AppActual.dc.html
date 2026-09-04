@@ -1,0 +1,113 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;500;600;700&family=Spectral:wght@400;500;600&display=swap">
+  <style>
+    * { box-sizing: border-box; }
+    body { margin: 0; font-family: "Public Sans", ui-sans-serif, system-ui, sans-serif; color: #1C2534; }
+    .ser { font-family: "Spectral", Georgia, serif; }
+    a { color: #8A6A3B; } a:hover { color: #6B5230; }
+    .eb { font-size: 11px; font-weight: 700; letter-spacing: 1.6px; text-transform: uppercase; color: #7A8496; }
+    .card { background: #FFFFFF; border: 1px solid #E4E2DC; border-radius: 14px; padding: 22px; }
+    .h3 { font-size: 13px; font-weight: 700; letter-spacing: 0.3px; color: #1C2534; margin: 0 0 8px; }
+    .p { font-size: 12.5px; line-height: 1.55; color: #47526A; margin: 0; }
+    li { font-size: 12.5px; line-height: 1.5; color: #47526A; margin-bottom: 5px; }
+  </style>
+</helmet>
+
+<div style="width: 1200px; min-height: 1520px; background: #F6F5F2; padding: 56px; display: flex; flex-direction: column; gap: 24px;">
+
+  <div style="max-width: 780px;">
+    <span class="eb">00 · Contexto</span>
+    <h1 class="ser" style="margin: 8px 0 0; font-size: 38px; font-weight: 500; letter-spacing: -1px;">La app actual, en frío</h1>
+    <p class="p" style="margin-top: 10px; font-size: 13.5px;">Analizada desde el código fuente (tokens en <code>src/ui/tokens.ts</code>, componentes en <code>src/ui</code>, pantallas en <code>src/app</code>, textos en <code>src/i18n/es.ts</code>) y desde la documentación de producto (<code>docs/01</code> visión, <code>docs/19</code> contrato visual del radar), con la app en ejecución para las pantallas de acceso. No se inventa ninguna funcionalidad: todo lo descrito existe hoy.</p>
+  </div>
+
+  <div style="display: grid; grid-template-columns: 300px 1fr; gap: 24px;">
+
+    <!-- screenshots -->
+    <div style="display: flex; flex-direction: column; gap: 16px;">
+      <div class="card" style="padding: 14px;">
+        <div class="eb" style="margin-bottom: 8px;">Acceso · pantalla real</div>
+        <img src="01-sign-in.png" alt="Pantalla de inicio de sesión actual de joinly" style="width: 100%; border-radius: 8px; border: 1px solid #E4E2DC; display: block;">
+      </div>
+      <div class="card" style="padding: 14px;">
+        <div class="eb" style="margin-bottom: 8px;">Registro · pantalla real</div>
+        <img src="02-sign-up.png" alt="Pantalla de creación de cuenta actual de joinly" style="width: 100%; border-radius: 8px; border: 1px solid #E4E2DC; display: block;">
+      </div>
+      <div class="card">
+        <div class="h3">Marca actual</div>
+        <p class="p">Wordmark “joinly” en minúsculas. Logo = anillos de radar con un punto naranja. Nombre provisional (pendiente de disponibilidad). Navy <code>#101D40</code>, azul <code>#3157C9</code>, naranja <code>#FF9E3D</code>, fondo <code>#F5F7FC</code>. Tipografía del sistema.</p>
+      </div>
+    </div>
+
+    <!-- analysis -->
+    <div style="display: flex; flex-direction: column; gap: 16px;">
+
+      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
+        <div class="card">
+          <div class="h3">Qué hace</div>
+          <p class="p">Descubrir, proponer y unirse a planes locales entre personas de la misma ciudad (piloto en Vigo). Seis categorías: bienestar, cultura y ocio, aprendizaje, comunidad, mascotas y conexiones. Sin mapas, chat, pagos, valoraciones ni listas de asistentes.</p>
+        </div>
+        <div class="card">
+          <div class="h3">Quién la usa</div>
+          <p class="p">Personas mayores de 18 que quieren hacer o acompañar planes en su zona y no siempre tienen con quién. Prioridad declarada: simplicidad, privacidad por defecto, minimización de datos y confianza.</p>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="h3">Navegación y flujos principales</div>
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
+          <ul style="margin: 0; padding-left: 18px;">
+            <li><strong>Barra inferior de 4 destinos:</strong> Radar · Mis planes · Crear · Perfil.</li>
+            <li><strong>Descubrir:</strong> cabecera navy inmersiva → radar abstracto → filtros de tiempo → lista de planes → ficha.</li>
+            <li><strong>Unirse:</strong> ficha → “Unirme al plan” / “Solicitar plaza” / “Tengo un código” (privados) → confirmación.</li>
+          </ul>
+          <ul style="margin: 0; padding-left: 18px;">
+            <li><strong>Crear:</strong> formulario de publicación (categoría, título, fecha/hora, zona, capacidad, modo de acceso).</li>
+            <li><strong>Gestionar:</strong> Mis planes con filtros Publicados / Cancelados / Pasados; solicitudes y participantes solo para quien organiza.</li>
+            <li><strong>Cuenta:</strong> perfil, bloqueos, normas de convivencia, verificación de correo, reportes.</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="h3">Arquitectura y componentes</div>
+        <p class="p">Expo / React Native con expo-router, React Query, Zustand y Supabase para identidad; backend Java/Spring + PostGIS. Sistema de UI propio y pequeño: <code>Button</code> (primary / secondary / text, alto 48, radio 12), <code>Card</code> (borde 1&nbsp;px, radio 16), <code>Screen</code>, <code>Text</code>, <code>EmptyState</code>, <code>DateTimeField</code>. Tokens de color, espaciado (4 / 8), radio (8 / 12 / 16 / pill) y tipografía (13–30). Objetivo táctil mínimo 48&nbsp;px. Los estados nunca se comunican solo por color (llevan texto “Confirmado”, “Pendiente”).</p>
+      </div>
+
+      <div class="card" style="border-color: #E7C9A6; background: #FCF6EE;">
+        <div class="h3" style="color: #8A5A22;">Problemas de UX/UI detectados</div>
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
+          <ul style="margin: 0; padding-left: 18px;">
+            <li>Mucho “chrome” antes del primer resultado: eyebrow + título grande + píldora de ubicación + radar (208&nbsp;px) + filtros + encabezado “En tu radar” + “Filtros”. El contenido llega tarde.</li>
+            <li>El radar es decorativo: solo pinta 3 blips y la lista de debajo es el acceso real. Ocupa espacio vertical sin función y los blips se solapan en pantallas pequeñas.</li>
+            <li>Doble cabecera navy (Descubrir y Ficha usan el mismo bloque oscuro): compiten por la atención y aplanan la jerarquía.</li>
+          </ul>
+          <ul style="margin: 0; padding-left: 18px;">
+            <li>Tarjeta de plan con la inicial del título como “avatar”: identidad débil y poca escaneabilidad de la categoría (10&nbsp;px en mayúsculas).</li>
+            <li>Disponibilidad alineada a la derecha con ancho máximo de 70&nbsp;px: “Con aprobación” se parte.</li>
+            <li>Sin modo oscuro; los tokens son solo tema claro (“dark is a later concern”).</li>
+            <li>Contrastes límite: texto secundario <code>#65708F</code> sobre <code>#F5F7FC</code> y eyebrow <code>#B8C7FF</code> sobre navy.</li>
+            <li>Estados vacíos y de error existen pero están poco trabajados visualmente.</li>
+            <li>El logo depende de la metáfora “radar”: difícil de escalar si el patrón de descubrimiento evoluciona.</li>
+          </ul>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+</div>
+</x-dc>
+<script data-dc-script data-props='{"$preview":{"width":1200,"height":1520}}'>
+class Component extends DCLogic {}
+</script>
+</body>
+</html>

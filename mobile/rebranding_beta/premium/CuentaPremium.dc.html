@@ -1,0 +1,116 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Spectral:wght@400;500;600&family=Public+Sans:wght@400;500;600;700&display=swap">
+  <style>
+    * { box-sizing: border-box; }
+    body { margin: 0; }
+    .pr { font-family: "Public Sans", ui-sans-serif, system-ui, sans-serif; color: #1C2534; -webkit-font-smoothing: antialiased; }
+    .pr .ser { font-family: "Spectral", Georgia, "Times New Roman", serif; }
+    .pr a { color: #8A6A3B; } .pr a:hover { color: #6B5230; }
+    .pr .eb { font-size: 10px; font-weight: 700; letter-spacing: 1.6px; text-transform: uppercase; color: #97836A; }
+    .phone { width: 390px; height: 820px; background: #FAF8F3; border: 1px solid #E6E1D7; border-radius: 22px; position: relative; overflow: hidden; }
+    .cap { font-size: 11px; font-weight: 700; letter-spacing: 1.2px; text-transform: uppercase; color: #97836A; margin-bottom: 10px; }
+  </style>
+</helmet>
+
+<div class="pr" style="width: 860px; min-height: 900px; background: #F1EEE6; padding: 30px; display: flex; gap: 40px;">
+
+  <!-- Mis planes -->
+  <div>
+    <div class="cap">Mis planes</div>
+    <div class="phone">
+      <div style="padding: 20px 22px 0;">
+        <div style="display: flex; align-items: baseline; justify-content: space-between;">
+          <h1 class="ser" style="margin: 0; font-size: 24px; font-weight: 500;">Mis planes</h1>
+          <a href="#" style="font-size: 13px; font-weight: 700; text-decoration: none;">Crear</a>
+        </div>
+        <p style="font-size: 12.5px; color: #5C6675; margin: 6px 0 0;">Los planes que organizas. Tócalos para editarlos o cancelarlos.</p>
+        <div style="display: flex; gap: 7px; margin-top: 14px;">
+          <span style="font-size: 12px; font-weight: 600; color: #FAF8F3; background: #1C2534; border-radius: 999px; padding: 6px 12px;">Publicados</span>
+          <span style="font-size: 12px; color: #33404F; border: 1px solid #E6E1D7; border-radius: 999px; padding: 6px 12px;">Cancelados</span>
+          <span style="font-size: 12px; color: #33404F; border: 1px solid #E6E1D7; border-radius: 999px; padding: 6px 12px;">Pasados</span>
+        </div>
+      </div>
+      <div style="padding: 16px 22px 0; display: flex; flex-direction: column; gap: 10px;">
+        <div style="border: 1px solid #E6E1D7; border-radius: 12px; background: #FFFFFF; padding: 14px 16px;">
+          <div style="display: flex; justify-content: space-between; align-items: center;">
+            <div class="eb" style="color: #97836A;">Cultura y ocio</div>
+            <span style="font-size: 10px; font-weight: 700; color: #1E5B45; background: #E7F0EC; border-radius: 999px; padding: 3px 8px;">Publicado</span>
+          </div>
+          <div class="ser" style="font-size: 16px; font-weight: 500; margin-top: 3px;">Club de lectura: novela gallega</div>
+          <div style="font-size: 11.5px; color: #5C6675; margin-top: 5px;">Jue 4 sep · 19:00 · 1 de 2 plazas · 3 solicitudes</div>
+        </div>
+        <div style="border: 1px solid #E6E1D7; border-radius: 12px; background: #FFFFFF; padding: 14px 16px;">
+          <div style="display: flex; justify-content: space-between; align-items: center;">
+            <div class="eb" style="color: #97836A;">Comunidad</div>
+            <span style="font-size: 10px; font-weight: 700; color: #1E5B45; background: #E7F0EC; border-radius: 999px; padding: 3px 8px;">Publicado</span>
+          </div>
+          <div class="ser" style="font-size: 16px; font-weight: 500; margin-top: 3px;">Limpieza de playa en Alcabre</div>
+          <div style="font-size: 11.5px; color: #5C6675; margin-top: 5px;">Sáb 6 sep · 11:00 · plazas abiertas</div>
+        </div>
+      </div>
+      <div style="position: absolute; left: 0; right: 0; bottom: 0; height: 60px; background: #FFFFFF; border-top: 1px solid #E6E1D7; display: flex; align-items: center; justify-content: space-around;">
+        <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="#97A0AD" stroke-width="1.6"><path d="M4 15 A8 8 0 0 1 20 15" stroke-linecap="round"/><path d="M8 15 A4 4 0 0 1 16 15" stroke-linecap="round"/></svg>
+        <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="#8A6A3B" stroke-width="1.7"><rect x="4" y="5" width="16" height="16" rx="2"/><path d="M4 10h16M9 3v4M15 3v4"/></svg>
+        <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="#97A0AD" stroke-width="1.6"><circle cx="12" cy="12" r="9"/><path d="M12 8v8M8 12h8"/></svg>
+        <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="#97A0AD" stroke-width="1.6"><circle cx="12" cy="8" r="3.4"/><path d="M5.5 20c1.3-3.6 4-5 6.5-5s5.2 1.4 6.5 5"/></svg>
+      </div>
+    </div>
+  </div>
+
+  <!-- Perfil -->
+  <div>
+    <div class="cap">Perfil</div>
+    <div class="phone">
+      <div style="padding: 20px 22px 0;">
+        <h1 class="ser" style="margin: 0; font-size: 24px; font-weight: 500;">Perfil</h1>
+        <div style="border: 1px solid #E6E1D7; border-radius: 12px; background: #FFFFFF; padding: 16px; margin-top: 14px; display: flex; align-items: center; gap: 12px;">
+          <div class="ser" style="width: 44px; height: 44px; border-radius: 999px; background: #F1EEE6; border: 1px solid #E6E1D7; display: grid; place-items: center; font-size: 18px; font-weight: 600; color: #8A6A3B;">a</div>
+          <div>
+            <div style="font-size: 15px; font-weight: 600;">andrea.c</div>
+            <div style="font-size: 11.5px; color: #1E5B45; display: flex; align-items: center; gap: 4px; margin-top: 2px;">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#1E5B45" stroke-width="2.4"><path d="M5 13l4 4L19 7"/></svg> Correo verificado
+            </div>
+          </div>
+        </div>
+      </div>
+      <div style="padding: 16px 22px 0;">
+        <div class="eb" style="margin-bottom: 8px;">Ajustes</div>
+        <div style="border: 1px solid #E6E1D7; border-radius: 12px; background: #FFFFFF; overflow: hidden;">
+          <div style="display: flex; align-items: center; justify-content: space-between; padding: 14px 16px; border-bottom: 1px solid #E6E1D7;"><span style="font-size: 13.5px;">Notificaciones</span><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#97836A" stroke-width="1.8"><path d="M9 6l6 6-6 6"/></svg></div>
+          <div style="display: flex; align-items: center; justify-content: space-between; padding: 14px 16px; border-bottom: 1px solid #E6E1D7;"><span style="font-size: 13.5px;">Ubicación de búsqueda</span><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#97836A" stroke-width="1.8"><path d="M9 6l6 6-6 6"/></svg></div>
+          <div style="display: flex; align-items: center; justify-content: space-between; padding: 14px 16px; border-bottom: 1px solid #E6E1D7;"><span style="font-size: 13.5px;">Personas bloqueadas</span><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#97836A" stroke-width="1.8"><path d="M9 6l6 6-6 6"/></svg></div>
+          <div style="display: flex; align-items: center; justify-content: space-between; padding: 14px 16px;"><span style="font-size: 13.5px;">Normas de convivencia</span><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#97836A" stroke-width="1.8"><path d="M9 6l6 6-6 6"/></svg></div>
+        </div>
+        <div class="eb" style="margin: 18px 0 8px;">Cuenta y datos</div>
+        <div style="border: 1px solid #E6E1D7; border-radius: 12px; background: #FFFFFF; overflow: hidden;">
+          <div style="display: flex; align-items: center; justify-content: space-between; padding: 14px 16px; border-bottom: 1px solid #E6E1D7;"><span style="font-size: 13.5px;">Cambiar contraseña</span><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#97836A" stroke-width="1.8"><path d="M9 6l6 6-6 6"/></svg></div>
+          <div style="display: flex; align-items: center; justify-content: space-between; padding: 14px 16px; border-bottom: 1px solid #E6E1D7;"><span style="font-size: 13.5px;">Descargar mis datos</span><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#97836A" stroke-width="1.8"><path d="M9 6l6 6-6 6"/></svg></div>
+          <div style="display: flex; align-items: center; justify-content: space-between; padding: 14px 16px;"><span style="font-size: 13.5px; color: #8E2C2C;">Eliminar cuenta</span><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#C88" stroke-width="1.8"><path d="M9 6l6 6-6 6"/></svg></div>
+        </div>
+        <a href="#" style="display: block; text-align: center; font-size: 13px; font-weight: 700; text-decoration: none; color: #8E2C2C; margin-top: 16px;">Cerrar sesión</a>
+        <div style="text-align: center; font-size: 10.5px; color: #97A0AD; margin-top: 10px;">joinly 1.0.0</div>
+      </div>
+      <div style="position: absolute; left: 0; right: 0; bottom: 0; height: 60px; background: #FFFFFF; border-top: 1px solid #E6E1D7; display: flex; align-items: center; justify-content: space-around;">
+        <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="#97A0AD" stroke-width="1.6"><path d="M4 15 A8 8 0 0 1 20 15" stroke-linecap="round"/><path d="M8 15 A4 4 0 0 1 16 15" stroke-linecap="round"/></svg>
+        <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="#97A0AD" stroke-width="1.6"><rect x="4" y="5" width="16" height="16" rx="2"/><path d="M4 10h16M9 3v4M15 3v4"/></svg>
+        <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="#97A0AD" stroke-width="1.6"><circle cx="12" cy="12" r="9"/><path d="M12 8v8M8 12h8"/></svg>
+        <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="#8A6A3B" stroke-width="1.7"><circle cx="12" cy="8" r="3.4"/><path d="M5.5 20c1.3-3.6 4-5 6.5-5s5.2 1.4 6.5 5"/></svg>
+      </div>
+    </div>
+  </div>
+
+</div>
+</x-dc>
+<script data-dc-script data-props='{"$preview":{"width":860,"height":900}}'>
+class Component extends DCLogic {}
+</script>
+</body>
+</html>

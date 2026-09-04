@@ -1,0 +1,184 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Spectral:wght@400;500;600;700&family=Public+Sans:wght@400;500;600;700&display=swap">
+  <style>
+    * { box-sizing: border-box; }
+    body { margin: 0; font-family: "Public Sans", ui-sans-serif, system-ui, sans-serif; color: #1C2534; }
+    .ser { font-family: "Spectral", Georgia, "Times New Roman", serif; }
+    a { color: #8A6A3B; } a:hover { color: #6B5230; }
+    .eb { font-size: 10px; font-weight: 700; letter-spacing: 1.8px; text-transform: uppercase; color: #97836A; }
+    .panel { background: #FFFFFF; border: 1px solid #E6E1D7; border-radius: 12px; padding: 26px; }
+    .lbl { font-size: 12px; color: #5C6675; }
+  </style>
+</helmet>
+
+<div class="ser" style="width: 960px; min-height: 1720px; background: #FAF8F3; padding: 44px; font-family: 'Public Sans', sans-serif;">
+
+  <div style="border-bottom: 1px solid #E6E1D7; padding-bottom: 20px;">
+    <div class="eb">01 · Premium / Timeless — Sistema de diseño</div>
+    <h1 class="ser" style="margin: 8px 0 0; font-size: 40px; font-weight: 500; letter-spacing: -1.2px;">Confianza y permanencia</h1>
+    <p style="margin: 8px 0 0; font-size: 13px; line-height: 1.55; color: #5C6675; max-width: 640px;">Refina la app actual sin reinventarla. Serif editorial para titulares, un texto neutro muy legible, un único acento de latón, jerarquía por espacio y tamaño, estados discretos. Objetivo: que no envejezca y que transmita seriedad sin frialdad.</p>
+  </div>
+
+  <!-- marca -->
+  <div class="panel" style="margin-top: 22px; display: flex; gap: 36px; align-items: center;">
+    <div style="flex: 1;">
+      <div class="eb" style="margin-bottom: 14px;">Marca</div>
+      <div class="ser" style="font-size: 46px; font-weight: 600; letter-spacing: -1px;">joinly</div>
+      <p style="margin: 10px 0 0; font-size: 11.5px; line-height: 1.5; color: #5C6675;">Wordmark en Spectral 600, minúsculas. El isotipo abandona los anillos de radar por un <strong>arco de proximidad</strong> abierto: un gesto simple que sobrevive a cualquier patrón de descubrimiento.</p>
+    </div>
+    <div style="width: 1px; align-self: stretch; background: #E6E1D7;"></div>
+    <div style="text-align: center;">
+      <div class="eb" style="margin-bottom: 14px;">Isotipo</div>
+      <div style="width: 88px; height: 88px; border-radius: 20px; background: #1C2534; display: grid; place-items: center; margin: 0 auto;">
+        <svg width="44" height="44" viewBox="0 0 48 48" fill="none">
+          <path d="M8 30 A16 16 0 0 1 40 30" stroke="#FAF8F3" stroke-width="3.4" stroke-linecap="round"/>
+          <path d="M15 30 A9 9 0 0 1 33 30" stroke="#FAF8F3" stroke-width="3.4" stroke-linecap="round" stroke-opacity="0.55"/>
+          <circle cx="24" cy="30" r="3.6" fill="#8A6A3B"/>
+        </svg>
+      </div>
+      <div class="lbl" style="font-size: 10.5px; margin-top: 8px;">App icon · 20 px radio</div>
+    </div>
+  </div>
+
+  <!-- tipografia -->
+  <div class="panel" style="margin-top: 16px;">
+    <div class="eb" style="margin-bottom: 16px;">Tipografía y jerarquía</div>
+    <div style="display: grid; grid-template-columns: 1.1fr 1fr; gap: 32px;">
+      <div style="border-right: 1px solid #E6E1D7; padding-right: 28px;">
+        <div class="lbl">Titulares — Spectral</div>
+        <div class="ser" style="font-size: 34px; font-weight: 500; letter-spacing: -0.8px; line-height: 1.1; margin-top: 6px;">Tu radar de planes</div>
+        <div class="ser" style="font-size: 22px; font-weight: 500; margin-top: 10px;">Club de lectura: novela gallega</div>
+        <div style="font-size: 11px; color: #97836A; margin-top: 10px;">Display 34/40 · Título 22/28 · Sección 17/24 — peso 500, tracking −0.8</div>
+      </div>
+      <div>
+        <div class="lbl">Texto e interfaz — Public Sans</div>
+        <div style="font-size: 15px; line-height: 1.55; margin-top: 6px; color: #33404F;">Cuerpo 15/23 · peso 400. Metadatos 13/18 en <span style="color:#5C6675;">#5C6675</span>. Etiquetas 10 mayúsculas, tracking 1.8.</div>
+        <div class="eb" style="margin-top: 12px;">Cultura y ocio · Etiqueta</div>
+        <div style="font-size: 11px; color: #97836A; margin-top: 10px;">Escalado del sistema respetado hasta 200 %. Números tabulares para horas y distancias.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- paleta -->
+  <div class="panel" style="margin-top: 16px;">
+    <div class="eb" style="margin-bottom: 16px;">Paleta y roles</div>
+    <div style="display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 14px;">
+      <div><div style="height: 58px; border-radius: 8px; background: #1C2534;"></div><div style="font-size: 11px; font-weight: 600; margin-top: 6px;">Tinta</div><div class="lbl" style="font-size: 10px;">#1C2534 · texto, cabecera</div></div>
+      <div><div style="height: 58px; border-radius: 8px; background: #FAF8F3; border: 1px solid #E6E1D7;"></div><div style="font-size: 11px; font-weight: 600; margin-top: 6px;">Papel</div><div class="lbl" style="font-size: 10px;">#FAF8F3 · fondo</div></div>
+      <div><div style="height: 58px; border-radius: 8px; background: #FFFFFF; border: 1px solid #E6E1D7;"></div><div style="font-size: 11px; font-weight: 600; margin-top: 6px;">Superficie</div><div class="lbl" style="font-size: 10px;">#FFFFFF · tarjetas</div></div>
+      <div><div style="height: 58px; border-radius: 8px; background: #8A6A3B;"></div><div style="font-size: 11px; font-weight: 600; margin-top: 6px;">Latón</div><div class="lbl" style="font-size: 10px;">#8A6A3B · acción, enlace</div></div>
+      <div><div style="height: 58px; border-radius: 8px; background: #5C6675;"></div><div style="font-size: 11px; font-weight: 600; margin-top: 6px;">Pizarra</div><div class="lbl" style="font-size: 10px;">#5C6675 · texto 2º</div></div>
+      <div><div style="height: 58px; border-radius: 8px; background: #E6E1D7;"></div><div style="font-size: 11px; font-weight: 600; margin-top: 6px;">Filete</div><div class="lbl" style="font-size: 10px;">#E6E1D7 · bordes</div></div>
+      <div><div style="height: 58px; border-radius: 8px; background: #1E5B45;"></div><div style="font-size: 11px; font-weight: 600; margin-top: 6px;">Confirmado</div><div class="lbl" style="font-size: 10px;">#1E5B45 / soft #E7F0EC</div></div>
+      <div><div style="height: 58px; border-radius: 8px; background: #8E2C2C;"></div><div style="font-size: 11px; font-weight: 600; margin-top: 6px;">Alerta</div><div class="lbl" style="font-size: 10px;">#8E2C2C · destructivo</div></div>
+    </div>
+    <p style="font-size: 11px; color: #5C6675; margin: 14px 0 0;">Un solo acento. Contraste AA garantizado: latón sobre papel 4.9:1, pizarra sobre papel 4.6:1, blanco sobre tinta 13:1. Nada se comunica solo por color.</p>
+  </div>
+
+  <!-- espaciado + botones -->
+  <div style="display: grid; grid-template-columns: 0.8fr 1.2fr; gap: 16px; margin-top: 16px;">
+    <div class="panel">
+      <div class="eb" style="margin-bottom: 14px;">Espaciado y radio</div>
+      <div style="display: flex; gap: 8px; align-items: flex-end;">
+        <div style="width: 4px; height: 16px; background: #C9BEA6;"></div>
+        <div style="width: 8px; height: 24px; background: #C9BEA6;"></div>
+        <div style="width: 12px; height: 32px; background: #C9BEA6;"></div>
+        <div style="width: 16px; height: 44px; background: #C9BEA6;"></div>
+        <div style="width: 24px; height: 56px; background: #C9BEA6;"></div>
+        <div style="width: 32px; height: 68px; background: #C9BEA6;"></div>
+      </div>
+      <div class="lbl" style="font-size: 10.5px; margin-top: 8px;">4 · 8 · 12 · 16 · 24 · 32 (escala actual)</div>
+      <div style="display: flex; gap: 10px; margin-top: 16px;">
+        <div style="width: 40px; height: 40px; border: 1px solid #1C2534; border-radius: 8px;"></div>
+        <div style="width: 40px; height: 40px; border: 1px solid #1C2534; border-radius: 12px;"></div>
+        <div style="width: 40px; height: 40px; border: 1px solid #1C2534; border-radius: 999px;"></div>
+      </div>
+      <div class="lbl" style="font-size: 10.5px; margin-top: 8px;">Controles 8 · Tarjetas 12 · Chips pill</div>
+    </div>
+
+    <div class="panel">
+      <div class="eb" style="margin-bottom: 14px;">Botones — 52 px alto</div>
+      <div style="display: flex; flex-direction: column; gap: 10px;">
+        <div style="display: flex; gap: 10px;">
+          <div style="background: #8A6A3B; color: #fff; border-radius: 8px; height: 44px; display: grid; place-items: center; font-size: 13px; font-weight: 600; padding: 0 20px;">Unirme al plan</div>
+          <div style="background: #6F5530; color: #fff; border-radius: 8px; height: 44px; display: grid; place-items: center; font-size: 13px; font-weight: 600; padding: 0 20px;">Pulsado</div>
+          <div style="background: #E6E1D7; color: #97836A; border-radius: 8px; height: 44px; display: grid; place-items: center; font-size: 13px; font-weight: 600; padding: 0 20px;">Inactivo</div>
+        </div>
+        <div style="display: flex; gap: 10px;">
+          <div style="border: 1px solid #1C2534; color: #1C2534; border-radius: 8px; height: 44px; display: grid; place-items: center; font-size: 13px; font-weight: 600; padding: 0 20px;">Secundario</div>
+          <div style="color: #8A6A3B; border-radius: 8px; height: 44px; display: grid; place-items: center; font-size: 13px; font-weight: 700; padding: 0 12px;">Enlace de texto</div>
+        </div>
+      </div>
+      <p style="font-size: 10.5px; color: #5C6675; margin: 12px 0 0;">Primario = latón lleno. Secundario = filete de tinta. Foco = anillo de 2&nbsp;px latón con 2&nbsp;px de separación.</p>
+    </div>
+  </div>
+
+  <!-- cards + inputs -->
+  <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 16px;">
+    <div class="panel">
+      <div class="eb" style="margin-bottom: 14px;">Tarjeta de plan</div>
+      <div style="background: #FFFFFF; border: 1px solid #E6E1D7; border-radius: 12px; padding: 16px;">
+        <div class="eb" style="color: #97836A;">Cultura y ocio</div>
+        <div class="ser" style="font-size: 17px; font-weight: 500; margin-top: 3px;">Club de lectura: novela gallega</div>
+        <div style="font-size: 11.5px; color: #5C6675; margin-top: 6px;">Jue 4 sep · 19:00 · Zona Areal · 800 m</div>
+        <div style="display: flex; gap: 6px; margin-top: 10px;">
+          <span style="font-size: 10.5px; font-weight: 600; color: #1E5B45; border: 1px solid #CDE2D8; border-radius: 999px; padding: 3px 9px;">2 plazas</span>
+          <span style="font-size: 10.5px; color: #5C6675; border: 1px solid #E6E1D7; border-radius: 999px; padding: 3px 9px;">andrea.c</span>
+        </div>
+      </div>
+      <p style="font-size: 10.5px; color: #5C6675; margin: 10px 0 0;">Sin sombra. Jerarquía por filete de 1&nbsp;px + espacio. Categoría legible arriba; sin “inicial” como avatar.</p>
+    </div>
+    <div class="panel">
+      <div class="eb" style="margin-bottom: 14px;">Campos</div>
+      <div style="display: flex; flex-direction: column; gap: 12px;">
+        <div>
+          <div style="font-size: 12px; font-weight: 600; margin-bottom: 5px;">Título del plan</div>
+          <div style="border: 1px solid #E6E1D7; border-radius: 8px; height: 44px; display: flex; align-items: center; padding: 0 12px; font-size: 13px; color: #97836A;">Escribe un título claro</div>
+        </div>
+        <div>
+          <div style="font-size: 12px; font-weight: 600; margin-bottom: 5px;">Zona aproximada <span style="color:#8A6A3B;">· enfocado</span></div>
+          <div style="border: 2px solid #8A6A3B; border-radius: 8px; height: 44px; display: flex; align-items: center; padding: 0 12px; font-size: 13px; color: #1C2534;">Zona Areal</div>
+        </div>
+        <div>
+          <div style="font-size: 12px; font-weight: 600; margin-bottom: 5px; color: #8E2C2C;">Fecha y hora · error</div>
+          <div style="border: 1px solid #8E2C2C; border-radius: 8px; height: 44px; display: flex; align-items: center; padding: 0 12px; font-size: 13px; color: #8E2C2C;">Elige una fecha futura</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- navegacion -->
+  <div class="panel" style="margin-top: 16px;">
+    <div class="eb" style="margin-bottom: 14px;">Navegación</div>
+    <div style="display: grid; grid-template-columns: 1.2fr 1fr; gap: 24px; align-items: center;">
+      <div style="border: 1px solid #E6E1D7; border-radius: 12px; padding: 12px 10px; display: flex; justify-content: space-around; background: #fff;">
+        <div style="text-align: center;"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#8A6A3B" stroke-width="1.6"><path d="M4 15 A8 8 0 0 1 20 15" stroke-linecap="round"/><path d="M8 15 A4 4 0 0 1 16 15" stroke-linecap="round"/><circle cx="12" cy="15" r="1.8" fill="#8A6A3B" stroke="none"/></svg><div style="font-size: 9.5px; font-weight: 600; margin-top: 3px;">Radar</div></div>
+        <div style="text-align: center;"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#97A0AD" stroke-width="1.6"><rect x="4" y="5" width="16" height="16" rx="2"/><path d="M4 10h16M9 3v4M15 3v4"/></svg><div style="font-size: 9.5px; color: #97A0AD; margin-top: 3px;">Mis planes</div></div>
+        <div style="text-align: center;"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#97A0AD" stroke-width="1.6"><circle cx="12" cy="12" r="9"/><path d="M12 8v8M8 12h8"/></svg><div style="font-size: 9.5px; color: #97A0AD; margin-top: 3px;">Crear</div></div>
+        <div style="text-align: center;"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#97A0AD" stroke-width="1.6"><circle cx="12" cy="8" r="3.4"/><path d="M5.5 20c1.3-3.6 4-5 6.5-5s5.2 1.4 6.5 5"/></svg><div style="font-size: 9.5px; color: #97A0AD; margin-top: 3px;">Perfil</div></div>
+      </div>
+      <p style="font-size: 11px; color: #5C6675; margin: 0;">Barra inferior de 4 destinos (sin cambios de estructura). Activo = latón. Iconos de trazo 1,6, familia única. Cabecera con volver: flecha + etiqueta, sobre papel, no navy.</p>
+    </div>
+  </div>
+
+  <!-- implementacion -->
+  <div class="panel" style="margin-top: 16px; background: #F1EEE6;">
+    <div class="eb" style="margin-bottom: 10px;">Mantenible y escalable</div>
+    <p style="font-size: 12px; line-height: 1.55; color: #33404F; margin: 0; max-width: 760px;">Extiende <code>src/ui/tokens.ts</code> (mismos nombres semánticos, nuevos valores) — no crea un sistema paralelo. Reutiliza los componentes existentes: <code>Button</code> gana solo la variante de foco, <code>Card</code> pierde la sombra, <code>Text</code> añade dos tamaños. Sin dependencias nuevas: Spectral y Public Sans se cargan con <code>expo-font</code>. Cero SVG complejos: el isotipo es un path. Modo oscuro previsto con los mismos tokens (tinta ↔ papel).</p>
+  </div>
+
+</div>
+</x-dc>
+<script data-dc-script data-props='{"$preview":{"width":960,"height":1720}}'>
+class Component extends DCLogic {}
+</script>
+</body>
+</html>

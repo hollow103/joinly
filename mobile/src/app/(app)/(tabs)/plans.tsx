@@ -4,7 +4,7 @@ import { useRouter } from 'expo-router';
 import { ActivityIndicator, FlatList, Pressable, StyleSheet, View } from 'react-native';
 import { getMyEvents, type EventDetail } from '@/api/endpoints';
 import { useSession } from '@/auth/session';
-import { categoryLabel, eventDate } from '@/events/discovery';
+import { categoryColor, categoryLabel, eventDate } from '@/events/discovery';
 import { Button, Screen, Text, tokens } from '@/ui';
 
 const statusFilters: [string, string][] = [
@@ -124,7 +124,9 @@ function EventRow({
       style={({ pressed }) => [styles.row, pressed ? styles.pressed : null]}
     >
       <View style={styles.rowMain}>
-        <Text style={styles.category}>{categoryLabel(event.category).toUpperCase()}</Text>
+        <Text style={[styles.category, { color: categoryColor(event.category) }]}>
+          {categoryLabel(event.category).toUpperCase()}
+        </Text>
         <Text variant="heading" numberOfLines={1}>
           {event.title}
         </Text>

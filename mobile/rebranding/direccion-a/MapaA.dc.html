@@ -1,0 +1,125 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Newsreader:opsz,wght@6..72,400;6..72,500;6..72,600&family=Instrument+Sans:wght@400;500;600&display=swap">
+  <style>
+    * { box-sizing: border-box; }
+    body { margin: 0; }
+    .aA { font-family: "Instrument Sans", ui-sans-serif, system-ui, sans-serif; color: #1E1B16; -webkit-font-smoothing: antialiased; }
+    .aA .serif { font-family: "Newsreader", Georgia, "Times New Roman", serif; }
+    .aA a { color: #6C2233; } .aA a:hover { color: #501826; }
+    .aA .kick { font-size: 10px; font-weight: 600; letter-spacing: 1.6px; text-transform: uppercase; color: #6B6459; }
+  </style>
+</helmet>
+
+<div class="aA" style="width: 390px; height: 844px; background: #F6F3EC; position: relative; overflow: hidden;">
+
+  <!-- header -->
+  <div style="display: flex; align-items: center; justify-content: space-between; padding: 20px 22px 0;">
+    <div style="display: flex; align-items: baseline; gap: 2px;">
+      <span class="serif" style="font-size: 22px; font-weight: 600; letter-spacing: -0.5px;">joinly</span>
+      <span style="width: 5px; height: 5px; border-radius: 50%; background: #6C2233; display: inline-block; margin-left: 1px; transform: translateY(-13px);"></span>
+    </div>
+    <div style="display: flex; align-items: center; gap: 6px; border: 1px solid #DED8CC; border-radius: 999px; padding: 7px 12px;">
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#6B6459" stroke-width="1.6"><path d="M12 21s-7-6.2-7-11a7 7 0 0 1 14 0c0 4.8-7 11-7 11Z"/><circle cx="12" cy="10" r="2.4"/></svg>
+      <span style="font-size: 12px; font-weight: 500; color: #3B372F;">Vigo</span>
+      <span style="font-size: 12px; color: #948C7E;">· 3 km</span>
+    </div>
+  </div>
+
+  <!-- title -->
+  <div style="padding: 20px 22px 0;">
+    <div class="kick">Miércoles 3 de septiembre</div>
+    <h1 class="serif" style="margin: 6px 0 0; font-size: 34px; line-height: 1.02; font-weight: 500; letter-spacing: -1px;">Cerca de ti</h1>
+  </div>
+
+  <!-- zone map (approximate areas, no streets, no exact pins) -->
+  <div style="padding: 16px 22px 0;">
+    <div style="border: 1px solid #E4DECF; border-radius: 8px; overflow: hidden; background: #EFEBDF;">
+      <svg width="344" height="252" viewBox="0 0 344 252" style="display: block;" role="img" aria-label="Mapa de zonas aproximadas de Vigo con recuento de planes por barrio">
+        <rect width="344" height="252" fill="#EFEBDF"/>
+        <!-- soft water edge, purely atmospheric -->
+        <path d="M0 210 Q90 180 170 208 T344 196 V252 H0 Z" fill="#DCE4DC" fill-opacity="0.7"/>
+        <!-- zone: Casco Vello -->
+        <path d="M28 34 Q92 18 118 54 Q128 96 86 112 Q34 120 22 78 Q18 46 28 34 Z" fill="#C4553A" fill-opacity="0.14" stroke="#C4553A" stroke-opacity="0.5" stroke-width="1.5"/>
+        <text x="60" y="70" font-family="Instrument Sans, sans-serif" font-size="11" font-weight="600" fill="#3B372F">Casco Vello</text>
+        <text x="60" y="85" font-family="Instrument Sans, sans-serif" font-size="10" fill="#7A2E2E">3 planes</text>
+        <!-- zone: Zona Centro -->
+        <path d="M200 26 Q286 20 306 62 Q312 104 262 116 Q206 118 194 74 Q190 40 200 26 Z" fill="#C4553A" fill-opacity="0.14" stroke="#C4553A" stroke-opacity="0.5" stroke-width="1.5"/>
+        <text x="224" y="64" font-family="Instrument Sans, sans-serif" font-size="11" font-weight="600" fill="#3B372F">Zona Centro</text>
+        <text x="224" y="79" font-family="Instrument Sans, sans-serif" font-size="10" fill="#7A2E2E">5 planes</text>
+        <!-- zone: O Berbés -->
+        <path d="M34 138 Q96 128 116 164 Q120 196 78 204 Q30 206 22 168 Q22 146 34 138 Z" fill="#C4553A" fill-opacity="0.14" stroke="#C4553A" stroke-opacity="0.5" stroke-width="1.5"/>
+        <text x="52" y="170" font-family="Instrument Sans, sans-serif" font-size="11" font-weight="600" fill="#3B372F">O Berbés</text>
+        <text x="52" y="185" font-family="Instrument Sans, sans-serif" font-size="10" fill="#7A2E2E">2 planes</text>
+        <!-- zone: O Areal (selected) -->
+        <path d="M198 130 Q292 120 312 166 Q316 210 258 220 Q200 222 190 176 Q188 144 198 130 Z" fill="#6C2233" fill-opacity="0.16" stroke="#6C2233" stroke-width="2"/>
+        <text x="224" y="168" font-family="Instrument Sans, sans-serif" font-size="11" font-weight="700" fill="#4A1621">O Areal</text>
+        <text x="224" y="183" font-family="Instrument Sans, sans-serif" font-size="10" font-weight="600" fill="#6C2233">2 planes</text>
+        <!-- you are here (approximate) -->
+        <circle cx="168" cy="150" r="15" fill="#6C2233" fill-opacity="0.12"/>
+        <circle cx="168" cy="150" r="5" fill="#6C2233"/>
+        <text x="150" y="132" font-family="Instrument Sans, sans-serif" font-size="9" font-weight="600" letter-spacing="0.6" fill="#6B6459">TÚ (APROX.)</text>
+      </svg>
+      <div style="display: flex; align-items: center; justify-content: space-between; padding: 10px 14px; border-top: 1px solid #E4DECF; background: #FFFFFF;">
+        <span style="font-size: 11px; color: #8A5230;">Zonas aproximadas · sin direcciones exactas</span>
+        <a href="#" style="font-size: 12px; font-weight: 600; text-decoration: none;">Cambiar radio</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- selected zone -->
+  <div style="display: flex; align-items: baseline; justify-content: space-between; padding: 18px 22px 0;">
+    <div class="kick" style="color: #6C2233;">O Areal · 2 planes</div>
+    <a href="#" style="font-size: 12px; font-weight: 600; text-decoration: none;">Ver todo</a>
+  </div>
+
+  <!-- editorial card -->
+  <div style="padding: 10px 22px 0;">
+    <div style="border: 1px solid #E4DECF; border-radius: 8px; overflow: hidden; background: #FFFFFF; display: flex;">
+      <svg width="96" height="118" viewBox="0 0 96 118" style="display: block; flex-shrink: 0;"><rect width="96" height="118" fill="#EAE3D2"/><circle cx="26" cy="96" r="50" fill="#6C2233" fill-opacity="0.8"/><circle cx="78" cy="24" r="22" fill="#C4553A"/></svg>
+      <div style="padding: 12px 14px;">
+        <div class="kick" style="color: #6C2233;">Cultura y ocio</div>
+        <div class="serif" style="font-size: 17px; font-weight: 500; line-height: 1.15; letter-spacing: -0.3px; margin-top: 3px;">Club de lectura: novela gallega</div>
+        <div style="font-size: 12px; color: #6B6459; margin-top: 6px;">Jue 4 sep · 19:00 · 800 m</div>
+        <div style="display: flex; gap: 6px; margin-top: 9px;">
+          <span style="font-size: 10.5px; font-weight: 600; color: #2F4A3C; border: 1px solid #CFD9CF; border-radius: 999px; padding: 3px 8px;">2 plazas</span>
+          <span style="font-size: 10.5px; color: #6B6459; border: 1px solid #E4DECF; border-radius: 999px; padding: 3px 8px;">andrea.c</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- tab bar -->
+  <div style="position: absolute; left: 0; right: 0; bottom: 0; height: 66px; background: #FFFFFF; border-top: 1px solid #E4DECF; display: flex; align-items: center; justify-content: space-around; padding: 0 12px;">
+    <div style="display: flex; flex-direction: column; align-items: center; gap: 3px;">
+      <svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="#1E1B16" stroke-width="1.6"><path d="M9 4 3 6.5v13L9 17l6 2.5 6-2.5v-13L15 6.5 9 4Z"/><path d="M9 4v13M15 6.5v13"/></svg>
+      <span style="font-size: 10px; font-weight: 600; color: #1E1B16;">Mapa</span>
+    </div>
+    <div style="display: flex; flex-direction: column; align-items: center; gap: 3px;">
+      <svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="#A29A8A" stroke-width="1.6"><rect x="4" y="5" width="16" height="16" rx="2"/><path d="M4 10h16M9 3v4M15 3v4"/></svg>
+      <span style="font-size: 10px; color: #A29A8A;">Agenda</span>
+    </div>
+    <div style="display: flex; flex-direction: column; align-items: center; gap: 3px;">
+      <svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="#A29A8A" stroke-width="1.6"><circle cx="12" cy="12" r="9"/><path d="M12 8v8M8 12h8"/></svg>
+      <span style="font-size: 10px; color: #A29A8A;">Crear</span>
+    </div>
+    <div style="display: flex; flex-direction: column; align-items: center; gap: 3px;">
+      <svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="#A29A8A" stroke-width="1.6"><circle cx="12" cy="8" r="3.4"/><path d="M5.5 20c1.3-3.6 4-5 6.5-5s5.2 1.4 6.5 5"/></svg>
+      <span style="font-size: 10px; color: #A29A8A;">Tú</span>
+    </div>
+  </div>
+
+</div>
+</x-dc>
+<script data-dc-script data-props='{"$preview":{"width":390,"height":844}}'>
+class Component extends DCLogic {}
+</script>
+</body>
+</html>

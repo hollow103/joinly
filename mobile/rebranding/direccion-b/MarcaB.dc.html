@@ -1,0 +1,127 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=DM+Mono:wght@400;500&display=swap">
+  <style>
+    * { box-sizing: border-box; }
+    body { margin: 0; }
+    .bB { font-family: "Space Grotesk", ui-sans-serif, system-ui, sans-serif; color: #111111; -webkit-font-smoothing: antialiased; }
+    .bB .mono { font-family: "DM Mono", ui-monospace, "SFMono-Regular", monospace; }
+    .bB a { color: #3B2EFF; } .bB a:hover { color: #2A1FCC; }
+    .bB .lbl { font-size: 10px; font-weight: 700; letter-spacing: 1.6px; text-transform: uppercase; color: #55524B; }
+    .bB .panel { border: 2px solid #111111; border-radius: 12px; background: #FFFFFF; padding: 26px; box-shadow: 6px 6px 0 #111111; }
+  </style>
+</helmet>
+
+<div class="bB" style="width: 820px; min-height: 1120px; background: #F2F1EC; padding: 48px;">
+
+  <!-- header -->
+  <div style="display: flex; align-items: flex-end; justify-content: space-between; border-bottom: 2px solid #111111; padding-bottom: 22px;">
+    <div>
+      <div class="lbl">joinly · rebranding — Dirección B</div>
+      <h1 style="margin: 8px 0 0; font-size: 46px; font-weight: 700; letter-spacing: -2px;">Hoy · Agenda viva</h1>
+    </div>
+    <div style="max-width: 300px; font-size: 12.5px; line-height: 1.5; color: #55524B;">El descubrimiento se organiza por <strong>tiempo</strong>, no por espacio: una tira de días y una línea temporal de planes por hora. Geométrica, de contraste alto y con energía.</div>
+  </div>
+
+  <!-- logo -->
+  <div class="panel" style="margin-top: 26px; display: flex; gap: 40px; align-items: center;">
+    <div style="flex: 1;">
+      <div class="lbl" style="margin-bottom: 16px;">Logotipo</div>
+      <div style="font-size: 60px; font-weight: 700; letter-spacing: -2.4px;">joinly</div>
+      <div class="mono" style="font-size: 11px; color: #55524B; margin-top: 12px;">Space Grotesk 700, tracking cerrado. Siempre en minúsculas, siempre sobre bloque claro o de color plano.</div>
+    </div>
+    <div style="width: 2px; align-self: stretch; background: #111111;"></div>
+    <div style="text-align: center;">
+      <div class="lbl" style="margin-bottom: 16px;">Isotipo — “pin de agenda”</div>
+      <div style="width: 96px; height: 96px; border: 2px solid #111111; border-radius: 16px; background: #3B2EFF; display: grid; place-items: center; margin: 0 auto; box-shadow: 4px 4px 0 #111111;">
+        <svg width="40" height="52" viewBox="0 0 40 52" fill="none">
+          <circle cx="20" cy="12" r="8" fill="#D6FF3D" stroke="#111111" stroke-width="2.5"/>
+          <path d="M20 20 V44" stroke="#FFFFFF" stroke-width="5" stroke-linecap="round"/>
+          <path d="M20 44 l0 4" stroke="#FF5C38" stroke-width="5" stroke-linecap="round"/>
+        </svg>
+      </div>
+      <div class="mono" style="font-size: 10.5px; color: #55524B; margin-top: 12px;">nodo + línea de tiempo = la “j”</div>
+    </div>
+  </div>
+
+  <!-- palette -->
+  <div class="panel" style="margin-top: 20px;">
+    <div class="lbl" style="margin-bottom: 16px;">Paleta</div>
+    <div style="display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 12px;">
+      <div><div style="height: 62px; border-radius: 8px; background: #F2F1EC; border: 2px solid #111111;"></div><div style="font-size: 10.5px; font-weight: 700; margin-top: 7px;">Hueso</div><div class="mono" style="font-size: 9.5px; color: #55524B;">#F2F1EC</div></div>
+      <div><div style="height: 62px; border-radius: 8px; background: #111111;"></div><div style="font-size: 10.5px; font-weight: 700; margin-top: 7px;">Negro</div><div class="mono" style="font-size: 9.5px; color: #55524B;">#111111</div></div>
+      <div><div style="height: 62px; border-radius: 8px; background: #3B2EFF;"></div><div style="font-size: 10.5px; font-weight: 700; margin-top: 7px;">Índigo</div><div class="mono" style="font-size: 9.5px; color: #55524B;">#3B2EFF</div></div>
+      <div><div style="height: 62px; border-radius: 8px; background: #7A1F33;"></div><div style="font-size: 10.5px; font-weight: 700; margin-top: 7px;">Burdeos</div><div class="mono" style="font-size: 9.5px; color: #55524B;">#7A1F33</div></div>
+      <div><div style="height: 62px; border-radius: 8px; background: #D6FF3D; border: 2px solid #111111;"></div><div style="font-size: 10.5px; font-weight: 700; margin-top: 7px;">Lima</div><div class="mono" style="font-size: 9.5px; color: #55524B;">#D6FF3D</div></div>
+      <div><div style="height: 62px; border-radius: 8px; background: #FF5C38;"></div><div style="font-size: 10.5px; font-weight: 700; margin-top: 7px;">Coral</div><div class="mono" style="font-size: 9.5px; color: #55524B;">#FF5C38</div></div>
+    </div>
+    <div style="font-size: 12px; color: #55524B; margin-top: 16px;">Índigo = estructura y selección. <strong style="color:#7A1F33;">Burdeos</strong> = cabecera de ficha y etiquetas en confirmación (el contrapunto oscuro del índigo). Lima = el “ahora”, lo destacado. Coral = solo Crear. Borde negro de 2&nbsp;px y sombra plana desplazada en todo elemento accionable.</div>
+  </div>
+
+  <!-- type -->
+  <div class="panel" style="margin-top: 20px;">
+    <div class="lbl" style="margin-bottom: 16px;">Tipografía</div>
+    <div style="display: flex; gap: 36px;">
+      <div style="flex: 1; border-right: 2px solid #111111; padding-right: 32px;">
+        <div class="mono" style="font-size: 11px; color: #55524B;">Display / UI — Space Grotesk</div>
+        <div style="font-size: 52px; font-weight: 700; letter-spacing: -2.4px; line-height: 0.95; margin-top: 8px;">Hoy</div>
+        <div style="font-size: 20px; font-weight: 600; margin-top: 10px;">Club de lectura: novela gallega</div>
+      </div>
+      <div style="flex: 1;">
+        <div class="mono" style="font-size: 11px; color: #55524B;">Horas y metadatos — DM Mono</div>
+        <div class="mono" style="font-size: 15px; margin-top: 10px; color: #33322D;">19:00 · Zona Areal · 800 m</div>
+        <div class="mono" style="font-size: 15px; margin-top: 4px; color: #33322D;">JUE 4 SEP · 2 plazas</div>
+        <div class="lbl" style="margin-top: 14px;">Cultura y ocio · Etiqueta</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- icons + nav -->
+  <div style="margin-top: 20px; display: grid; grid-template-columns: 1.35fr 1fr; gap: 20px;">
+    <div class="panel">
+      <div class="lbl" style="margin-bottom: 18px;">Iconografía — trazo 2,2 · remate cuadrado</div>
+      <div style="display: flex; gap: 22px; flex-wrap: wrap;">
+        <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#111111" stroke-width="2.2"><rect x="4" y="5" width="16" height="16" rx="1.5"/><path d="M4 10h16M9 3v4M15 3v4"/></svg>
+        <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#111111" stroke-width="2.2"><path d="M4 6h16M4 12h16M4 18h10"/></svg>
+        <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#111111" stroke-width="2.2"><path d="M12 5v14M5 12h14"/></svg>
+        <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#111111" stroke-width="2.2"><circle cx="12" cy="8" r="3.6"/><path d="M5.5 20c1.3-3.6 4-5 6.5-5s5.2 1.4 6.5 5"/></svg>
+        <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#111111" stroke-width="2.2"><circle cx="12" cy="12" r="8"/><path d="M12 8v4l3 2"/></svg>
+        <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#111111" stroke-width="2.2"><rect x="4" y="10" width="16" height="11" rx="1.5"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></svg>
+        <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#111111" stroke-width="2.2"><path d="M4 18 L10 10 L14 14 L20 6"/><path d="M15 6h5v5"/></svg>
+        <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#111111" stroke-width="2.2"><circle cx="11" cy="11" r="7"/><path d="M20 20l-4-4"/></svg>
+      </div>
+      <div class="mono" style="font-size: 11px; color: #55524B; margin-top: 16px;">Una familia geométrica de trazo grueso. Nunca emojis. Todo icono sin texto lleva etiqueta de accesibilidad.</div>
+    </div>
+    <div class="panel">
+      <div class="lbl" style="margin-bottom: 18px;">Barra de navegación</div>
+      <div style="border: 2px solid #111111; border-radius: 10px; padding: 12px 8px; display: flex; justify-content: space-around; align-items: flex-end;">
+        <div style="text-align: center;"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="#111111" stroke-width="2.2"><rect x="4" y="5" width="16" height="16" rx="1.5"/><path d="M4 10h16M9 3v4M15 3v4"/></svg><div style="font-size: 9px; font-weight: 700; margin-top: 3px;">Hoy</div></div>
+        <div style="text-align: center;"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="#8A877E" stroke-width="2.2"><path d="M4 6h16M4 12h16M4 18h10"/></svg><div style="font-size: 9px; color: #8A877E; margin-top: 3px;">Planes</div></div>
+        <div style="text-align: center;"><div style="width: 28px; height: 28px; background: #FF5C38; border: 2px solid #111111; border-radius: 7px; display: grid; place-items: center; box-shadow: 2px 2px 0 #111111;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="3"><path d="M12 6v12M6 12h12"/></svg></div><div style="font-size: 9px; color: #8A877E; margin-top: 4px;">Crear</div></div>
+        <div style="text-align: center;"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="#8A877E" stroke-width="2.2"><circle cx="12" cy="8" r="3.6"/><path d="M5.5 20c1.3-3.6 4-5 6.5-5s5.2 1.4 6.5 5"/></svg><div style="font-size: 9px; color: #8A877E; margin-top: 3px;">Perfil</div></div>
+      </div>
+      <div class="mono" style="font-size: 11px; color: #55524B; margin-top: 14px;">“Radar” pasa a <strong>Hoy</strong>. Crear mantiene el acento (coral), el resto es monocromo.</div>
+    </div>
+  </div>
+
+  <!-- voice -->
+  <div class="panel" style="margin-top: 20px; background: #D6FF3D;">
+    <div class="lbl" style="margin-bottom: 12px;">Voz</div>
+    <div style="font-size: 30px; font-weight: 700; letter-spacing: -1.2px;">“Tu ciudad, hora a hora.”</div>
+    <div style="font-size: 13px; color: #33322D; margin-top: 10px; line-height: 1.55; max-width: 620px;">Directa y con ritmo. Verbos en presente, frases de menos de ocho palabras. El tiempo manda: “esta tarde”, “a las 19:00”, “este finde”.</div>
+  </div>
+
+</div>
+</x-dc>
+<script data-dc-script data-props='{"$preview":{"width":820,"height":1120}}'>
+class Component extends DCLogic {}
+</script>
+</body>
+</html>

@@ -1,0 +1,98 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,700&family=Hanken+Grotesk:wght@400;500;600;700&display=swap">
+  <style>
+    * { box-sizing: border-box; }
+    body { margin: 0; }
+    .bd { font-family: "Hanken Grotesk", ui-sans-serif, system-ui, sans-serif; color: #141210; -webkit-font-smoothing: antialiased; }
+    .bd .disp { font-family: "Bricolage Grotesque", "Hanken Grotesk", system-ui, sans-serif; }
+    .bd a { color: #2440E8; } .bd a:hover { color: #1B31B0; }
+    .bd .tnum { font-variant-numeric: tabular-nums; }
+  </style>
+</helmet>
+
+<div class="bd" style="width: 390px; height: 844px; background: #F3EFE6; position: relative; overflow: hidden;">
+
+  <!-- header -->
+  <div style="display: flex; align-items: center; justify-content: space-between; padding: 18px 20px 0;">
+    <div class="disp" style="font-size: 21px; font-weight: 700; letter-spacing: -0.8px;">joinly</div>
+    <div style="font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; border: 2px solid #141210; border-radius: 7px; padding: 5px 9px;">Vigo · 3 km</div>
+  </div>
+
+  <!-- title -->
+  <div style="padding: 14px 20px 0;">
+    <h1 class="disp" style="margin: 0; font-size: 40px; font-weight: 700; letter-spacing: -2px; line-height: 0.98;">Cerca de ti</h1>
+    <div style="font-size: 12px; font-weight: 600; color: #5C564E; margin-top: 6px;">3 planes dentro de 3 km · zonas aproximadas</div>
+  </div>
+
+  <!-- filters -->
+  <div style="display: flex; gap: 7px; padding: 16px 20px 0;">
+    <span style="font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.8px; color: #F3EFE6; background: #141210; border-radius: 999px; padding: 7px 11px;">Ahora</span>
+    <span style="font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.8px; color: #141210; border: 2px solid #141210; border-radius: 999px; padding: 6px 11px;">Esta tarde</span>
+    <span style="font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.8px; color: #141210; border: 2px solid #141210; border-radius: 999px; padding: 6px 11px;">Mañana</span>
+    <span style="font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.8px; color: #141210; border: 2px solid #141210; border-radius: 999px; padding: 6px 11px;">Finde</span>
+  </div>
+
+  <!-- feed -->
+  <div style="padding: 18px 20px 0; display: flex; flex-direction: column; gap: 16px;">
+
+    <div style="border: 2px solid #141210; border-radius: 14px; background: #FFFFFF; overflow: hidden; box-shadow: 5px 5px 0 #141210;">
+      <div style="background: #7A1F33; padding: 9px 16px;"><span style="font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 1.2px; color: #F1D9DF;">Cultura y ocio</span></div>
+      <div style="padding: 16px;">
+        <div class="disp" style="font-size: 21px; font-weight: 700; line-height: 1.08; letter-spacing: -0.5px;">Club de lectura: novela gallega</div>
+        <div class="tnum" style="font-size: 24px; font-weight: 700; margin-top: 10px;">Jue 19:00 · 800 m</div>
+        <div style="font-size: 12px; font-weight: 600; color: #5C564E; margin-top: 4px;">Zona Areal · organiza andrea.c</div>
+        <div style="margin-top: 12px;">
+          <span style="font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.6px; color: #141210; background: #D6F24A; border: 2px solid #141210; border-radius: 999px; padding: 4px 9px;">2 plazas</span>
+        </div>
+      </div>
+    </div>
+
+    <div style="border: 2px solid #141210; border-radius: 14px; background: #FFFFFF; overflow: hidden; box-shadow: 5px 5px 0 #141210;">
+      <div style="background: #2440E8; padding: 9px 16px;"><span style="font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 1.2px; color: #CDD6FF;">Conexiones</span></div>
+      <div style="padding: 16px;">
+        <div class="disp" style="font-size: 21px; font-weight: 700; line-height: 1.08; letter-spacing: -0.5px;">Café y networking para creativos</div>
+        <div class="tnum" style="font-size: 24px; font-weight: 700; margin-top: 10px;">Hoy 17:00 · 400 m</div>
+        <div style="font-size: 12px; font-weight: 600; color: #5C564E; margin-top: 4px;">Zona Centro · organiza xoel</div>
+        <div style="margin-top: 12px;">
+          <span style="font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.6px; color: #141210; background: #D6F24A; border: 2px solid #141210; border-radius: 999px; padding: 4px 9px;">6 plazas</span>
+        </div>
+      </div>
+    </div>
+
+    <div style="border: 2px solid #141210; border-radius: 14px; background: #FFFFFF; display: flex; align-items: stretch; overflow: hidden;">
+      <div style="width: 8px; background: #0E7A4F; flex-shrink: 0;"></div>
+      <div style="padding: 12px 14px; flex: 1;">
+        <div style="display: flex; align-items: baseline; justify-content: space-between;">
+          <span style="font-size: 9px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; color: #0E7A4F;">Bienestar</span>
+          <span class="tnum" style="font-size: 16px; font-weight: 700;">Sáb 10:00</span>
+        </div>
+        <div class="disp" style="font-size: 16px; font-weight: 700; line-height: 1.1; margin-top: 3px;">Ruta al Monte do Castro</div>
+        <div style="font-size: 11px; font-weight: 600; color: #5C564E; margin-top: 3px;">Casco Vello · 1,2 km · 4 plazas</div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- tab bar -->
+  <div style="position: absolute; left: 0; right: 0; bottom: 0; height: 68px; background: #FFFFFF; border-top: 2px solid #141210; display: flex; align-items: center; justify-content: space-around; padding: 0 12px;">
+    <div style="text-align: center;"><svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="#2440E8" stroke-width="2.4"><rect x="4" y="4" width="16" height="16" rx="2"/><path d="M4 12h16"/></svg><div style="font-size: 9px; font-weight: 700; text-transform: uppercase; color: #2440E8; margin-top: 2px;">Cerca</div></div>
+    <div style="text-align: center;"><svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="#8A857C" stroke-width="2.2"><path d="M4 6h16M4 12h16M4 18h10"/></svg><div style="font-size: 9px; font-weight: 600; color: #8A857C; margin-top: 2px;">Mis planes</div></div>
+    <div style="text-align: center;"><div style="width: 32px; height: 32px; background: #7A1F33; border: 2px solid #141210; border-radius: 8px; display: grid; place-items: center; box-shadow: 2px 2px 0 #141210;"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3"><path d="M12 6v12M6 12h12"/></svg></div><div style="font-size: 9px; font-weight: 600; color: #8A857C; margin-top: 3px;">Crear</div></div>
+    <div style="text-align: center;"><svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="#8A857C" stroke-width="2.2"><circle cx="12" cy="8" r="3.6"/><path d="M5.5 20c1.3-3.6 4-5 6.5-5s5.2 1.4 6.5 5"/></svg><div style="font-size: 9px; font-weight: 600; color: #8A857C; margin-top: 2px;">Perfil</div></div>
+  </div>
+
+</div>
+</x-dc>
+<script data-dc-script data-props='{"$preview":{"width":390,"height":844}}'>
+class Component extends DCLogic {}
+</script>
+</body>
+</html>

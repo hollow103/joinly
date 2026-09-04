@@ -1,0 +1,44 @@
+{
+  "pages": [
+    { "id": "contexto", "name": "00 · Contexto" },
+    { "id": "premium", "name": "01 · Premium" },
+    { "id": "bold", "name": "02 · Bold" },
+    { "id": "future", "name": "03 · Future" },
+    { "id": "cierre", "name": "04 · Comparativa" }
+  ],
+  "artboards": [
+    { "file": "Main.dc.html", "page": "contexto", "x": 0, "y": 0, "w": 1200, "h": 1040 },
+    { "file": "AppActual.dc.html", "page": "contexto", "x": 1280, "y": 0, "w": 1200, "h": 1580 },
+    { "file": "Benchmark.dc.html", "page": "contexto", "x": 0, "y": 1160, "w": 1200, "h": 1120 },
+
+    { "file": "SistemaPremium.dc.html", "page": "premium", "x": 0, "y": 0, "w": 960, "h": 1800 },
+    { "file": "DescubrirPremium.dc.html", "page": "premium", "x": 1040, "y": 0, "w": 390, "h": 844 },
+    { "file": "FichaPremium.dc.html", "page": "premium", "x": 1510, "y": 0, "w": 390, "h": 844 },
+    { "file": "CrearPremium.dc.html", "page": "premium", "x": 1980, "y": 0, "w": 390, "h": 844 },
+    { "file": "CuentaPremium.dc.html", "page": "premium", "x": 2450, "y": 0, "w": 880, "h": 960 },
+    { "file": "EstadosPremium.dc.html", "page": "premium", "x": 1040, "y": 1000, "w": 1200, "h": 1020 },
+
+    { "file": "SistemaBold.dc.html", "page": "bold", "x": 0, "y": 0, "w": 960, "h": 1800 },
+    { "file": "DescubrirBold.dc.html", "page": "bold", "x": 1040, "y": 0, "w": 390, "h": 844 },
+    { "file": "FichaBold.dc.html", "page": "bold", "x": 1510, "y": 0, "w": 390, "h": 844 },
+    { "file": "CrearBold.dc.html", "page": "bold", "x": 1980, "y": 0, "w": 390, "h": 844 },
+    { "file": "CuentaBold.dc.html", "page": "bold", "x": 2450, "y": 0, "w": 880, "h": 960 },
+    { "file": "EstadosBold.dc.html", "page": "bold", "x": 1040, "y": 1000, "w": 1200, "h": 1020 },
+
+    { "file": "SistemaFuture.dc.html", "page": "future", "x": 0, "y": 0, "w": 960, "h": 1840 },
+    { "file": "DescubrirFuture.dc.html", "page": "future", "x": 1040, "y": 0, "w": 390, "h": 844 },
+    { "file": "FichaFuture.dc.html", "page": "future", "x": 1510, "y": 0, "w": 390, "h": 844 },
+    { "file": "CrearFuture.dc.html", "page": "future", "x": 1980, "y": 0, "w": 390, "h": 844 },
+    { "file": "CuentaFuture.dc.html", "page": "future", "x": 2450, "y": 0, "w": 880, "h": 960 },
+    { "file": "EstadosFuture.dc.html", "page": "future", "x": 1040, "y": 1000, "w": 1200, "h": 1020 },
+
+    { "file": "Comparativa.dc.html", "page": "cierre", "x": 0, "y": 0, "w": 1320, "h": 1120 }
+  ],
+  "annotations": [
+    { "id": "brief", "page": "contexto", "x": -330, "y": 0, "w": 280, "text": "joinly · rebranding_beta\n\nAnálisis de la app actual + benchmark, y luego 3 direcciones completas (Premium / Bold / Future), cada una con su sistema de diseño, pantallas y estados. Cierra con la comparativa y la recomendación.\n\nMockups estáticos. Datos de ejemplo reales (Vigo)." },
+    { "id": "guia-premium", "page": "premium", "x": 0, "y": -70, "w": 1400, "text": "01 · PREMIUM / TIMELESS — Izquierda: sistema de diseño.  Centro: Descubrir · Ficha · Crear.  Derecha: Cuenta (Mis planes + Perfil).  Abajo: estados, responsive y accesibilidad." },
+    { "id": "guia-bold", "page": "bold", "x": 0, "y": -70, "w": 1400, "text": "02 · BOLD / DISTINCTIVE — Mismo conjunto de tableros que Premium, con otro sistema visual: grotesca con carácter, cobalto + burdeos, bordes de 2 px y sombra plana." },
+    { "id": "guia-future", "page": "future", "x": 0, "y": -70, "w": 1400, "text": "03 · FUTURE / INNOVATIVE — Mismo conjunto de tableros. Dark-first, tipografía técnica, datos en monoespaciada y descubrimiento como carriles de módulos personalizables." }
+  ],
+  "launch": { "view": "canvas", "page": "contexto" }
+}

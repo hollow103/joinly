@@ -1,0 +1,161 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap">
+  <style>
+    * { box-sizing: border-box; }
+    body { margin: 0; font-family: "Space Grotesk", ui-sans-serif, system-ui, sans-serif; color: #EAECF5; }
+    .mono { font-family: "IBM Plex Mono", ui-monospace, "SFMono-Regular", monospace; }
+    a { color: #7C5CFF; } a:hover { color: #9B82FF; }
+    .eb { font-size: 10px; font-weight: 700; letter-spacing: 1.8px; text-transform: uppercase; color: #8A93A8; }
+    .panel { background: #151826; border: 1px solid rgba(255,255,255,0.08); border-radius: 16px; padding: 24px; }
+  </style>
+</helmet>
+
+<div style="width: 960px; min-height: 1760px; background: #0C0E15; padding: 44px; position: relative;">
+  <div style="position: absolute; inset: 0; background: radial-gradient(70% 32% at 82% 0%, rgba(124,92,255,0.16), transparent 60%), radial-gradient(60% 30% at 4% 100%, rgba(61,225,255,0.08), transparent 55%);"></div>
+
+  <div style="position: relative; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 20px;">
+    <div class="eb" style="color: #7C5CFF;">03 · Future / Innovative — Sistema de diseño</div>
+    <h1 style="margin: 8px 0 0; font-size: 44px; font-weight: 700; letter-spacing: -1.6px;">Modular y en tiempo real</h1>
+    <p style="margin: 8px 0 0; font-size: 13px; line-height: 1.55; color: #8A93A8; max-width: 660px;">Dark-first (con modo claro por los mismos tokens), tipografía técnica, datos en monoespaciada, superficies modulares que se combinan y reordenan. Microinteracciones sobrias y esqueletos de carga de primera clase. Preparado para crecer: nuevos módulos sin rediseñar la pantalla.</p>
+  </div>
+
+  <!-- marca -->
+  <div class="panel" style="position: relative; margin-top: 22px; display: flex; gap: 36px; align-items: center;">
+    <div style="flex: 1;">
+      <div class="eb" style="margin-bottom: 14px;">Marca</div>
+      <div style="display: flex; align-items: center; gap: 3px; font-size: 50px; font-weight: 700; letter-spacing: -1.6px;">
+        <span>j</span><span>o</span>
+        <span style="width: 16px; height: 16px; border-radius: 5px; background: linear-gradient(135deg, #7C5CFF, #3DE1FF); display: inline-block; margin: 0 2px; box-shadow: 0 0 18px rgba(124,92,255,0.7);"></span>
+        <span>nly</span>
+      </div>
+      <p style="margin: 10px 0 0; font-size: 11.5px; line-height: 1.5; color: #8A93A8;">Space Grotesk 700. La “o” es un <strong>módulo</strong> con degradado violeta→cian y halo: la unidad mínima del sistema. Sobre claro, el módulo pierde el halo y mantiene el degradado.</p>
+    </div>
+    <div style="width: 1px; align-self: stretch; background: rgba(255,255,255,0.1);"></div>
+    <div style="text-align: center;">
+      <div class="eb" style="margin-bottom: 14px;">Isotipo</div>
+      <div style="width: 88px; height: 88px; border-radius: 22px; background: linear-gradient(160deg, #1B2036, #0E1120); border: 1px solid rgba(255,255,255,0.12); display: grid; place-items: center; margin: 0 auto;">
+        <span style="width: 26px; height: 26px; border-radius: 8px; background: linear-gradient(135deg, #7C5CFF, #3DE1FF); box-shadow: 0 0 24px rgba(124,92,255,0.85);"></span>
+      </div>
+      <div class="mono" style="font-size: 10px; color: #8A93A8; margin-top: 8px;">app icon · un módulo</div>
+    </div>
+  </div>
+
+  <!-- tipografia -->
+  <div class="panel" style="position: relative; margin-top: 16px;">
+    <div class="eb" style="margin-bottom: 16px;">Tipografía y jerarquía</div>
+    <div style="display: grid; grid-template-columns: 1.1fr 1fr; gap: 32px;">
+      <div style="border-right: 1px solid rgba(255,255,255,0.1); padding-right: 28px;">
+        <div class="mono" style="font-size: 11px; color: #8A93A8;">Display / UI — Space Grotesk</div>
+        <div style="font-size: 38px; font-weight: 700; letter-spacing: -1.6px; line-height: 1.02; margin-top: 6px;">Cerca ahora</div>
+        <div style="font-size: 21px; font-weight: 600; margin-top: 12px;">Club de lectura: novela gallega</div>
+        <div class="mono" style="font-size: 10.5px; color: #8A93A8; margin-top: 10px;">Display 38/38 · Titulo 21/26 · peso 600–700</div>
+      </div>
+      <div>
+        <div class="mono" style="font-size: 11px; color: #8A93A8;">Datos y etiquetas — IBM Plex Mono</div>
+        <div class="mono" style="font-size: 15px; margin-top: 8px; color: #C3C9DC;">19:00 · 800 m · 2 plazas</div>
+        <div class="mono" style="font-size: 15px; margin-top: 4px; color: #C3C9DC;">JUE 4 SEP · ~ZONA AREAL</div>
+        <div class="eb" style="color: #7C5CFF; margin-top: 12px;">Cultura y ocio · Etiqueta</div>
+        <div class="mono" style="font-size: 10.5px; color: #8A93A8; margin-top: 10px;">La monoespaciada marca “esto es dato”, no decoración.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- paleta -->
+  <div class="panel" style="position: relative; margin-top: 16px;">
+    <div class="eb" style="margin-bottom: 16px;">Paleta y roles · dark-first</div>
+    <div style="display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 14px;">
+      <div><div style="height: 56px; border-radius: 8px; background: #0C0E15; border: 1px solid rgba(255,255,255,0.16);"></div><div style="font-size: 11px; font-weight: 600; margin-top: 6px;">Fondo</div><div class="mono" style="font-size: 9.5px; color: #8A93A8;">#0C0E15 · claro #F7F8FB</div></div>
+      <div><div style="height: 56px; border-radius: 8px; background: #151826; border: 1px solid rgba(255,255,255,0.1);"></div><div style="font-size: 11px; font-weight: 600; margin-top: 6px;">Módulo</div><div class="mono" style="font-size: 9.5px; color: #8A93A8;">#151826 · claro #FFFFFF</div></div>
+      <div><div style="height: 56px; border-radius: 8px; background: #7C5CFF;"></div><div style="font-size: 11px; font-weight: 600; margin-top: 6px;">Violeta</div><div class="mono" style="font-size: 9.5px; color: #8A93A8;">#7C5CFF · acción</div></div>
+      <div><div style="height: 56px; border-radius: 8px; background: #3DE1FF;"></div><div style="font-size: 11px; font-weight: 600; margin-top: 6px;">Cian</div><div class="mono" style="font-size: 9.5px; color: #8A93A8;">#3DE1FF · señal, enlace</div></div>
+      <div><div style="height: 56px; border-radius: 8px; background: #3DDC97;"></div><div style="font-size: 11px; font-weight: 600; margin-top: 6px;">Confirmado</div><div class="mono" style="font-size: 9.5px; color: #8A93A8;">#3DDC97</div></div>
+      <div><div style="height: 56px; border-radius: 8px; background: #FF6B6B;"></div><div style="font-size: 11px; font-weight: 600; margin-top: 6px;">Alerta</div><div class="mono" style="font-size: 9.5px; color: #8A93A8;">#FF6B6B</div></div>
+      <div><div style="height: 56px; border-radius: 8px; background: #EAECF5;"></div><div style="font-size: 11px; font-weight: 600; margin-top: 6px;">Texto</div><div class="mono" style="font-size: 9.5px; color: #8A93A8;">#EAECF5 · muted #8A93A8</div></div>
+      <div><div style="height: 56px; border-radius: 8px; background: linear-gradient(135deg, #7C5CFF, #3DE1FF);"></div><div style="font-size: 11px; font-weight: 600; margin-top: 6px;">Módulo activo</div><div class="mono" style="font-size: 9.5px; color: #8A93A8;">degradado, uso puntual</div></div>
+    </div>
+    <p class="mono" style="font-size: 10px; color: #8A93A8; margin: 14px 0 0;">Violeta y cian comparten luminosidad. Contraste AA: violeta sobre módulo 4.7:1, texto sobre fondo 15:1. Modo claro invierte fondo/texto con los mismos nombres de token.</p>
+  </div>
+
+  <!-- botones + campos -->
+  <div style="position: relative; display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 16px;">
+    <div class="panel">
+      <div class="eb" style="margin-bottom: 14px;">Botones — 52 px · radio 12</div>
+      <div style="display: flex; flex-direction: column; gap: 12px;">
+        <div style="display: flex; gap: 10px;">
+          <div style="background: #7C5CFF; color: #fff; border-radius: 12px; height: 44px; display: grid; place-items: center; font-size: 13px; font-weight: 600; padding: 0 20px;">Unirme al plan</div>
+          <div style="background: #7C5CFF; color: #fff; border-radius: 12px; height: 44px; display: grid; place-items: center; font-size: 13px; font-weight: 600; padding: 0 20px; box-shadow: 0 0 0 3px rgba(124,92,255,0.35);">Foco</div>
+        </div>
+        <div style="display: flex; gap: 10px;">
+          <div style="border: 1px solid rgba(255,255,255,0.18); color: #EAECF5; border-radius: 12px; height: 44px; display: grid; place-items: center; font-size: 13px; font-weight: 500; padding: 0 20px;">Fantasma</div>
+          <div class="mono" style="color: #3DE1FF; height: 44px; display: grid; place-items: center; font-size: 12px; padding: 0 10px;">enlace_texto()</div>
+        </div>
+        <div style="background: rgba(255,255,255,0.06); color: #5A6178; border-radius: 12px; height: 44px; display: grid; place-items: center; font-size: 13px; font-weight: 600; padding: 0 20px; align-self: flex-start;">Inactivo</div>
+      </div>
+      <p class="mono" style="font-size: 10px; color: #8A93A8; margin: 12px 0 0;">Microinteracción: pulsar = escala 0.98 en 90 ms. Foco = halo violeta 3 px.</p>
+    </div>
+    <div class="panel">
+      <div class="eb" style="margin-bottom: 14px;">Campos y módulos</div>
+      <div style="display: flex; flex-direction: column; gap: 12px;">
+        <div>
+          <div class="mono" style="font-size: 10px; color: #8A93A8; margin-bottom: 5px;">TITULO</div>
+          <div style="border: 1px solid rgba(255,255,255,0.12); border-radius: 12px; height: 44px; display: flex; align-items: center; padding: 0 12px; font-size: 13px; color: #5A6178; background: #0F1220;">Escribe un título</div>
+        </div>
+        <div>
+          <div class="mono" style="font-size: 10px; color: #7C5CFF; margin-bottom: 5px;">ZONA · ENFOCADO</div>
+          <div style="border: 1px solid #7C5CFF; border-radius: 12px; height: 44px; display: flex; align-items: center; padding: 0 12px; font-size: 13px; color: #EAECF5; background: #0F1220; box-shadow: 0 0 0 3px rgba(124,92,255,0.28);">~ Zona Areal</div>
+        </div>
+        <div style="display: flex; gap: 6px;">
+          <span style="font-size: 10px; font-weight: 600; color: #EAECF5; background: rgba(124,92,255,0.18); border: 1px solid rgba(124,92,255,0.4); border-radius: 999px; padding: 4px 9px;">Cultura y ocio</span>
+          <span style="font-size: 10px; color: #8A93A8; border: 1px solid rgba(255,255,255,0.12); border-radius: 999px; padding: 4px 9px;">Bienestar</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- modulos + nav -->
+  <div style="position: relative; display: grid; grid-template-columns: 1.1fr 1fr; gap: 16px; margin-top: 16px;">
+    <div class="panel">
+      <div class="eb" style="margin-bottom: 14px;">Módulo de plan (reutilizable)</div>
+      <div style="border: 1px solid rgba(255,255,255,0.1); border-radius: 14px; background: #0F1220; padding: 14px;">
+        <div class="eb" style="color: #7C5CFF;">Cultura y ocio</div>
+        <div style="font-size: 16px; font-weight: 600; margin-top: 4px;">Club de lectura: novela gallega</div>
+        <div class="mono" style="font-size: 11px; color: #8A93A8; margin-top: 6px;">JUE 19:00 · ~ZONA AREAL · 800 m</div>
+        <div style="display: flex; gap: 6px; margin-top: 10px;">
+          <span class="mono" style="font-size: 10px; color: #3DDC97; border: 1px solid rgba(61,220,151,0.4); border-radius: 999px; padding: 3px 8px;">2 plazas</span>
+        </div>
+      </div>
+      <p class="mono" style="font-size: 10px; color: #8A93A8; margin: 10px 0 0;">Mismo módulo en carril horizontal, lista, resultado de búsqueda y “Para ti”. Densidad ajustable (compacto / cómodo).</p>
+    </div>
+    <div class="panel">
+      <div class="eb" style="margin-bottom: 14px;">Navegación</div>
+      <div style="border: 1px solid rgba(255,255,255,0.12); border-radius: 14px; padding: 10px 8px; display: flex; justify-content: space-around; align-items: flex-end; background: rgba(12,14,21,0.6);">
+        <div style="text-align: center;"><div style="width: 26px; height: 26px; border-radius: 999px; background: rgba(124,92,255,0.2); display: grid; place-items: center; margin: 0 auto;"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#9B82FF" stroke-width="1.9"><rect x="4" y="4" width="7" height="7" rx="1.6"/><rect x="13" y="4" width="7" height="7" rx="1.6"/><rect x="4" y="13" width="7" height="7" rx="1.6"/><rect x="13" y="13" width="7" height="7" rx="1.6"/></svg></div><div style="font-size: 9px; font-weight: 600; color: #9B82FF; margin-top: 3px;">Descubrir</div></div>
+        <div style="text-align: center;"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="#6E7793" stroke-width="1.9"><rect x="4" y="5" width="16" height="16" rx="2"/><path d="M4 10h16M9 3v4M15 3v4"/></svg><div style="font-size: 9px; color: #6E7793; margin-top: 3px;">Agenda</div></div>
+        <div style="text-align: center;"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="#6E7793" stroke-width="1.9"><circle cx="12" cy="12" r="9"/><path d="M12 8v8M8 12h8"/></svg><div style="font-size: 9px; color: #6E7793; margin-top: 3px;">Crear</div></div>
+        <div style="text-align: center;"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="#6E7793" stroke-width="1.9"><circle cx="12" cy="8" r="3.4"/><path d="M5.5 20c1.3-3.6 4-5 6.5-5s5.2 1.4 6.5 5"/></svg><div style="font-size: 9px; color: #6E7793; margin-top: 3px;">Tú</div></div>
+      </div>
+      <p class="mono" style="font-size: 10px; color: #8A93A8; margin: 12px 0 0;">Mismos 4 destinos. “Radar”→“Descubrir”, “Mis planes”→“Agenda”. Barra con desenfoque; activo = píldora violeta.</p>
+    </div>
+  </div>
+
+  <!-- implementacion -->
+  <div class="panel" style="position: relative; margin-top: 16px; background: rgba(124,92,255,0.08); border-color: rgba(124,92,255,0.25);">
+    <div class="eb" style="color: #C9BEFF; margin-bottom: 10px;">Mantenible y escalable</div>
+    <p style="font-size: 12px; line-height: 1.55; color: #C3C9DC; margin: 0; max-width: 780px;">Un solo componente <code>PlanModule</code> con prop <code>density</code> alimenta lista, carriles y búsqueda. La home es un array de <code>&lt;Rail title items /&gt;</code>: añadir “De tus intereses” es una entrada más, sin tocar layout. Tokens claro/oscuro con los mismos nombres (un <code>ThemeProvider</code>). Degradado y halo son 2 tokens, no efectos sueltos. Motion centralizado: <code>enter 180 ms</code>, <code>press 90 ms</code>, todo respeta “reducir movimiento”. Space Grotesk + IBM Plex Mono vía <code>expo-font</code>.</p>
+  </div>
+
+</div>
+</x-dc>
+<script data-dc-script data-props='{"$preview":{"width":960,"height":1760}}'>
+class Component extends DCLogic {}
+</script>
+</body>
+</html>

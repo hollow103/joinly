@@ -1,0 +1,84 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Newsreader:opsz,wght@6..72,400;6..72,500;6..72,600&family=Instrument+Sans:wght@400;500;600&display=swap">
+  <style>
+    * { box-sizing: border-box; }
+    body { margin: 0; }
+    .aA { font-family: "Instrument Sans", ui-sans-serif, system-ui, sans-serif; color: #1E1B16; -webkit-font-smoothing: antialiased; }
+    .aA .serif { font-family: "Newsreader", Georgia, "Times New Roman", serif; }
+    .aA a { color: #6C2233; } .aA a:hover { color: #501826; }
+    .aA .kick { font-size: 10px; font-weight: 600; letter-spacing: 1.6px; text-transform: uppercase; color: #6B6459; }
+  </style>
+</helmet>
+
+<div class="aA" style="width: 390px; height: 844px; background: #F6F3EC; position: relative; overflow: hidden;">
+
+  <!-- back -->
+  <div style="padding: 20px 22px 0;">
+    <a href="#" style="font-size: 13px; font-weight: 600; text-decoration: none; display: inline-flex; align-items: center; gap: 5px;">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#6C2233" stroke-width="2"><path d="M15 5l-7 7 7 7"/></svg> Mapa
+    </a>
+  </div>
+
+  <!-- image -->
+  <div style="padding: 16px 22px 0;">
+    <svg width="346" height="176" viewBox="0 0 346 176" style="display: block; border-radius: 8px;">
+      <rect width="346" height="176" fill="#EAE3D2"/>
+      <circle cx="80" cy="150" r="110" fill="#2F4A3C" fill-opacity="0.9"/>
+      <circle cx="270" cy="36" r="70" fill="#6C2233" fill-opacity="0.85"/>
+      <path d="M0 120 Q110 70 190 106 T346 84 V176 H0 Z" fill="#1E1B16" fill-opacity="0.12"/>
+      <g stroke="#F6F3EC" stroke-width="1" stroke-opacity="0.55"><path d="M24 24h54M24 34h80M24 44h40"/></g>
+    </svg>
+  </div>
+
+  <!-- headline -->
+  <div style="padding: 18px 22px 0;">
+    <div class="kick" style="color: #6C2233;">Cultura y ocio</div>
+    <h1 class="serif" style="margin: 6px 0 0; font-size: 27px; line-height: 1.12; font-weight: 500; letter-spacing: -0.6px;">Club de lectura: novela gallega</h1>
+  </div>
+
+  <!-- meta pills -->
+  <div style="display: flex; flex-wrap: wrap; gap: 7px; padding: 16px 22px 0;">
+    <span style="font-size: 11.5px; color: #3B372F; border: 1px solid #DED8CC; border-radius: 999px; padding: 5px 11px;">Jue 4 sep · 19:00</span>
+    <span style="font-size: 11.5px; color: #3B372F; border: 1px solid #DED8CC; border-radius: 999px; padding: 5px 11px;">Zona Areal</span>
+    <span style="font-size: 11.5px; color: #3B372F; border: 1px solid #DED8CC; border-radius: 999px; padding: 5px 11px;">800 m</span>
+    <span style="font-size: 11.5px; font-weight: 600; color: #2F4A3C; border: 1px solid #CFD9CF; border-radius: 999px; padding: 5px 11px;">2 plazas</span>
+  </div>
+
+  <!-- description -->
+  <p style="margin: 16px 22px 0; font-size: 14.5px; line-height: 1.55; color: #4A453C;">Quedada tranquila para comentar novela gallega contemporánea. Traer el libro del mes; hay sitio para quien llegue sin haber terminado.</p>
+
+  <!-- organiser -->
+  <div style="margin: 18px 22px 0; padding-top: 16px; border-top: 1px solid #E4DECF; display: flex; align-items: center; gap: 12px;">
+    <div class="serif" style="width: 40px; height: 40px; border-radius: 50%; background: #EAE3D2; border: 1px solid #DED8CC; display: grid; place-items: center; font-size: 17px; font-weight: 600; color: #2F4A3C;">a</div>
+    <div>
+      <div style="font-size: 14px; font-weight: 600;">Organiza andrea.c</div>
+      <div style="font-size: 12px; color: #948C7E;">Alias visible · sin datos de contacto</div>
+    </div>
+  </div>
+
+  <!-- location notice -->
+  <div style="margin: 16px 22px 0; background: #EFEADD; border-radius: 8px; padding: 12px 14px; display: flex; gap: 10px;">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#6B6459" stroke-width="1.6" style="flex-shrink: 0; margin-top: 1px;"><rect x="4" y="10" width="16" height="11" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></svg>
+    <span style="font-size: 12.5px; line-height: 1.45; color: #5A5348;">Verás la dirección exacta cuando confirmes tu plaza.</span>
+  </div>
+
+  <!-- fixed CTA -->
+  <div style="position: absolute; left: 0; right: 0; bottom: 0; background: #F6F3EC; border-top: 1px solid #E4DECF; padding: 14px 22px 20px;">
+    <div style="background: #6C2233; color: #FFF; border-radius: 8px; height: 50px; display: grid; place-items: center; font-size: 15px; font-weight: 600;">Unirme al plan</div>
+  </div>
+
+</div>
+</x-dc>
+<script data-dc-script data-props='{"$preview":{"width":390,"height":844}}'>
+class Component extends DCLogic {}
+</script>
+</body>
+</html>

@@ -75,7 +75,7 @@ export default function SignUp() {
   }
 
   return (
-    <Screen backgroundColor={tokens.color.brandNavy} style={styles.screen}>
+    <Screen backgroundColor={tokens.color.bg} style={styles.screen}>
       <KeyboardAvoidingView
         behavior={Platform.select({ ios: 'padding', default: undefined })}
         style={styles.flex}
@@ -209,13 +209,28 @@ const styles = StyleSheet.create({
     gap: tokens.space.md,
   },
   back: { width: 48, height: 48, justifyContent: 'center' },
-  backText: { color: tokens.color.surface, fontSize: 28, lineHeight: 32 },
-  eyebrow: { color: '#B8C7FF', fontSize: 11, fontWeight: '700', letterSpacing: 1 },
-  title: { color: tokens.color.surface, fontSize: 30, fontWeight: '700', lineHeight: 36 },
+  backText: { color: tokens.color.primary, fontSize: 28, lineHeight: 32 },
+  eyebrow: {
+    color: tokens.color.textMuted,
+    fontFamily: tokens.font.family.sansSemibold,
+    fontSize: 10,
+    letterSpacing: 1.6,
+    textTransform: 'uppercase',
+  },
+  title: {
+    color: tokens.color.text,
+    fontFamily: tokens.font.family.serifSemibold,
+    fontSize: 30,
+    lineHeight: 36,
+    letterSpacing: -0.8,
+  },
   card: {
     backgroundColor: tokens.color.surface,
-    borderTopLeftRadius: 28,
-    borderTopRightRadius: 28,
+    borderColor: tokens.color.border,
+    borderWidth: 1,
+    borderRadius: tokens.radius.lg,
+    marginHorizontal: tokens.space.lg,
+    marginBottom: tokens.space.lg,
     padding: tokens.space.xl,
     gap: tokens.space.lg,
   },
@@ -235,6 +250,6 @@ const styles = StyleSheet.create({
   checkmark: { color: tokens.color.primaryText, fontSize: 14, fontWeight: '700' },
   agreementText: { flex: 1, fontSize: 13, color: tokens.color.textMuted },
   readLink: { minHeight: 48, justifyContent: 'center' },
-  readLinkText: { color: tokens.color.primary, fontSize: 13, fontWeight: '700' },
+  readLinkText: { color: tokens.color.primary, fontFamily: tokens.font.family.sansSemibold, fontSize: 13 },
   error: { color: tokens.color.danger, fontSize: 13 },
 });

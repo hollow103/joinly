@@ -2,6 +2,8 @@ export { Button } from '@/ui/Button';
 export { Card } from '@/ui/Card';
 export { DateTimeField } from '@/ui/DateTimeField';
 export { EmptyState } from '@/ui/EmptyState';
+export { Logo, OrbMark } from '@/ui/Logo';
+export { AuroraBackground } from '@/ui/AuroraBackground';
 export { Screen } from '@/ui/Screen';
 export { Text } from '@/ui/Text';
 export type { TextVariant } from '@/ui/Text';

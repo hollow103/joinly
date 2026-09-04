@@ -31,3 +31,18 @@ compose.override.yml
 opencode.json
 AGENTS.md
 SESSION_HANDOF.md
+
+# Local Claude Code configuration (skills mirrored from .agents/, MCPs live in ~/.claude.json)
+.claude/skills/
+.playwright-mcp/
+
+# Claude Code tooling mirrored into the working tree (not part of the app)
+.agents/
+skills-lock.json
+/preview-full.png
+/canvas-resumen.png
+
+# Design-canvas seeded output bundles (regenerable from the .dc.html sources)
+mobile/rebranding/joinly-rebranding.html
+mobile/rebranding/navegables/joinly-radar-navegable.html
+mobile/rebranding_beta/joinly-rebranding-beta.html

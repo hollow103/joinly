@@ -1,0 +1,104 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;500;600;700&family=Spectral:wght@400;500;600&display=swap">
+  <style>
+    * { box-sizing: border-box; }
+    body { margin: 0; font-family: "Public Sans", ui-sans-serif, system-ui, sans-serif; color: #1C2534; }
+    .ser { font-family: "Spectral", Georgia, serif; }
+    a { color: #8A6A3B; }
+    .eb { font-size: 11px; font-weight: 700; letter-spacing: 1.6px; text-transform: uppercase; color: #7A8496; }
+    .panel { background: #FFFFFF; border: 1px solid #E4E2DC; border-radius: 14px; }
+    td, th { font-size: 12px; line-height: 1.45; padding: 12px 14px; text-align: left; vertical-align: top; border-bottom: 1px solid #EDEAE3; }
+    th { font-weight: 700; color: #1C2534; background: #F3F1EC; }
+    .rowh { font-weight: 700; color: #47526A; width: 190px; background: #FBFAF7; }
+  </style>
+</helmet>
+
+<div style="width: 1320px; min-height: 1060px; background: #F6F5F2; padding: 56px; display: flex; flex-direction: column; gap: 24px;">
+
+  <div style="max-width: 820px;">
+    <span class="eb">04 · Comparativa y recomendación</span>
+    <h1 class="ser" style="margin: 8px 0 0; font-size: 38px; font-weight: 500; letter-spacing: -1px;">Las tres, frente a frente</h1>
+  </div>
+
+  <div class="panel" style="overflow: hidden;">
+    <table style="border-collapse: collapse; width: 100%;">
+      <tr>
+        <th style="width: 190px;">Criterio</th>
+        <th>01 · Premium / Timeless</th>
+        <th>02 · Bold / Distinctive</th>
+        <th>03 · Future / Innovative</th>
+      </tr>
+      <tr><td class="rowh">Personalidad</td>
+        <td>Confianza, calma, permanencia. “La opción seria”.</td>
+        <td>Carácter, energía de comunidad, memorable. “La que se recuerda”.</td>
+        <td>Tecnológica, personal, en tiempo real. “La que se adelanta”.</td></tr>
+      <tr><td class="rowh">Diferenciación vs. competencia</td>
+        <td>Media. Se distingue por sobriedad, no por gesto.</td>
+        <td><strong>Alta.</strong> Cobalto + burdeos + grotesca la sacan del cliché rojo/naranja del sector.</td>
+        <td>Alta en producto (carriles modulares), media en marca.</td></tr>
+      <tr><td class="rowh">Riesgo / ambición</td>
+        <td>Bajo. Evolución, no ruptura.</td>
+        <td>Medio-alto. Exige disciplina; puede cansar si se abusa del contraste.</td>
+        <td>Alto. Dark-first y personalización son una apuesta grande para el piloto.</td></tr>
+      <tr><td class="rowh">Esfuerzo de desarrollo</td>
+        <td><strong>Bajo.</strong> Extiende <code>tokens.ts</code> y los componentes actuales. 2 fuentes, 0 dependencias nuevas.</td>
+        <td>Medio. Sombra plana + mapa categoría→color + revisión de todos los componentes.</td>
+        <td>Medio-alto. Nuevo <code>PlanModule</code>, sistema de carriles, tema claro/oscuro, motion centralizado.</td></tr>
+      <tr><td class="rowh">Escalabilidad del sistema</td>
+        <td>Buena. Jerarquía tipográfica aguanta nuevas pantallas.</td>
+        <td>Buena si se respeta la parrilla; frágil si crece el número de acentos.</td>
+        <td><strong>Excelente.</strong> Añadir un módulo o un carril no toca el layout.</td></tr>
+      <tr><td class="rowh">Accesibilidad</td>
+        <td><strong>Muy buena.</strong> Contraste holgado, un solo acento, estados discretos con texto.</td>
+        <td>Buena. Contraste alto por diseño; vigilar mayúsculas y densidad.</td>
+        <td>Buena en ambos modos; requiere cuidar carriles con teclado y lectores.</td></tr>
+      <tr><td class="rowh">Encaje con el producto actual</td>
+        <td><strong>Total.</strong> Mismos 4 destinos, mismo patrón, radar más tranquilo.</td>
+        <td>Alto. Cambia la piel del descubrimiento (feed), no la estructura.</td>
+        <td>Alto. Reorganiza el descubrimiento en carriles; el resto encaja.</td></tr>
+      <tr><td class="rowh">Mantenimiento a 2 años</td>
+        <td><strong>Barato.</strong> Poco que “envejece”.</td>
+        <td>Medio. Las modas de la grotesca y el neo-brutalismo pueden datarla.</td>
+        <td>Medio. La personalización añade estados y casos límite a mantener.</td></tr>
+      <tr><td class="rowh">Cuándo elegirla</td>
+        <td>Si la prioridad es lanzar ya, con confianza y sin riesgo de marca.</td>
+        <td>Si el objetivo es notoriedad y crecer boca a boca en la ciudad piloto.</td>
+        <td>Si hay recorrido para invertir en producto y la personalización es el norte.</td></tr>
+    </table>
+  </div>
+
+  <div style="display: grid; grid-template-columns: 1.4fr 1fr; gap: 20px;">
+    <div class="panel" style="padding: 26px; border-color: #D8CBB0; background: #FBF7EE;">
+      <div class="eb" style="color: #8A6A3B;">Recomendación</div>
+      <h2 class="ser" style="margin: 8px 0 0; font-size: 26px; font-weight: 500; letter-spacing: -0.5px;">Desarrollar <strong>01 · Premium</strong> como base, con la arquitectura de <strong>03 · Future</strong> por debajo.</h2>
+      <p style="font-size: 13px; line-height: 1.6; color: #47526A; margin: 12px 0 0;">Premium es la que <strong>mejor resuelve los problemas reales de UX</strong> (menos chrome antes del contenido, radar que deja de estorbar, tarjetas legibles, contraste correcto) con el <strong>menor coste y riesgo</strong>: extiende los tokens y componentes que ya existen, no añade dependencias y no ata la marca a una moda. Su tono —seriedad sin frialdad— es exactamente el posicionamiento de joinly: privacidad y confianza por defecto.</p>
+      <p style="font-size: 13px; line-height: 1.6; color: #47526A; margin: 10px 0 0;">De Future se toma <strong>solo la ingeniería</strong>: un <code>PlanModule</code> reutilizable con densidad ajustable y la home como lista de carriles. Así el producto puede crecer (nuevos carriles, “Para ti”, modo oscuro) sin rediseñar. De Bold se guarda el <strong>registro “alto”</strong> —numerales grandes, un acento rotundo— para comunicación de lanzamiento y para los momentos de éxito dentro de la app, no para toda la interfaz.</p>
+    </div>
+    <div class="panel" style="padding: 26px;">
+      <div class="eb" style="margin-bottom: 12px;">Plan por fases</div>
+      <ol style="margin: 0; padding-left: 18px; font-size: 12.5px; line-height: 1.7; color: #47526A;">
+        <li><strong>Tokens + tipografía</strong> (Premium): color, escala, Spectral + Public Sans. Sin tocar pantallas.</li>
+        <li><strong>Componentes</strong>: <code>Button</code> (foco), <code>Card</code> (sin sombra), <code>PlanModule</code> nuevo con <code>density</code>.</li>
+        <li><strong>Descubrir</strong>: quitar chrome, radar compacto, home como carriles/lista de módulos.</li>
+        <li><strong>Ficha · Crear · Cuenta</strong>: aplicar sistema; cabecera con volver sobre papel.</li>
+        <li><strong>Estados</strong>: esqueletos, error, vacío y éxito como piezas del sistema.</li>
+        <li><strong>Modo oscuro</strong> con los mismos tokens (aprovecha la base de Future).</li>
+      </ol>
+    </div>
+  </div>
+
+</div>
+</x-dc>
+<script data-dc-script data-props='{"$preview":{"width":1320,"height":1060}}'>
+class Component extends DCLogic {}
+</script>
+</body>
+</html>

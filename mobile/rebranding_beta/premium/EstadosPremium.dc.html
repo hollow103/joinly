@@ -1,0 +1,133 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Spectral:wght@400;500;600&family=Public+Sans:wght@400;500;600;700&display=swap">
+  <style>
+    * { box-sizing: border-box; }
+    body { margin: 0; }
+    .pr { font-family: "Public Sans", ui-sans-serif, system-ui, sans-serif; color: #1C2534; -webkit-font-smoothing: antialiased; }
+    .pr .ser { font-family: "Spectral", Georgia, "Times New Roman", serif; }
+    .pr a { color: #8A6A3B; }
+    .pr .eb { font-size: 10px; font-weight: 700; letter-spacing: 1.6px; text-transform: uppercase; color: #97836A; }
+    .frame { width: 262px; height: 460px; background: #FAF8F3; border: 1px solid #E6E1D7; border-radius: 18px; padding: 18px; overflow: hidden; }
+    .fcap { font-size: 10px; font-weight: 700; letter-spacing: 1.2px; text-transform: uppercase; color: #97836A; margin-bottom: 8px; }
+    .panel { background: #FFFFFF; border: 1px solid #E6E1D7; border-radius: 12px; padding: 20px; }
+    .sk { background: #ECE7DC; border-radius: 6px; }
+  </style>
+</helmet>
+
+<div class="pr" style="width: 1180px; min-height: 980px; background: #F1EEE6; padding: 40px;">
+
+  <div style="border-bottom: 1px solid #E6E1D7; padding-bottom: 16px;">
+    <div class="eb">01 · Premium / Timeless — Estados, responsive y accesibilidad</div>
+    <h1 class="ser" style="margin: 6px 0 0; font-size: 32px; font-weight: 500; letter-spacing: -0.8px;">Los estados también son producto</h1>
+  </div>
+
+  <div style="display: flex; gap: 30px; margin-top: 24px;">
+
+    <!-- loading -->
+    <div>
+      <div class="fcap">Carga · esqueleto</div>
+      <div class="frame">
+        <div class="sk" style="width: 60%; height: 20px;"></div>
+        <div class="sk" style="width: 40%; height: 12px; margin-top: 12px;"></div>
+        <div style="margin-top: 18px; display: flex; flex-direction: column; gap: 12px;">
+          <div style="border: 1px solid #E6E1D7; border-radius: 12px; padding: 14px; background: #fff;">
+            <div class="sk" style="width: 35%; height: 9px;"></div>
+            <div class="sk" style="width: 85%; height: 14px; margin-top: 8px;"></div>
+            <div class="sk" style="width: 55%; height: 10px; margin-top: 8px;"></div>
+          </div>
+          <div style="border: 1px solid #E6E1D7; border-radius: 12px; padding: 14px; background: #fff;">
+            <div class="sk" style="width: 30%; height: 9px;"></div>
+            <div class="sk" style="width: 75%; height: 14px; margin-top: 8px;"></div>
+            <div class="sk" style="width: 50%; height: 10px; margin-top: 8px;"></div>
+          </div>
+        </div>
+        <div style="font-size: 10.5px; color: #97A0AD; margin-top: 16px;">Sin spinner a pantalla completa. Placeholder con la forma real; aparición 150 ms.</div>
+      </div>
+    </div>
+
+    <!-- error -->
+    <div>
+      <div class="fcap">Error</div>
+      <div class="frame">
+        <div style="height: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; gap: 12px;">
+          <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="#8E2C2C" stroke-width="1.6"><path d="M12 8v5M12 16.5v.5"/><path d="M10.3 3.9 2.4 18a2 2 0 0 0 1.7 3h15.8a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0Z"/></svg>
+          <div class="ser" style="font-size: 17px; font-weight: 500;">No hemos podido conectar</div>
+          <div style="font-size: 12px; color: #5C6675; line-height: 1.45;">Revisa tu conexión. Tus planes guardados siguen disponibles sin conexión.</div>
+          <div style="background: #8A6A3B; color: #fff; border-radius: 8px; height: 42px; display: grid; place-items: center; font-size: 13px; font-weight: 600; padding: 0 22px;">Reintentar</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- empty -->
+    <div>
+      <div class="fcap">Vacío</div>
+      <div class="frame">
+        <div style="height: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; gap: 12px;">
+          <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="#97836A" stroke-width="1.5"><path d="M4 15 A8 8 0 0 1 20 15" stroke-linecap="round"/><path d="M8 15 A4 4 0 0 1 16 15" stroke-linecap="round"/><circle cx="12" cy="15" r="1.6" fill="#97836A" stroke="none"/></svg>
+          <div class="ser" style="font-size: 17px; font-weight: 500;">No hay planes aquí todavía</div>
+          <div style="font-size: 12px; color: #5C6675; line-height: 1.45;">Prueba a ampliar el radio o a cambiar los filtros de categoría.</div>
+          <div style="border: 1px solid #1C2534; color: #1C2534; border-radius: 8px; height: 42px; display: grid; place-items: center; font-size: 13px; font-weight: 600; padding: 0 20px;">Ampliar a 5 km</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- success -->
+    <div>
+      <div class="fcap">Éxito</div>
+      <div class="frame">
+        <div style="background: #E7F0EC; border: 1px solid #CDE2D8; border-radius: 12px; padding: 16px;">
+          <div style="display: flex; align-items: center; gap: 8px;">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#1E5B45" stroke-width="2.2"><path d="M5 13l4 4L19 7"/></svg>
+            <span class="ser" style="font-size: 16px; font-weight: 500; color: #143F30;">Participación confirmada</span>
+          </div>
+          <div style="font-size: 12px; color: #2C5546; margin-top: 6px;">Nos vemos allí. Te recordaremos el plan la víspera.</div>
+        </div>
+        <div style="border: 1px solid #E6E1D7; border-radius: 12px; background: #fff; padding: 14px; margin-top: 12px;">
+          <div class="eb" style="color: #1E5B45;">Ubicación exacta</div>
+          <div class="ser" style="font-size: 15px; font-weight: 500; margin-top: 4px;">Rúa do Areal 42, Vigo</div>
+        </div>
+        <div style="font-size: 10.5px; color: #97A0AD; margin-top: 14px;">Feedback inmediato en la ficha; la dirección exacta se revela al confirmar.</div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- responsive + a11y -->
+  <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-top: 28px;">
+    <div class="panel">
+      <div class="eb" style="margin-bottom: 12px;">Responsive</div>
+      <ul style="margin: 0; padding-left: 18px; font-size: 12px; line-height: 1.6; color: #47526A;">
+        <li><strong>360–430 px (teléfono):</strong> una columna, tarjetas a ancho completo, CTA fija sobre la barra.</li>
+        <li><strong>≥ 700 px (tablet / plegable):</strong> lista en 2 columnas; la ficha abre como panel lateral, no pantalla completa.</li>
+        <li>Todo en unidades relativas y flex/grid con <code>gap</code>. El radar es un bloque fijo de 96 px que no crece.</li>
+        <li>Texto y controles escalan con el sistema hasta 200 % sin romper la barra inferior (iconos + etiqueta apilados).</li>
+      </ul>
+    </div>
+    <div class="panel">
+      <div class="eb" style="margin-bottom: 12px;">Accesibilidad</div>
+      <ul style="margin: 0; padding-left: 18px; font-size: 12px; line-height: 1.6; color: #47526A;">
+        <li>Contraste AA en todo el texto (pares verificados en la hoja de sistema).</li>
+        <li>Objetivo táctil ≥ 48 px; foco visible con anillo de latón de 2 px.</li>
+        <li>Estados nunca solo por color: “2 plazas”, “Confirmado”, “Con aprobación” llevan texto.</li>
+        <li>Cada icono sin texto tiene etiqueta; el radar expone “3 planes cerca” a lectores de pantalla.</li>
+        <li>Respeta “reducir movimiento”: sin transiciones no esenciales, estado final directo.</li>
+        <li>Orden de lectura lógico; la CTA fija se anuncia antes que el pie.</li>
+      </ul>
+    </div>
+  </div>
+
+</div>
+</x-dc>
+<script data-dc-script data-props='{"$preview":{"width":1180,"height":980}}'>
+class Component extends DCLogic {}
+</script>
+</body>
+</html>

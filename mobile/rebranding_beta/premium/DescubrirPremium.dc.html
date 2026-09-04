@@ -1,0 +1,124 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Spectral:wght@400;500;600&family=Public+Sans:wght@400;500;600;700&display=swap">
+  <style>
+    * { box-sizing: border-box; }
+    body { margin: 0; }
+    .pr { font-family: "Public Sans", ui-sans-serif, system-ui, sans-serif; color: #1C2534; -webkit-font-smoothing: antialiased; }
+    .pr .ser { font-family: "Spectral", Georgia, "Times New Roman", serif; }
+    .pr a { color: #8A6A3B; } .pr a:hover { color: #6B5230; }
+    .pr .eb { font-size: 10px; font-weight: 700; letter-spacing: 1.6px; text-transform: uppercase; color: #97836A; }
+  </style>
+</helmet>
+
+<div class="pr" style="width: 390px; height: 844px; background: #FAF8F3; position: relative; overflow: hidden;">
+
+  <!-- header -->
+  <div style="display: flex; align-items: center; justify-content: space-between; padding: 18px 22px 0;">
+    <div class="ser" style="font-size: 21px; font-weight: 600; letter-spacing: -0.4px;">joinly</div>
+    <div style="display: flex; align-items: center; gap: 6px; font-size: 12px; color: #5C6675;">
+      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#8A6A3B" stroke-width="1.7"><path d="M12 21s-7-6.2-7-11a7 7 0 0 1 14 0c0 4.8-7 11-7 11Z"/><circle cx="12" cy="10" r="2.4"/></svg>
+      Vigo · 3 km · <span style="color:#8A6A3B;font-weight:600;">Cambiar</span>
+    </div>
+  </div>
+
+  <!-- title -->
+  <div style="padding: 18px 22px 0;">
+    <h1 class="ser" style="margin: 0; font-size: 27px; font-weight: 500; letter-spacing: -0.8px; line-height: 1.08;">Tu radar de planes</h1>
+  </div>
+
+  <!-- quiet radar -->
+  <div style="padding: 14px 22px 0;">
+    <div style="border: 1px solid #E6E1D7; border-radius: 12px; background: #FFFFFF; padding: 14px 16px; display: flex; align-items: center; gap: 16px;">
+      <svg width="96" height="66" viewBox="0 0 120 82" fill="none" style="flex-shrink: 0;" role="img" aria-label="Radar abstracto: tres planes cerca">
+        <path d="M6 74 A54 54 0 0 1 114 74" stroke="#E0D8C7" stroke-width="2"/>
+        <path d="M26 74 A34 34 0 0 1 94 74" stroke="#E0D8C7" stroke-width="2"/>
+        <path d="M44 74 A16 16 0 0 1 76 74" stroke="#E0D8C7" stroke-width="2"/>
+        <circle cx="60" cy="74" r="3.5" fill="#8A6A3B"/>
+        <circle cx="40" cy="40" r="3" fill="#1C2534"/>
+        <circle cx="86" cy="30" r="3" fill="#1C2534"/>
+        <circle cx="72" cy="56" r="3" fill="#1C2534"/>
+      </svg>
+      <div>
+        <div style="font-size: 13px; font-weight: 600;">3 planes dentro de 3 km</div>
+        <div style="font-size: 11.5px; color: #5C6675; margin-top: 2px;">Zonas aproximadas · la dirección exacta se ve al confirmar</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- time filters -->
+  <div style="display: flex; gap: 7px; padding: 16px 22px 0;">
+    <span style="font-size: 12px; font-weight: 600; color: #FAF8F3; background: #1C2534; border-radius: 999px; padding: 7px 13px;">Ahora</span>
+    <span style="font-size: 12px; color: #33404F; border: 1px solid #E6E1D7; border-radius: 999px; padding: 7px 13px;">Esta tarde</span>
+    <span style="font-size: 12px; color: #33404F; border: 1px solid #E6E1D7; border-radius: 999px; padding: 7px 13px;">Mañana</span>
+    <span style="font-size: 12px; color: #33404F; border: 1px solid #E6E1D7; border-radius: 999px; padding: 7px 13px;">Este finde</span>
+  </div>
+
+  <!-- section -->
+  <div style="display: flex; align-items: baseline; justify-content: space-between; padding: 18px 22px 0;">
+    <div class="eb">En tu radar</div>
+    <a href="#" style="font-size: 12px; font-weight: 700; text-decoration: none;">Filtros</a>
+  </div>
+
+  <!-- list -->
+  <div style="padding: 10px 22px 0; display: flex; flex-direction: column; gap: 10px;">
+    <div style="border: 1px solid #E6E1D7; border-radius: 12px; background: #FFFFFF; padding: 14px 16px;">
+      <div class="eb" style="color: #97836A;">Cultura y ocio</div>
+      <div class="ser" style="font-size: 17px; font-weight: 500; line-height: 1.15; margin-top: 3px;">Club de lectura: novela gallega</div>
+      <div style="font-size: 11.5px; color: #5C6675; margin-top: 6px;">Jue 4 sep · 19:00 · Zona Areal · 800 m</div>
+      <div style="display: flex; gap: 6px; margin-top: 10px;">
+        <span style="font-size: 10.5px; font-weight: 600; color: #1E5B45; border: 1px solid #CDE2D8; border-radius: 999px; padding: 3px 9px;">2 plazas</span>
+        <span style="font-size: 10.5px; color: #5C6675; border: 1px solid #E6E1D7; border-radius: 999px; padding: 3px 9px;">andrea.c</span>
+      </div>
+    </div>
+    <div style="border: 1px solid #E6E1D7; border-radius: 12px; background: #FFFFFF; padding: 14px 16px;">
+      <div class="eb" style="color: #97836A;">Conexiones</div>
+      <div class="ser" style="font-size: 17px; font-weight: 500; line-height: 1.15; margin-top: 3px;">Café y networking para creativos</div>
+      <div style="font-size: 11.5px; color: #5C6675; margin-top: 6px;">Hoy · 17:00 · Zona Centro · 400 m</div>
+      <div style="display: flex; gap: 6px; margin-top: 10px;">
+        <span style="font-size: 10.5px; font-weight: 600; color: #1E5B45; border: 1px solid #CDE2D8; border-radius: 999px; padding: 3px 9px;">6 plazas</span>
+        <span style="font-size: 10.5px; color: #5C6675; border: 1px solid #E6E1D7; border-radius: 999px; padding: 3px 9px;">xoel</span>
+      </div>
+    </div>
+    <div style="border: 1px solid #E6E1D7; border-radius: 12px; background: #FFFFFF; padding: 14px 16px;">
+      <div class="eb" style="color: #97836A;">Bienestar</div>
+      <div class="ser" style="font-size: 17px; font-weight: 500; line-height: 1.15; margin-top: 3px;">Ruta de senderismo al Monte do Castro</div>
+      <div style="font-size: 11.5px; color: #5C6675; margin-top: 6px;">Sáb 6 sep · 10:00 · Casco Vello · 1,2 km</div>
+      <div style="display: flex; gap: 6px; margin-top: 10px;">
+        <span style="font-size: 10.5px; font-weight: 600; color: #1E5B45; border: 1px solid #CDE2D8; border-radius: 999px; padding: 3px 9px;">4 plazas</span>
+        <span style="font-size: 10.5px; color: #5C6675; border: 1px solid #E6E1D7; border-radius: 999px; padding: 3px 9px;">marta_vgo</span>
+      </div>
+    </div>
+    <div style="border: 1px solid #E6E1D7; border-radius: 12px; background: #FFFFFF; padding: 14px 16px;">
+      <div class="eb" style="color: #97836A;">Aprendizaje</div>
+      <div class="ser" style="font-size: 17px; font-weight: 500; line-height: 1.15; margin-top: 3px;">Intercambio de idiomas ES/EN</div>
+      <div style="font-size: 11.5px; color: #5C6675; margin-top: 6px;">Vie 5 sep · 18:30 · O Berbés · 600 m</div>
+      <div style="display: flex; gap: 6px; margin-top: 10px;">
+        <span style="font-size: 10.5px; color: #5C6675; border: 1px solid #E6E1D7; border-radius: 999px; padding: 3px 9px;">Con aprobación</span>
+        <span style="font-size: 10.5px; color: #5C6675; border: 1px solid #E6E1D7; border-radius: 999px; padding: 3px 9px;">lois</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- tab bar -->
+  <div style="position: absolute; left: 0; right: 0; bottom: 0; height: 64px; background: #FFFFFF; border-top: 1px solid #E6E1D7; display: flex; align-items: center; justify-content: space-around;">
+    <div style="text-align: center;"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#8A6A3B" stroke-width="1.6"><path d="M4 15 A8 8 0 0 1 20 15" stroke-linecap="round"/><path d="M8 15 A4 4 0 0 1 16 15" stroke-linecap="round"/><circle cx="12" cy="15" r="1.8" fill="#8A6A3B" stroke="none"/></svg><div style="font-size: 9.5px; font-weight: 600; margin-top: 3px;">Radar</div></div>
+    <div style="text-align: center;"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#97A0AD" stroke-width="1.6"><rect x="4" y="5" width="16" height="16" rx="2"/><path d="M4 10h16M9 3v4M15 3v4"/></svg><div style="font-size: 9.5px; color: #97A0AD; margin-top: 3px;">Mis planes</div></div>
+    <div style="text-align: center;"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#97A0AD" stroke-width="1.6"><circle cx="12" cy="12" r="9"/><path d="M12 8v8M8 12h8"/></svg><div style="font-size: 9.5px; color: #97A0AD; margin-top: 3px;">Crear</div></div>
+    <div style="text-align: center;"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#97A0AD" stroke-width="1.6"><circle cx="12" cy="8" r="3.4"/><path d="M5.5 20c1.3-3.6 4-5 6.5-5s5.2 1.4 6.5 5"/></svg><div style="font-size: 9.5px; color: #97A0AD; margin-top: 3px;">Perfil</div></div>
+  </div>
+
+</div>
+</x-dc>
+<script data-dc-script data-props='{"$preview":{"width":390,"height":844}}'>
+class Component extends DCLogic {}
+</script>
+</body>
+</html>

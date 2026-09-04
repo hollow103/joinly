@@ -1,0 +1,104 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Unbounded:wght@500;700&family=Space+Grotesk:wght@400;500;600;700&display=swap">
+  <style>
+    * { box-sizing: border-box; }
+    body { margin: 0; font-family: "Space Grotesk", ui-sans-serif, system-ui, sans-serif; color: #171720; }
+    .disp { font-family: "Unbounded", "Space Grotesk", system-ui, sans-serif; }
+    a { color: #171720; }
+    .eb { font-size: 10px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: #8A8A9A; }
+    .panel { background: #FFFFFF; border: 1px solid #E4E4EA; border-radius: 14px; }
+    td, th { font-size: 12px; line-height: 1.45; padding: 12px 14px; text-align: left; vertical-align: top; border-bottom: 1px solid #EDEDF2; }
+    th { font-weight: 700; background: #F6F6F8; }
+    .rh { font-weight: 700; color: #4A4A58; width: 180px; background: #FAFAFC; }
+  </style>
+</helmet>
+
+<div style="width: 1320px; min-height: 1000px; background: #F4F4F6; padding: 56px; display: flex; flex-direction: column; gap: 24px;">
+
+  <div style="max-width: 820px;">
+    <span class="eb">Comparativa y recomendación</span>
+    <h1 class="disp" style="margin: 8px 0 0; font-size: 38px; font-weight: 700; letter-spacing: -1.2px;">Tres identidades, un producto</h1>
+  </div>
+
+  <div class="panel" style="overflow: hidden;">
+    <table style="border-collapse: collapse; width: 100%;">
+      <tr>
+        <th style="width: 180px;">Criterio</th>
+        <th>F · Neón nocturno</th>
+        <th>G · Risografía</th>
+        <th>H · Aurora / cristal</th>
+      </tr>
+      <tr><td class="rh">Personalidad</td>
+        <td>Vida nocturna, energía, "algo está pasando".</td>
+        <td>Fanzine impreso, hecho a mano, cercano y con humor.</td>
+        <td>Calma luminosa, moderno-premium, respira.</td></tr>
+      <tr><td class="rh">Fondo</td>
+        <td>Oscuro con malla de degradados + retícula de puntos + ruido.</td>
+        <td>Crema con trama de medios tonos + grano + forma fuera de registro.</td>
+        <td>Casi-blanco con manchas de aurora difuminadas.</td></tr>
+      <tr><td class="rh">Sombra</td>
+        <td><strong>Brillo de color</strong> (glow) del acento.</td>
+        <td><strong>Plana y dura</strong> (offset), con "clic físico" al pulsar.</td>
+        <td><strong>Suave y difusa</strong>, multicapa, con brillo interior.</td></tr>
+      <tr><td class="rh">Radar</td>
+        <td>Anillos neón que laten, blips que brillan.</td>
+        <td>Círculos "impresos" desregistrados, blips como sellos girados.</td>
+        <td>Orbe luminoso tras cristal, blips como píldoras esmeriladas.</td></tr>
+      <tr><td class="rh">Botones</td>
+        <td>Píldora lima con glow · segmentado que desliza.</td>
+        <td>Rectángulo con contorno de 2&nbsp;px + sombra dura · toggle coral.</td>
+        <td>Píldora con degradado y brillo · segmentado de cristal.</td></tr>
+      <tr><td class="rh">Tipografía</td>
+        <td>Unbounded (display) + Space Grotesk.</td>
+        <td>Bricolage Grotesque + Hanken Grotesk.</td>
+        <td>Manrope (una sola, con contraste de peso).</td></tr>
+      <tr><td class="rh">Público</td>
+        <td><strong>Joven</strong>, sobre todo. Puede cansar a la mediana edad.</td>
+        <td>Amplio: indie para jóvenes, tangible y cálido para +40.</td>
+        <td><strong>El más transversal.</strong> Gusta a casi todo el mundo.</td></tr>
+      <tr><td class="rh">Riesgo / mantenimiento</td>
+        <td>Alto. Modo oscuro obligatorio, contraste de neón exige disciplina, glow puede saturar.</td>
+        <td>Medio. El desregistro y los giros hay que sistematizarlos o se descontrola.</td>
+        <td>Medio-bajo. <code>backdrop-filter</code> tiene coste de render; cuidar rendimiento en listas largas.</td></tr>
+      <tr><td class="rh">Accesibilidad</td>
+        <td>Cuidado: texto sobre glow y sobre fondo con ruido.</td>
+        <td>Buena: contraste alto por diseño; vigilar mayúsculas y texto girado.</td>
+        <td>Buena: contraste holgado; el cristal necesita un fallback sólido si no hay blur.</td></tr>
+    </table>
+  </div>
+
+  <div style="display: grid; grid-template-columns: 1.5fr 1fr; gap: 20px;">
+    <div class="panel" style="padding: 26px; border-color: #C9C9F0; background: #F3F3FF;">
+      <div class="eb" style="color: #4A54C7;">Recomendación</div>
+      <h2 class="disp" style="margin: 8px 0 0; font-size: 24px; font-weight: 700; letter-spacing: -0.5px;">Desarrollar H · Aurora, con un acento de G.</h2>
+      <p style="font-size: 13px; line-height: 1.6; color: #3D3D4C; margin: 12px 0 0;">De las tres, <strong>H es la que atrae a público joven sin dejar fuera a la mediana edad</strong>: fresca y moderna, pero calmada y legible. Su sistema de sombras suaves y superficies de cristal resuelve lo de "componentes sueltos" —lo que separa es la elevación difusa y el filo del cristal, no un borde repetido— y el radar-orbe da un patrón reconocible y distinto sin volverse un mapa. Coste de mantenimiento razonable si se cuida el rendimiento del desenfoque.</p>
+      <p style="font-size: 13px; line-height: 1.6; color: #3D3D4C; margin: 10px 0 0;">De <strong>G</strong> se toma prestado el <strong>gesto de "clic físico"</strong> (el botón que se hunde en su sombra) y el sello de categoría girado, como toques de personalidad puntuales sobre la base de H. <strong>F</strong> queda como <strong>tema oscuro / modo noche</strong> del sistema, no como identidad principal: reutiliza los mismos componentes con el glow en vez de la sombra suave.</p>
+    </div>
+    <div class="panel" style="padding: 26px;">
+      <div class="eb" style="margin-bottom: 12px;">Siguientes pasos</div>
+      <ol style="margin: 0; padding-left: 18px; font-size: 12.5px; line-height: 1.7; color: #4A4A58;">
+        <li>Definir tokens de H: <code>glass</code>, <code>shadow-soft</code>, <code>shadow-cta</code>, radios 22–24, degradado de fondo.</li>
+        <li>Cargar Manrope; migrar <code>Card</code> a superficie de cristal (con fallback sólido si no hay blur).</li>
+        <li>Radar-orbe: sustituir la caja actual por el orbe luminoso + anillos + blips-píldora.</li>
+        <li>Botonera: segmentado de cristal flotante para el filtro de tiempo; barra inferior como píldora esmerilada.</li>
+        <li>Micro-detalle de G: <code>:active { transform: translateY(1px) }</code> con sombra que encoge en el CTA.</li>
+        <li>Modo noche = dirección F: mismos componentes, glow en lugar de sombra difusa.</li>
+      </ol>
+    </div>
+  </div>
+
+</div>
+</x-dc>
+<script data-dc-script data-props='{"$preview":{"width":1320,"height":1000}}'>
+class Component extends DCLogic {}
+</script>
+</body>
+</html>

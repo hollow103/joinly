@@ -1,0 +1,101 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,700;12..96,800&family=Hanken+Grotesk:wght@400;500;600;700&display=swap">
+  <style>
+    * { box-sizing: border-box; }
+    body { margin: 0; font-family: "Hanken Grotesk", ui-sans-serif, system-ui, sans-serif; color: #1A1A17; }
+    .disp { font-family: "Bricolage Grotesque", "Hanken Grotesk", system-ui, sans-serif; }
+    a { color: #F0533A; }
+    .eb { font-size: 10px; font-weight: 700; letter-spacing: 1.6px; text-transform: uppercase; color: #6B6A5E; }
+    .panel { background: #FFFCF5; border: 2px solid #1A1A17; border-radius: 12px; padding: 22px; box-shadow: 6px 6px 0 #1A1A17; }
+  </style>
+</helmet>
+
+<div style="width: 920px; min-height: 1240px; background: #FBF3E4; padding: 44px; position: relative;">
+  <svg width="920" height="1240" viewBox="0 0 920 1240" preserveAspectRatio="none" style="position:absolute;inset:0;z-index:0;">
+    <defs>
+      <pattern id="sghalf" width="14" height="14" patternUnits="userSpaceOnUse"><circle cx="3" cy="3" r="1.6" fill="#F0533A" fill-opacity="0.09"/></pattern>
+      <filter id="sggrain"><feTurbulence type="fractalNoise" baseFrequency="0.85" numOctaves="2" stitchTiles="stitch"/><feColorMatrix type="saturate" values="0"/><feComponentTransfer><feFuncA type="linear" slope="0.05"/></feComponentTransfer></filter>
+    </defs>
+    <rect width="920" height="1240" fill="#FBF3E4"/>
+    <rect x="-60" y="140" width="500" height="500" rx="50" fill="#2B3A8C" fill-opacity="0.06" transform="rotate(-8 200 380)"/>
+    <rect x="420" y="720" width="520" height="520" rx="50" fill="#E8B23A" fill-opacity="0.09" transform="rotate(10 680 980)"/>
+    <rect width="920" height="1240" fill="url(#sghalf)"/><rect width="920" height="1240" filter="url(#sggrain)"/>
+  </svg>
+
+  <div style="position: relative; z-index: 1;">
+    <div style="border-bottom: 2px solid #1A1A17; padding-bottom: 20px;">
+      <div class="eb" style="color: #F0533A;">Dirección G — Sistema</div>
+      <h1 class="disp" style="margin: 10px 0 0; font-size: 42px; font-weight: 800; letter-spacing: -1.6px;">RISOGRAFÍA</h1>
+      <p style="margin: 8px 0 0; font-size: 13px; line-height: 1.55; color: #4A473C; max-width: 620px;">Estética de fanzine impreso: tramas de puntos, grano de papel, tintas coral / azul / mostaza con leve desregistro. Contorno negro de 2&nbsp;px y sombra plana dura. Collage, sellos, cosas ligeramente giradas. Cruza generaciones: indie para los jóvenes, cálido y tangible para la mediana edad.</p>
+    </div>
+
+    <div class="panel" style="margin-top: 22px;">
+      <div class="eb" style="margin-bottom: 14px;">Fondo de pantalla</div>
+      <div style="height: 130px; border: 2px solid #1A1A17; border-radius: 8px; overflow: hidden;">
+        <svg width="100%" height="130" viewBox="0 0 800 130" preserveAspectRatio="none"><rect width="800" height="130" fill="#FBF3E4"/><rect x="-20" y="-30" width="300" height="300" rx="30" fill="#2B3A8C" fill-opacity="0.06" transform="rotate(-8 130 80)"/><rect width="800" height="130" fill="url(#sghalf)"/><rect width="800" height="130" filter="url(#sggrain)"/></svg>
+      </div>
+      <p style="font-size: 11px; color: #6B6A5E; margin: 10px 0 0;">Crema <code>#FBF3E4</code> + trama de medios tonos coral + grano + una forma grande fuera de registro (azul, girada). Un solo SVG.</p>
+    </div>
+
+    <div class="panel" style="margin-top: 16px;">
+      <div class="eb" style="margin-bottom: 16px;">Paleta — tintas riso</div>
+      <div style="display: grid; grid-template-columns: repeat(5, 1fr); gap: 12px;">
+        <div><div style="height: 56px; border-radius: 6px; background: #FBF3E4; border: 2px solid #1A1A17;"></div><div style="font-size: 10.5px; font-weight: 700; margin-top: 6px;">Crema</div><div style="font-size: 9.5px; color: #6B6A5E;">#FBF3E4</div></div>
+        <div><div style="height: 56px; border-radius: 6px; background: #1A1A17;"></div><div style="font-size: 10.5px; font-weight: 700; margin-top: 6px;">Tinta</div><div style="font-size: 9.5px; color: #6B6A5E;">#1A1A17</div></div>
+        <div><div style="height: 56px; border-radius: 6px; background: #F0533A;"></div><div style="font-size: 10.5px; font-weight: 700; margin-top: 6px;">Coral</div><div style="font-size: 9.5px; color: #6B6A5E;">#F0533A · acción</div></div>
+        <div><div style="height: 56px; border-radius: 6px; background: #2B3A8C;"></div><div style="font-size: 10.5px; font-weight: 700; margin-top: 6px;">Azul</div><div style="font-size: 9.5px; color: #6B6A5E;">#2B3A8C</div></div>
+        <div><div style="height: 56px; border-radius: 6px; background: #E8B23A;"></div><div style="font-size: 10.5px; font-weight: 700; margin-top: 6px;">Mostaza</div><div style="font-size: 9.5px; color: #6B6A5E;">#E8B23A</div></div>
+      </div>
+      <p style="font-size: 11px; color: #6B6A5E; margin: 14px 0 0;">Coral = acción. Azul = confirmado / "dentro". Mostaza = acentos y sombra. Tres tintas planas, sin degradados.</p>
+    </div>
+
+    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 16px;">
+      <div class="panel">
+        <div class="eb" style="margin-bottom: 14px;">Sombras — planas y duras</div>
+        <div style="display: flex; gap: 16px; flex-wrap: wrap;">
+          <div style="width: 80px; height: 56px; background: #FFFCF5; border: 2px solid #1A1A17; border-radius: 8px; box-shadow: 4px 4px 0 #1A1A17;"></div>
+          <div style="width: 80px; height: 56px; background: #FFFCF5; border: 2px solid #1A1A17; border-radius: 8px; box-shadow: 4px 4px 0 #E8B23A;"></div>
+          <div style="width: 80px; height: 56px; background: #FFFCF5; border: 2px solid #1A1A17; border-radius: 8px; box-shadow: 4px 4px 0 #2B3A8C;"></div>
+        </div>
+        <p style="font-size: 10.5px; color: #6B6A5E; margin: 12px 0 0;"><code>4px 4px 0</code> en tarjetas, <code>5px 5px 0</code> en el CTA, <code>2px 2px 0</code> en chips. Al pulsar, el elemento se desplaza <code>translate(3px,3px)</code> y la sombra encoge: "clic físico".</p>
+      </div>
+      <div class="panel">
+        <div class="eb" style="margin-bottom: 14px;">Botones</div>
+        <div style="display: flex; flex-direction: column; gap: 12px;">
+          <div style="height: 44px; border: 2px solid #1A1A17; border-radius: 10px; background: #F0533A; color: #FFF; display: grid; place-items: center; font-family: 'Bricolage Grotesque'; font-size: 14px; font-weight: 700; box-shadow: 5px 5px 0 #1A1A17;">Unirme al plan</div>
+          <div style="display: flex; gap: 8px;">
+            <span style="flex: 1; text-align: center; border: 2px solid #1A1A17; border-radius: 8px; padding: 8px 0; font-size: 12px; font-weight: 700; background: #F0533A; color: #FFF;">Ahora</span>
+            <span style="flex: 1; text-align: center; border: 2px solid #1A1A17; border-radius: 8px; padding: 8px 0; font-size: 12px; font-weight: 700; background: #FFFCF5; box-shadow: 3px 3px 0 #1A1A17;">Finde</span>
+          </div>
+        </div>
+        <p style="font-size: 10.5px; color: #6B6A5E; margin: 12px 0 0;">Rectángulos con contorno de 2&nbsp;px. Toggle lleno de coral cuando está activo.</p>
+      </div>
+    </div>
+
+    <div class="panel" style="margin-top: 16px;">
+      <div class="eb" style="margin-bottom: 14px;">Componente — tarjeta con sello</div>
+      <div style="display: flex; gap: 20px;">
+        <div style="width: 250px; position: relative; background: #FFFCF5; border: 2px solid #1A1A17; border-radius: 10px; padding: 14px; box-shadow: 4px 4px 0 #2B3A8C;">
+          <span style="position: absolute; top: -12px; left: 12px; transform: rotate(-3deg); font-size: 9px; font-weight: 700; text-transform: uppercase; border: 2px solid #1A1A17; border-radius: 999px; padding: 3px 9px; background: #2B3A8C; color: #FFF;">Cultura y ocio</span>
+          <div class="disp" style="font-size: 16px; font-weight: 700; margin-top: 6px;">Club de lectura: novela galega</div>
+          <div style="font-size: 11.5px; color: #6B6A5E; margin-top: 4px;">Dom 19:00 · O Areal · 1,4 km</div>
+        </div>
+        <p style="font-size: 11px; color: #4A473C; line-height: 1.6; flex: 1;">La etiqueta de categoría es un "sello" que sobresale por la esquina, girado unos grados. Las tarjetas se solapan y se inclinan levemente para el efecto collage. Titulares en Bricolage Grotesque 700–800; texto en Hanken Grotesk.</p>
+      </div>
+    </div>
+  </div>
+</div>
+</x-dc>
+<script data-dc-script data-props='{"$preview":{"width":920,"height":1240}}'>
+class Component extends DCLogic {}
+</script>
+</body>
+</html>

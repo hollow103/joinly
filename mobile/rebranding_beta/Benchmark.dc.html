@@ -1,0 +1,99 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;500;600;700&family=Spectral:wght@400;500;600&display=swap">
+  <style>
+    * { box-sizing: border-box; }
+    body { margin: 0; font-family: "Public Sans", ui-sans-serif, system-ui, sans-serif; color: #1C2534; }
+    .ser { font-family: "Spectral", Georgia, serif; }
+    a { color: #8A6A3B; } a:hover { color: #6B5230; }
+    .eb { font-size: 11px; font-weight: 700; letter-spacing: 1.6px; text-transform: uppercase; color: #7A8496; }
+    .card { background: #FFFFFF; border: 1px solid #E4E2DC; border-radius: 14px; padding: 20px; }
+    .name { font-size: 15px; font-weight: 700; }
+    .p { font-size: 12px; line-height: 1.5; color: #47526A; margin: 6px 0 0; }
+    .take { font-size: 11.5px; line-height: 1.45; color: #8A5A22; background: #FBF3E8; border-radius: 8px; padding: 8px 10px; margin-top: 10px; }
+  </style>
+</helmet>
+
+<div style="width: 1200px; min-height: 1080px; background: #F6F5F2; padding: 56px; display: flex; flex-direction: column; gap: 24px;">
+
+  <div style="max-width: 780px;">
+    <span class="eb">00 · Contexto</span>
+    <h1 class="ser" style="margin: 8px 0 0; font-size: 38px; font-weight: 500; letter-spacing: -1px;">Benchmark: qué hacen bien los referentes</h1>
+    <p class="p" style="margin-top: 10px; font-size: 13px;">Siete productos del entorno de eventos, comunidad e hiperlocal. Se mira UX, UI, navegación, tipografía, branding y usabilidad. Inspiración, nunca copia: joinly parte de restricciones propias (sin ubicación exacta, sin chat, alias) que ninguno de estos comparte del todo.</p>
+  </div>
+
+  <div style="display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 16px;">
+
+    <div class="card">
+      <div class="name">Luma <span style="font-weight:400;color:#7A8496;font-size:11px;">· lu.ma</span></div>
+      <p class="p">Páginas de evento minimalistas, jerarquía tipográfica clarísima, calendario personal, cero ruido. El contenido manda.</p>
+      <div class="take"><strong>Tomamos:</strong> sobriedad, respeto por el contenido, un sistema tipográfico que hace casi todo el trabajo.</div>
+    </div>
+
+    <div class="card">
+      <div class="name">Partiful</div>
+      <p class="p">Personalidad de marca fuerte, tipografía expresiva, tono lúdico. La fiesta “empieza” en la propia invitación; foco en quién viene.</p>
+      <div class="take"><strong>Tomamos:</strong> que la marca tenga carácter y que el plan se sienta vivo desde la ficha (dirección Bold).</div>
+    </div>
+
+    <div class="card">
+      <div class="name">Meetup</div>
+      <p class="p">Descubrimiento por intereses y por grupos; taxonomía de categorías robusta; sensación de pertenencia a una comunidad recurrente.</p>
+      <div class="take"><strong>Tomamos:</strong> categorías como eje real de navegación y filtrado, no como etiqueta decorativa.</div>
+    </div>
+
+    <div class="card">
+      <div class="name">Nextdoor</div>
+      <p class="p">Hiperlocal y vecinal: verificación de zona, tono de confianza, todo anclado al barrio. La proximidad es el valor.</p>
+      <div class="take"><strong>Tomamos:</strong> la sensación de “esto es de tu barrio” sin exponer direcciones; zonas con nombre.</div>
+    </div>
+
+    <div class="card">
+      <div class="name">Airbnb · Experiences</div>
+      <p class="p">Design system maduro y reutilizable, tarjetas con imagen, microcopy cálido, accesibilidad cuidada, estados bien resueltos.</p>
+      <div class="take"><strong>Tomamos:</strong> el rigor del sistema (componentes, estados, a11y) como listón mínimo, no como aspiración.</div>
+    </div>
+
+    <div class="card">
+      <div class="name">Citymapper</div>
+      <p class="p">Densidad de información local muy legible, estados de carga claros, jerarquía por color y tipografía sin saturar.</p>
+      <div class="take"><strong>Tomamos:</strong> comunicar cercanía y tiempo con precisión sin mapa de calles ni pines exactos.</div>
+    </div>
+
+    <div class="card">
+      <div class="name">Strava</div>
+      <p class="p">Comunidad alrededor de una actividad concreta; hábito semanal; feed y segmentación que motivan a volver.</p>
+      <div class="take"><strong>Tomamos:</strong> diseñar para el hábito (“esta semana cerca de ti”), no solo para el primer uso.</div>
+    </div>
+
+    <div class="card" style="background: #EEF1F6; border-color: #DCE1EA;">
+      <div class="name" style="font-size: 13px;">Patrón común</div>
+      <p class="p">Todos: una acción primaria por pantalla, tarjetas con imagen o color de categoría, tipografía como jerarquía principal, y estados de carga/vacío tratados como parte del producto.</p>
+      <p class="p" style="margin-top:8px;"><strong>Dónde joinly puede diferenciarse:</strong> privacidad radical como rasgo de marca, y el “tú aquí, ahora” resuelto sin mapa.</p>
+    </div>
+
+  </div>
+
+  <div class="card">
+    <div class="eb" style="margin-bottom: 10px;">Lecturas por dimensión</div>
+    <div style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 20px; font-size: 12px; line-height: 1.5; color: #47526A;">
+      <div><strong style="color:#1C2534;">Navegación</strong><br>2–4 destinos estables + búsqueda/filtro siempre a mano. El descubrimiento no vive detrás de un menú.</div>
+      <div><strong style="color:#1C2534;">Tipografía y branding</strong><br>Un display con voz + un texto neutro muy legible. La marca se reconoce por la tipografía y un gesto, no por un logotipo recargado.</div>
+      <div><strong style="color:#1C2534;">Usabilidad</strong><br>Primer resultado visible sin scroll; CTA fija; feedback inmediato al unirse; sin callejones sin salida en vacío o error.</div>
+    </div>
+  </div>
+
+</div>
+</x-dc>
+<script data-dc-script data-props='{"$preview":{"width":1200,"height":1080}}'>
+class Component extends DCLogic {}
+</script>
+</body>
+</html>

@@ -1,0 +1,76 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap">
+  <style>
+    * { box-sizing: border-box; }
+    body { margin: 0; }
+    .ft { font-family: "Space Grotesk", ui-sans-serif, system-ui, sans-serif; color: #EAECF5; -webkit-font-smoothing: antialiased; }
+    .ft .mono { font-family: "IBM Plex Mono", ui-monospace, "SFMono-Regular", monospace; }
+    .ft a { color: #3DE1FF; } .ft a:hover { color: #7EEBFF; }
+    .ft .kick { font-size: 10px; font-weight: 700; letter-spacing: 1.4px; text-transform: uppercase; color: #7C5CFF; }
+    .ft .mchip { font-family: "IBM Plex Mono", monospace; font-size: 10.5px; color: #C3C9DC; border: 1px solid rgba(255,255,255,0.12); background: rgba(255,255,255,0.04); border-radius: 8px; padding: 5px 9px; }
+  </style>
+</helmet>
+
+<div class="ft" style="width: 390px; height: 844px; background: #0C0E15; position: relative; overflow: hidden;">
+  <div style="position: absolute; inset: 0; background: radial-gradient(120% 45% at 80% 0%, rgba(124,92,255,0.16), transparent 60%);"></div>
+
+  <!-- back -->
+  <div style="position: relative; padding: 18px 20px 0;">
+    <a href="#" style="font-family: 'IBM Plex Mono', monospace; font-size: 12px; text-decoration: none; display: inline-flex; align-items: center; gap: 6px;">
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#3DE1FF" stroke-width="2.4"><path d="M15 5l-7 7 7 7"/></svg> descubrir
+    </a>
+  </div>
+
+  <!-- module hero -->
+  <div style="position: relative; margin: 16px 20px 0; border: 1px solid rgba(124,92,255,0.4); border-radius: 18px; background: linear-gradient(180deg, #171B2C, #10131F); padding: 20px; box-shadow: 0 0 34px -10px rgba(124,92,255,0.5);">
+    <div class="kick">Cultura y ocio</div>
+    <h1 style="margin: 8px 0 0; font-size: 25px; font-weight: 700; line-height: 1.1; letter-spacing: -0.6px;">Club de lectura: novela gallega</h1>
+    <div class="mono" style="font-size: 12px; color: #8A93A8; margin-top: 10px;">JUE 4 SEP · 19:00 · ~ZONA AREAL · 800 m</div>
+  </div>
+
+  <!-- chips -->
+  <div style="position: relative; display: flex; flex-wrap: wrap; gap: 7px; padding: 14px 20px 0;">
+    <span class="mchip" style="color: #3DDC97; border-color: rgba(61,220,151,0.4);">2 plazas</span>
+    <span class="mchip">acceso: abierto</span>
+    <span class="mchip">org: andrea.c</span>
+  </div>
+
+  <!-- description -->
+  <p style="position: relative; margin: 16px 20px 0; font-size: 14px; line-height: 1.55; color: #A6ADC0;">Quedada tranquila para comentar novela gallega contemporánea. Trae el libro del mes; hay sitio para quien llegue sin haberlo terminado.</p>
+
+  <!-- organiser -->
+  <div style="position: relative; margin: 16px 20px 0; padding-top: 16px; border-top: 1px solid rgba(255,255,255,0.08); display: flex; align-items: center; gap: 12px;">
+    <div style="width: 40px; height: 40px; border-radius: 12px; background: linear-gradient(135deg, rgba(124,92,255,0.3), rgba(61,225,255,0.2)); border: 1px solid rgba(124,92,255,0.4); display: grid; place-items: center; font-size: 16px; font-weight: 700;">a</div>
+    <div style="flex: 1;">
+      <div style="font-size: 14px; font-weight: 600;">andrea.c</div>
+      <div class="mono" style="font-size: 10px; color: #6E7793;">alias visible · sin contacto</div>
+    </div>
+    <a href="#" class="mono" style="font-size: 10px; text-decoration: none; color: #FF6B6B;">reportar</a>
+  </div>
+
+  <!-- notice -->
+  <div style="position: relative; margin: 14px 20px 0; background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08); border-radius: 14px; padding: 12px 14px; display: flex; gap: 10px;">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#8A93A8" stroke-width="1.7" style="flex-shrink: 0; margin-top: 1px;"><rect x="4" y="10" width="16" height="11" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></svg>
+    <span class="mono" style="font-size: 11px; line-height: 1.5; color: #8A93A8;">La dirección exacta se revela al confirmar tu plaza.</span>
+  </div>
+
+  <!-- fixed CTA -->
+  <div style="position: absolute; left: 0; right: 0; bottom: 0; background: linear-gradient(180deg, rgba(12,14,21,0), #0C0E15 24%); padding: 26px 20px 22px;">
+    <div style="background: #7C5CFF; color: #FFFFFF; border-radius: 14px; height: 54px; display: grid; place-items: center; font-size: 15px; font-weight: 600; box-shadow: 0 14px 34px -10px rgba(124,92,255,0.6);">Unirme al plan</div>
+  </div>
+
+</div>
+</x-dc>
+<script data-dc-script data-props='{"$preview":{"width":390,"height":844}}'>
+class Component extends DCLogic {}
+</script>
+</body>
+</html>

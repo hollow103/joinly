@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1160" height="420" viewBox="0 0 1160 420" fill="none">
+  <!-- Propuesta 1 — "Radar j": la inicial de joinly con cabeza de radar y estela.
+       Colores de marca: navy #101D40, azul #3157C9, acento #FF9E3D.
+       El wordmark usa fuente del sistema; en el arte final debe convertirse a trazados. -->
+  <defs>
+    <symbol id="p1-mark" viewBox="0 0 200 200">
+      <circle cx="118" cy="60" r="66" fill="none" stroke="#3157C9" stroke-width="6" stroke-opacity=".18"/>
+      <circle cx="118" cy="60" r="44" fill="none" stroke="#3157C9" stroke-width="6" stroke-opacity=".34"/>
+      <path d="M118 84 L118 150 Q118 188 80 188" fill="none" stroke="#3157C9" stroke-width="30" stroke-linecap="round"/>
+      <circle cx="118" cy="60" r="19" fill="#FF9E3D"/>
+    </symbol>
+    <symbol id="p1-mark-inv" viewBox="0 0 200 200">
+      <circle cx="118" cy="60" r="66" fill="none" stroke="#FFFFFF" stroke-width="6" stroke-opacity=".28"/>
+      <circle cx="118" cy="60" r="44" fill="none" stroke="#FFFFFF" stroke-width="6" stroke-opacity=".5"/>
+      <path d="M118 84 L118 150 Q118 188 80 188" fill="none" stroke="#FFFFFF" stroke-width="30" stroke-linecap="round"/>
+      <circle cx="118" cy="60" r="19" fill="#FF9E3D"/>
+    </symbol>
+  </defs>
+
+  <rect width="1160" height="420" fill="#F5F7FC"/>
+
+  <!-- App icon -->
+  <rect x="60" y="70" width="200" height="200" rx="46" fill="#208AEF"/>
+  <use href="#p1-mark-inv" x="80" y="90" width="160" height="160"/>
+  <text x="160" y="312" text-anchor="middle" fill="#65708F" font-family="Arial, sans-serif" font-size="15" font-weight="700">Icono de app</text>
+
+  <!-- Symbol -->
+  <use href="#p1-mark" x="360" y="82" width="176" height="176"/>
+  <text x="448" y="312" text-anchor="middle" fill="#65708F" font-family="Arial, sans-serif" font-size="15" font-weight="700">Símbolo</text>
+
+  <!-- Lockup -->
+  <use href="#p1-mark" x="612" y="96" width="150" height="150"/>
+  <text x="770" y="200" fill="#101D40" font-family="Helvetica Neue, Arial, sans-serif" font-size="96" font-weight="700" letter-spacing="-3">joinly</text>
+  <text x="612" y="312" fill="#65708F" font-family="Arial, sans-serif" font-size="15" font-weight="700">Lockup horizontal</text>
+</svg>

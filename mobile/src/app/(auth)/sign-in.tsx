@@ -6,7 +6,7 @@ import { z } from 'zod';
 import { AuthField } from '@/auth/AuthField';
 import { useSession } from '@/auth/session';
 import { supabase } from '@/auth/supabase';
-import { Button, Screen, Text, tokens } from '@/ui';
+import { Button, Logo, Screen, Text, tokens } from '@/ui';
 
 const signInSchema = z.object({
   email: z.string().trim().email(),
@@ -44,14 +44,14 @@ export default function SignIn() {
   }
 
   return (
-    <Screen backgroundColor={tokens.color.brandNavy} style={styles.screen}>
+    <Screen backgroundColor={tokens.color.bg} style={styles.screen}>
       <KeyboardAvoidingView
         behavior={Platform.select({ ios: 'padding', default: undefined })}
         style={styles.flex}
       >
         <ScrollView contentContainerStyle={styles.content} keyboardShouldPersistTaps="handled">
           <View style={styles.hero}>
-            <Text style={styles.wordmark}>{t('common.appName').toLowerCase()}</Text>
+            <Logo size={22} />
             <Text style={styles.eyebrow}>{t('auth.eyebrow')}</Text>
             <Text style={styles.title}>{t('auth.signInTitle')}</Text>
           </View>
@@ -102,13 +102,27 @@ const styles = StyleSheet.create({
     paddingBottom: 48,
     gap: tokens.space.md,
   },
-  wordmark: { color: tokens.color.surface, fontSize: 16, fontWeight: '700' },
-  eyebrow: { color: '#B8C7FF', fontSize: 11, fontWeight: '700', letterSpacing: 1 },
-  title: { color: tokens.color.surface, fontSize: 32, fontWeight: '700', lineHeight: 38 },
+  eyebrow: {
+    color: tokens.color.textMuted,
+    fontFamily: tokens.font.family.sansSemibold,
+    fontSize: 10,
+    letterSpacing: 1.6,
+    textTransform: 'uppercase',
+  },
+  title: {
+    color: tokens.color.text,
+    fontFamily: tokens.font.family.serifSemibold,
+    fontSize: 30,
+    lineHeight: 36,
+    letterSpacing: -0.8,
+  },
   card: {
     backgroundColor: tokens.color.surface,
-    borderTopLeftRadius: 28,
-    borderTopRightRadius: 28,
+    borderColor: tokens.color.border,
+    borderWidth: 1,
+    borderRadius: tokens.radius.lg,
+    marginHorizontal: tokens.space.lg,
+    marginBottom: tokens.space.lg,
     padding: tokens.space.xl,
     gap: tokens.space.lg,
   },

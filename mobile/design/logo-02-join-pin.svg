@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1160" height="420" viewBox="0 0 1160 420" fill="none">
+  <!-- Propuesta 2 — "Join pin": un marcador de lugar cuya cabeza son dos círculos
+       que se unen (join). La lente central en acento = el punto de encuentro. -->
+  <defs>
+    <clipPath id="p2-cL"><circle cx="83" cy="80" r="34"/></clipPath>
+    <symbol id="p2-mark" viewBox="0 0 200 200">
+      <path d="M100 196 C 54 132 36 120 36 82 A 64 64 0 1 1 164 82 C 164 120 146 132 100 196 Z" fill="#3157C9"/>
+      <circle cx="83" cy="80" r="34" fill="#FFFFFF"/>
+      <circle cx="117" cy="80" r="34" fill="#FFFFFF"/>
+      <circle cx="117" cy="80" r="34" fill="#FF9E3D" clip-path="url(#p2-cL)"/>
+    </symbol>
+    <symbol id="p2-mark-inv" viewBox="0 0 200 200">
+      <path d="M100 196 C 54 132 36 120 36 82 A 64 64 0 1 1 164 82 C 164 120 146 132 100 196 Z" fill="none" stroke="#FFFFFF" stroke-width="14"/>
+      <circle cx="83" cy="80" r="30" fill="none" stroke="#FFFFFF" stroke-width="12"/>
+      <circle cx="117" cy="80" r="30" fill="none" stroke="#FFFFFF" stroke-width="12"/>
+      <circle cx="117" cy="80" r="30" fill="#FF9E3D" clip-path="url(#p2-cL)"/>
+    </symbol>
+  </defs>
+
+  <rect width="1160" height="420" fill="#F5F7FC"/>
+
+  <rect x="60" y="70" width="200" height="200" rx="46" fill="#3157C9"/>
+  <use href="#p2-mark-inv" x="80" y="86" width="160" height="160"/>
+  <text x="160" y="312" text-anchor="middle" fill="#65708F" font-family="Arial, sans-serif" font-size="15" font-weight="700">Icono de app</text>
+
+  <use href="#p2-mark" x="366" y="82" width="164" height="176"/>
+  <text x="448" y="312" text-anchor="middle" fill="#65708F" font-family="Arial, sans-serif" font-size="15" font-weight="700">Símbolo</text>
+
+  <use href="#p2-mark" x="618" y="92" width="150" height="160"/>
+  <text x="782" y="200" fill="#101D40" font-family="Helvetica Neue, Arial, sans-serif" font-size="96" font-weight="700" letter-spacing="-3">joinly</text>
+  <text x="618" y="312" fill="#65708F" font-family="Arial, sans-serif" font-size="15" font-weight="700">Lockup horizontal</text>
+</svg>

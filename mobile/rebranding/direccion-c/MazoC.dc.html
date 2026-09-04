@@ -1,0 +1,86 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700&display=swap">
+  <style>
+    * { box-sizing: border-box; }
+    body { margin: 0; }
+    .cC { font-family: "Sora", ui-sans-serif, system-ui, sans-serif; color: #EDF0F7; -webkit-font-smoothing: antialiased; }
+    .cC a { color: #F4B24C; } .cC a:hover { color: #E39A2E; }
+    .cC .kick { font-size: 10px; font-weight: 700; letter-spacing: 1.8px; text-transform: uppercase; color: #F4B24C; }
+  </style>
+</helmet>
+
+<div class="cC" style="width: 390px; height: 844px; background: #0B0F1A; position: relative; overflow: hidden;">
+  <div style="position: absolute; inset: 0; background: radial-gradient(120% 60% at 80% 0%, rgba(138,124,255,0.16), transparent 60%), radial-gradient(90% 50% at 10% 100%, rgba(244,178,76,0.10), transparent 55%);"></div>
+
+  <!-- header -->
+  <div style="position: relative; display: flex; align-items: center; justify-content: space-between; padding: 22px 22px 0;">
+    <div style="display: flex; align-items: center; gap: 1px; font-size: 20px; font-weight: 600; letter-spacing: -0.4px;">
+      <span>j</span><span>o</span>
+      <span style="width: 9px; height: 9px; border-radius: 50%; background: #F4B24C; box-shadow: 0 0 10px rgba(244,178,76,0.9); display: inline-block; margin: 0 1px;"></span>
+      <span>nly</span>
+    </div>
+    <div style="display: flex; align-items: center; gap: 6px; font-size: 12px; color: #8B95AD;">
+      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#8B95AD" stroke-width="1.8"><path d="M12 21s-7-6.2-7-11a7 7 0 0 1 14 0c0 4.8-7 11-7 11Z"/><circle cx="12" cy="10" r="2.4"/></svg>
+      Vigo · 3 km
+    </div>
+  </div>
+
+  <!-- card -->
+  <div style="position: relative; margin: 20px 22px 0; border-radius: 24px; overflow: hidden; background: linear-gradient(180deg, #161D30 0%, #10162599 100%); border: 1px solid rgba(255,255,255,0.09); box-shadow: 0 24px 60px -20px rgba(0,0,0,0.7);">
+    <svg width="346" height="208" viewBox="0 0 346 208" style="display: block;">
+      <rect width="346" height="208" fill="#0E1424"/>
+      <circle cx="70" cy="180" r="130" fill="#8A7CFF" fill-opacity="0.28"/>
+      <circle cx="290" cy="30" r="90" fill="#9B2F4C" fill-opacity="0.34"/>
+      <path d="M0 140 Q120 90 210 128 T346 104 V208 H0 Z" fill="#0B0F1A" fill-opacity="0.45"/>
+      <g stroke="#EDF0F7" stroke-width="1" stroke-opacity="0.14"><path d="M26 26h60M26 38h96M26 50h44"/></g>
+    </svg>
+    <div style="padding: 18px 20px 20px;">
+      <div class="kick">Cultura y ocio</div>
+      <div style="font-size: 22px; font-weight: 600; line-height: 1.16; letter-spacing: -0.4px; margin-top: 8px;">Club de lectura: novela gallega</div>
+      <div style="font-size: 12.5px; color: #8B95AD; margin-top: 10px;">Jue 4 sep · 19:00 · Zona Areal · 800 m</div>
+      <div style="margin-top: 12px;">
+        <span style="font-size: 11px; font-weight: 600; color: #F0AEBF; border: 1px solid rgba(155,47,76,0.5); background: rgba(155,47,76,0.16); border-radius: 999px; padding: 5px 11px;">2 plazas · organiza andrea.c</span>
+      </div>
+      <div style="display: flex; gap: 10px; margin-top: 18px;">
+        <div style="flex: 1; height: 46px; border-radius: 12px; border: 1px solid rgba(255,255,255,0.16); display: grid; place-items: center; font-size: 13.5px; font-weight: 500; color: #A7B0C4;">Ahora no</div>
+        <div style="flex: 1.4; height: 46px; border-radius: 12px; background: #F4B24C; color: #1A1204; display: grid; place-items: center; font-size: 14px; font-weight: 700; box-shadow: 0 8px 24px -6px rgba(244,178,76,0.6);">Me interesa</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- progress -->
+  <div style="position: relative; text-align: center; margin-top: 22px;">
+    <div style="font-size: 12px; color: #8B95AD;">Has visto 3 · quedan 8 cerca</div>
+    <div style="display: flex; gap: 5px; justify-content: center; margin-top: 10px;">
+      <span style="width: 18px; height: 4px; border-radius: 2px; background: #F4B24C;"></span>
+      <span style="width: 18px; height: 4px; border-radius: 2px; background: #F4B24C;"></span>
+      <span style="width: 18px; height: 4px; border-radius: 2px; background: #F4B24C;"></span>
+      <span style="width: 18px; height: 4px; border-radius: 2px; background: rgba(255,255,255,0.14);"></span>
+      <span style="width: 18px; height: 4px; border-radius: 2px; background: rgba(255,255,255,0.14);"></span>
+      <span style="width: 18px; height: 4px; border-radius: 2px; background: rgba(255,255,255,0.14);"></span>
+    </div>
+  </div>
+
+  <!-- tab bar -->
+  <div style="position: absolute; left: 0; right: 0; bottom: 0; height: 70px; background: rgba(11,15,26,0.9); border-top: 1px solid rgba(255,255,255,0.08); display: flex; align-items: center; justify-content: space-around; padding: 0 14px; backdrop-filter: blur(8px);">
+    <div style="text-align: center;"><svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="#F4B24C" stroke-width="1.8"><rect x="4" y="4" width="7" height="7" rx="1.6"/><rect x="13" y="4" width="7" height="7" rx="1.6"/><rect x="4" y="13" width="7" height="7" rx="1.6"/><rect x="13" y="13" width="7" height="7" rx="1.6"/></svg><div style="font-size: 9.5px; font-weight: 600; color: #F4B24C; margin-top: 3px;">Descubre</div></div>
+    <div style="text-align: center;"><svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="#6E7793" stroke-width="1.8"><path d="M6 4h12v16l-6-4-6 4Z"/></svg><div style="font-size: 9.5px; color: #6E7793; margin-top: 3px;">Guardados</div></div>
+    <div style="text-align: center;"><div style="width: 32px; height: 32px; border: 1.5px solid #F4B24C; border-radius: 50%; display: grid; place-items: center;"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#F4B24C" stroke-width="2.4"><path d="M12 6v12M6 12h12"/></svg></div><div style="font-size: 9.5px; color: #6E7793; margin-top: 3px;">Crear</div></div>
+    <div style="text-align: center;"><svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="#6E7793" stroke-width="1.8"><circle cx="12" cy="8" r="3.4"/><path d="M5.5 20c1.3-3.6 4-5 6.5-5s5.2 1.4 6.5 5"/></svg><div style="font-size: 9.5px; color: #6E7793; margin-top: 3px;">Perfil</div></div>
+  </div>
+
+</div>
+</x-dc>
+<script data-dc-script data-props='{"$preview":{"width":390,"height":844}}'>
+class Component extends DCLogic {}
+</script>
+</body>
+</html>

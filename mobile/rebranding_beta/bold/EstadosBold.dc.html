@@ -1,0 +1,134 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,700&family=Hanken+Grotesk:wght@400;500;600;700&display=swap">
+  <style>
+    * { box-sizing: border-box; }
+    body { margin: 0; }
+    .bd { font-family: "Hanken Grotesk", ui-sans-serif, system-ui, sans-serif; color: #141210; -webkit-font-smoothing: antialiased; }
+    .bd .disp { font-family: "Bricolage Grotesque", "Hanken Grotesk", system-ui, sans-serif; }
+    .eb { font-size: 10px; font-weight: 700; letter-spacing: 1.8px; text-transform: uppercase; color: #5C564E; }
+    .frame { width: 262px; height: 460px; background: #F3EFE6; border: 2px solid #141210; border-radius: 18px; padding: 18px; overflow: hidden; }
+    .fcap { font-size: 10px; font-weight: 700; letter-spacing: 1.2px; text-transform: uppercase; color: #5C564E; margin-bottom: 8px; }
+    .panel { background: #FFFFFF; border: 2px solid #141210; border-radius: 12px; padding: 20px; }
+    .sk { background: #E4DECF; border: 2px solid #D3CBB8; border-radius: 4px; }
+  </style>
+</helmet>
+
+<div class="bd" style="width: 1180px; min-height: 980px; background: #EAE5D9; padding: 40px;">
+
+  <div style="border-bottom: 2px solid #141210; padding-bottom: 16px;">
+    <div class="eb" style="color: #2440E8;">02 · Bold / Distinctive — Estados, responsive y accesibilidad</div>
+    <h1 class="disp" style="margin: 6px 0 0; font-size: 34px; font-weight: 700; letter-spacing: -1.2px;">Estados con la misma voz</h1>
+  </div>
+
+  <div style="display: flex; gap: 30px; margin-top: 24px;">
+
+    <div>
+      <div class="fcap">Carga · esqueleto</div>
+      <div class="frame">
+        <div class="sk" style="width: 60%; height: 22px;"></div>
+        <div style="margin-top: 16px; display: flex; flex-direction: column; gap: 12px;">
+          <div style="border: 2px solid #141210; border-radius: 12px; overflow: hidden;">
+            <div class="sk" style="height: 22px; border: none; border-bottom: 2px solid #141210; border-radius: 0;"></div>
+            <div style="padding: 12px;">
+              <div class="sk" style="width: 85%; height: 14px;"></div>
+              <div class="sk" style="width: 55%; height: 18px; margin-top: 8px;"></div>
+            </div>
+          </div>
+          <div style="border: 2px solid #141210; border-radius: 12px; overflow: hidden;">
+            <div class="sk" style="height: 22px; border: none; border-bottom: 2px solid #141210; border-radius: 0;"></div>
+            <div style="padding: 12px;">
+              <div class="sk" style="width: 75%; height: 14px;"></div>
+              <div class="sk" style="width: 50%; height: 18px; margin-top: 8px;"></div>
+            </div>
+          </div>
+        </div>
+        <div style="font-size: 10.5px; color: #5C564E; margin-top: 16px;">Bloque de categoría y numeral se insinúan; sin spinner. Shimmer 1,2 s.</div>
+      </div>
+    </div>
+
+    <div>
+      <div class="fcap">Error</div>
+      <div class="frame">
+        <div style="height: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; gap: 14px;">
+          <div style="width: 52px; height: 52px; border: 2px solid #141210; border-radius: 12px; background: #7A1F33; display: grid; place-items: center; box-shadow: 3px 3px 0 #141210;">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.6"><path d="M6 6l12 12M18 6L6 18"/></svg>
+          </div>
+          <div class="disp" style="font-size: 19px; font-weight: 700; line-height: 1.1;">No hemos podido conectar</div>
+          <div style="font-size: 12px; color: #5C564E; line-height: 1.4;">Revisa tu conexión. Tus planes guardados siguen disponibles.</div>
+          <div style="background: #2440E8; color: #fff; border: 2px solid #141210; border-radius: 10px; height: 44px; display: grid; place-items: center; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; padding: 0 22px; box-shadow: 4px 4px 0 #141210;">Reintentar</div>
+        </div>
+      </div>
+    </div>
+
+    <div>
+      <div class="fcap">Vacío</div>
+      <div class="frame">
+        <div style="height: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; gap: 14px;">
+          <div style="width: 52px; height: 52px; border: 2px solid #141210; border-radius: 12px; background: #D6F24A; display: grid; place-items: center;">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#141210" stroke-width="2.6"><rect x="4" y="4" width="16" height="16" rx="2"/><path d="M4 12h16"/></svg>
+          </div>
+          <div class="disp" style="font-size: 19px; font-weight: 700; line-height: 1.1;">Nada por aquí todavía</div>
+          <div style="font-size: 12px; color: #5C564E; line-height: 1.4;">Amplía el radio o cambia las categorías del filtro.</div>
+          <div style="background: #fff; color: #141210; border: 2px solid #141210; border-radius: 10px; height: 44px; display: grid; place-items: center; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; padding: 0 20px;">Ampliar a 5 km</div>
+        </div>
+      </div>
+    </div>
+
+    <div>
+      <div class="fcap">Éxito</div>
+      <div class="frame">
+        <div style="border: 2px solid #141210; border-radius: 12px; background: #0E7A4F; padding: 16px; box-shadow: 4px 4px 0 #141210;">
+          <div style="display: flex; align-items: center; gap: 8px;">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#D6F24A" stroke-width="3"><path d="M5 13l4 4L19 7"/></svg>
+            <span class="disp" style="font-size: 16px; font-weight: 700; color: #fff;">¡Estás dentro!</span>
+          </div>
+          <div style="font-size: 12px; color: #CFECDF; margin-top: 6px;">Nos vemos el jueves. Aviso la víspera.</div>
+        </div>
+        <div style="border: 2px solid #141210; border-radius: 12px; background: #fff; padding: 12px; margin-top: 12px;">
+          <div style="font-size: 9px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; color: #0E7A4F;">Ubicación exacta</div>
+          <div class="disp" style="font-size: 15px; font-weight: 700; margin-top: 3px;">Rúa do Areal 42, Vigo</div>
+        </div>
+        <div style="font-size: 10px; color: #5C564E; margin-top: 12px;">Confirmación como bloque sólido; la dirección aparece debajo.</div>
+      </div>
+    </div>
+
+  </div>
+
+  <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-top: 28px;">
+    <div class="panel">
+      <div class="eb" style="margin-bottom: 12px;">Responsive</div>
+      <ul style="margin: 0; padding-left: 18px; font-size: 12px; line-height: 1.6; color: #38342E;">
+        <li><strong>360–430 px:</strong> feed de una columna; el título display baja a 32 px en 360.</li>
+        <li><strong>≥ 700 px:</strong> feed en 2 columnas tipo mosaico; la sombra plana se mantiene, el borde no.</li>
+        <li>Numerales grandes con <code>font-variant-numeric: tabular-nums</code> para que no “bailen” al cambiar de dato.</li>
+        <li>Bloques de categoría con altura fija de 1 línea; el título envuelve debajo.</li>
+      </ul>
+    </div>
+    <div class="panel">
+      <div class="eb" style="margin-bottom: 12px;">Accesibilidad</div>
+      <ul style="margin: 0; padding-left: 18px; font-size: 12px; line-height: 1.6; color: #38342E;">
+        <li>Contraste alto por diseño: tinta sobre crema 14:1, blanco sobre cobalto 5.3:1, blanco sobre burdeos 8.9:1.</li>
+        <li>El color de categoría nunca va solo: siempre lleva su nombre en texto.</li>
+        <li>Foco = contorno de lima de 3 px, visible sobre cualquier fondo.</li>
+        <li>Mayúsculas solo en etiquetas cortas (≤ 2 palabras) para no penalizar lectura.</li>
+        <li>Objetivo táctil ≥ 48 px; el botón Crear en burdeos mide 44×44 mínimo con área ampliada.</li>
+        <li>“Reducir movimiento”: sin shimmer ni desplazamiento de sombra al pulsar.</li>
+      </ul>
+    </div>
+  </div>
+
+</div>
+</x-dc>
+<script data-dc-script data-props='{"$preview":{"width":1180,"height":980}}'>
+class Component extends DCLogic {}
+</script>
+</body>
+</html>

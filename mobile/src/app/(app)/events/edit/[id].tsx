@@ -362,7 +362,11 @@ const styles = StyleSheet.create({
   optionSelected: { backgroundColor: tokens.color.primarySoft, borderColor: tokens.color.primary },
   optionTitle: { color: tokens.color.text, fontSize: 14, fontWeight: '700' },
   optionHint: { color: tokens.color.textMuted, fontSize: 12, lineHeight: 17 },
-  stale: { backgroundColor: '#FFF3E6', borderRadius: tokens.radius.md, padding: tokens.space.md },
-  staleText: { color: '#8A4B12', fontSize: 13, lineHeight: 18 },
+  stale: {
+    backgroundColor: tokens.color.burgundySoft,
+    borderRadius: tokens.radius.md,
+    padding: tokens.space.md,
+  },
+  staleText: { color: tokens.color.burgundy, fontSize: 13, lineHeight: 18 },
   fieldError: { color: tokens.color.danger, fontSize: 13, lineHeight: 18 },
 });

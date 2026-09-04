@@ -1,0 +1,121 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap">
+  <style>
+    * { box-sizing: border-box; }
+    body { margin: 0; }
+    .ft { font-family: "Space Grotesk", ui-sans-serif, system-ui, sans-serif; color: #EAECF5; -webkit-font-smoothing: antialiased; }
+    .ft .mono { font-family: "IBM Plex Mono", ui-monospace, "SFMono-Regular", monospace; }
+    .ft a { color: #3DE1FF; } .ft a:hover { color: #7EEBFF; }
+    .ft .rail-lbl { font-size: 10px; font-weight: 700; letter-spacing: 1.6px; text-transform: uppercase; color: #8A93A8; }
+    .ft .mod { flex-shrink: 0; width: 236px; border: 1px solid rgba(255,255,255,0.1); border-radius: 14px; background: #151826; padding: 14px; }
+    .ft .kick { font-size: 10px; font-weight: 700; letter-spacing: 1.4px; text-transform: uppercase; color: #7C5CFF; }
+  </style>
+</helmet>
+
+<div class="ft" style="width: 390px; height: 844px; background: #0C0E15; position: relative; overflow: hidden;">
+  <div style="position: absolute; inset: 0; background: radial-gradient(110% 40% at 85% 0%, rgba(124,92,255,0.14), transparent 60%);"></div>
+
+  <!-- header -->
+  <div style="position: relative; display: flex; align-items: center; justify-content: space-between; padding: 18px 20px 0;">
+    <div style="display: flex; align-items: center; gap: 1px; font-size: 19px; font-weight: 700; letter-spacing: -0.6px;">
+      <span>j</span><span>o</span>
+      <span style="width: 8px; height: 8px; border-radius: 3px; background: linear-gradient(135deg,#7C5CFF,#3DE1FF); box-shadow: 0 0 10px rgba(124,92,255,0.8); display: inline-block; margin: 0 1px;"></span>
+      <span>nly</span>
+    </div>
+    <div class="mono" style="font-size: 11px; color: #8A93A8;">~Vigo · 3 km</div>
+  </div>
+
+  <!-- title -->
+  <div style="position: relative; padding: 16px 20px 0; display: flex; align-items: flex-end; justify-content: space-between;">
+    <h1 style="margin: 0; font-size: 34px; font-weight: 700; letter-spacing: -1.4px; line-height: 0.98;">Cerca ahora</h1>
+    <div style="display: flex; align-items: center; gap: 6px; border: 1px solid rgba(255,255,255,0.14); border-radius: 999px; padding: 5px 10px;">
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#9B82FF" stroke-width="1.9"><path d="M4 6h16M7 12h10M10 18h4"/></svg>
+      <span class="mono" style="font-size: 10px; color: #C3C9DC;">Ajustar</span>
+    </div>
+  </div>
+  <div class="mono" style="position: relative; font-size: 10px; color: #8A93A8; padding: 6px 20px 0;">MIÉ 3 SEP · 3 planes en tu radio</div>
+
+  <!-- rail 1 -->
+  <div style="position: relative; padding: 18px 0 0;">
+    <div class="rail-lbl" style="padding: 0 20px;">Cerca ahora</div>
+    <div style="display: flex; gap: 12px; padding: 10px 20px 0; overflow: hidden;">
+      <div class="mod">
+        <div class="kick">Conexiones</div>
+        <div style="font-size: 15px; font-weight: 600; line-height: 1.15; margin-top: 4px;">Café y networking para creativos</div>
+        <div class="mono" style="font-size: 10px; color: #8A93A8; margin-top: 6px;">HOY 17:00 · ~CENTRO · 400 m</div>
+        <span class="mono" style="display: inline-block; font-size: 9.5px; color: #3DDC97; border: 1px solid rgba(61,220,151,0.4); border-radius: 999px; padding: 2px 7px; margin-top: 8px;">6 plazas</span>
+      </div>
+      <div class="mod">
+        <div class="kick">Aprendizaje</div>
+        <div style="font-size: 15px; font-weight: 600; line-height: 1.15; margin-top: 4px;">Intercambio de idiomas ES/EN</div>
+        <div class="mono" style="font-size: 10px; color: #8A93A8; margin-top: 6px;">VIE 18:30 · ~O BERBÉS · 600 m</div>
+        <span class="mono" style="display: inline-block; font-size: 9.5px; color: #C3C9DC; border: 1px solid rgba(255,255,255,0.14); border-radius: 999px; padding: 2px 7px; margin-top: 8px;">Con aprobación</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- rail 2 -->
+  <div style="position: relative; padding: 16px 0 0;">
+    <div class="rail-lbl" style="padding: 0 20px;">Esta noche</div>
+    <div style="display: flex; gap: 12px; padding: 10px 20px 0; overflow: hidden;">
+      <div class="mod" style="border-color: rgba(124,92,255,0.4); box-shadow: 0 0 24px -8px rgba(124,92,255,0.5);">
+        <div class="kick">Cultura y ocio</div>
+        <div style="font-size: 15px; font-weight: 600; line-height: 1.15; margin-top: 4px;">Club de lectura: novela gallega</div>
+        <div class="mono" style="font-size: 10px; color: #8A93A8; margin-top: 6px;">JUE 19:00 · ~ZONA AREAL · 800 m</div>
+        <span class="mono" style="display: inline-block; font-size: 9.5px; color: #3DDC97; border: 1px solid rgba(61,220,151,0.4); border-radius: 999px; padding: 2px 7px; margin-top: 8px;">2 plazas</span>
+      </div>
+      <div class="mod">
+        <div class="kick">Bienestar</div>
+        <div style="font-size: 15px; font-weight: 600; line-height: 1.15; margin-top: 4px;">Ruta al Monte do Castro</div>
+        <div class="mono" style="font-size: 10px; color: #8A93A8; margin-top: 6px;">SÁB 10:00 · ~CASCO VELLO</div>
+        <span class="mono" style="display: inline-block; font-size: 9.5px; color: #3DDC97; border: 1px solid rgba(61,220,151,0.4); border-radius: 999px; padding: 2px 7px; margin-top: 8px;">4 plazas</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- rail 3 -->
+  <div style="position: relative; padding: 16px 0 0;">
+    <div class="rail-lbl" style="padding: 0 20px;">De tus intereses · Mascotas</div>
+    <div style="display: flex; gap: 12px; padding: 10px 20px 0; overflow: hidden;">
+      <div class="mod">
+        <div class="kick">Mascotas</div>
+        <div style="font-size: 15px; font-weight: 600; line-height: 1.15; margin-top: 4px;">Paseo de perros por Samil</div>
+        <div class="mono" style="font-size: 10px; color: #8A93A8; margin-top: 6px;">DOM 09:30 · ~SAMIL · 3,4 km</div>
+        <span class="mono" style="display: inline-block; font-size: 9.5px; color: #C3C9DC; border: 1px solid rgba(255,255,255,0.14); border-radius: 999px; padding: 2px 7px; margin-top: 8px;">Plazas abiertas</span>
+      </div>
+      <div class="mod">
+        <div class="kick">Comunidad</div>
+        <div style="font-size: 15px; font-weight: 600; line-height: 1.15; margin-top: 4px;">Limpieza de playa en Alcabre</div>
+        <div class="mono" style="font-size: 10px; color: #8A93A8; margin-top: 6px;">SÁB 11:00 · ~ALCABRE · 2,1 km</div>
+        <span class="mono" style="display: inline-block; font-size: 9.5px; color: #C3C9DC; border: 1px solid rgba(255,255,255,0.14); border-radius: 999px; padding: 2px 7px; margin-top: 8px;">Plazas abiertas</span>
+      </div>
+    </div>
+  </div>
+
+  <div style="position: relative; padding: 16px 20px 0;">
+    <a href="#" class="mono" style="font-size: 11px; text-decoration: none; color: #3DE1FF;">ver los 8 planes en lista →</a>
+  </div>
+
+  <!-- tab bar -->
+  <div style="position: absolute; left: 0; right: 0; bottom: 0; height: 70px; background: rgba(12,14,21,0.9); border-top: 1px solid rgba(255,255,255,0.08); display: flex; align-items: center; justify-content: space-around; padding: 0 14px; backdrop-filter: blur(8px);">
+    <div style="text-align: center;"><div style="width: 30px; height: 26px; border-radius: 999px; background: rgba(124,92,255,0.22); display: grid; place-items: center; margin: 0 auto;"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#9B82FF" stroke-width="1.9"><rect x="4" y="4" width="7" height="7" rx="1.6"/><rect x="13" y="4" width="7" height="7" rx="1.6"/><rect x="4" y="13" width="7" height="7" rx="1.6"/><rect x="13" y="13" width="7" height="7" rx="1.6"/></svg></div><div style="font-size: 9px; font-weight: 600; color: #9B82FF; margin-top: 2px;">Descubrir</div></div>
+    <div style="text-align: center;"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#6E7793" stroke-width="1.9"><rect x="4" y="5" width="16" height="16" rx="2"/><path d="M4 10h16M9 3v4M15 3v4"/></svg><div style="font-size: 9px; color: #6E7793; margin-top: 3px;">Agenda</div></div>
+    <div style="text-align: center;"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#6E7793" stroke-width="1.9"><circle cx="12" cy="12" r="9"/><path d="M12 8v8M8 12h8"/></svg><div style="font-size: 9px; color: #6E7793; margin-top: 3px;">Crear</div></div>
+    <div style="text-align: center;"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#6E7793" stroke-width="1.9"><circle cx="12" cy="8" r="3.4"/><path d="M5.5 20c1.3-3.6 4-5 6.5-5s5.2 1.4 6.5 5"/></svg><div style="font-size: 9px; color: #6E7793; margin-top: 3px;">Tú</div></div>
+  </div>
+
+</div>
+</x-dc>
+<script data-dc-script data-props='{"$preview":{"width":390,"height":844}}'>
+class Component extends DCLogic {}
+</script>
+</body>
+</html>

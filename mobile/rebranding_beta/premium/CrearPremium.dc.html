@@ -1,0 +1,92 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Spectral:wght@400;500;600&family=Public+Sans:wght@400;500;600;700&display=swap">
+  <style>
+    * { box-sizing: border-box; }
+    body { margin: 0; }
+    .pr { font-family: "Public Sans", ui-sans-serif, system-ui, sans-serif; color: #1C2534; -webkit-font-smoothing: antialiased; }
+    .pr .ser { font-family: "Spectral", Georgia, "Times New Roman", serif; }
+    .pr a { color: #8A6A3B; } .pr a:hover { color: #6B5230; }
+    .pr .fld-label { font-size: 12px; font-weight: 600; margin-bottom: 6px; }
+    .pr .fld { border: 1px solid #E6E1D7; border-radius: 8px; height: 46px; display: flex; align-items: center; padding: 0 12px; font-size: 13px; color: #97836A; background: #FFFFFF; }
+  </style>
+</helmet>
+
+<div class="pr" style="width: 390px; height: 844px; background: #FAF8F3; position: relative; overflow: hidden;">
+
+  <!-- header -->
+  <div style="display: flex; align-items: center; gap: 8px; padding: 18px 22px 0;">
+    <a href="#" style="text-decoration: none;"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#8A6A3B" stroke-width="2"><path d="M15 5l-7 7 7 7"/></svg></a>
+    <div class="ser" style="font-size: 21px; font-weight: 500;">Crear un plan</div>
+  </div>
+
+  <div style="padding: 20px 22px 0; display: flex; flex-direction: column; gap: 16px;">
+
+    <div>
+      <div class="fld-label">Categoría</div>
+      <div style="display: flex; flex-wrap: wrap; gap: 6px;">
+        <span style="font-size: 11.5px; font-weight: 600; color: #FAF8F3; background: #1C2534; border-radius: 999px; padding: 6px 11px;">Cultura y ocio</span>
+        <span style="font-size: 11.5px; color: #33404F; border: 1px solid #E6E1D7; border-radius: 999px; padding: 6px 11px;">Bienestar</span>
+        <span style="font-size: 11.5px; color: #33404F; border: 1px solid #E6E1D7; border-radius: 999px; padding: 6px 11px;">Aprendizaje</span>
+        <span style="font-size: 11.5px; color: #33404F; border: 1px solid #E6E1D7; border-radius: 999px; padding: 6px 11px;">Comunidad</span>
+        <span style="font-size: 11.5px; color: #33404F; border: 1px solid #E6E1D7; border-radius: 999px; padding: 6px 11px;">Mascotas</span>
+        <span style="font-size: 11.5px; color: #33404F; border: 1px solid #E6E1D7; border-radius: 999px; padding: 6px 11px;">Conexiones</span>
+      </div>
+    </div>
+
+    <div>
+      <div class="fld-label">Título del plan</div>
+      <div class="fld" style="color: #1C2534;">Club de lectura: novela gallega</div>
+    </div>
+
+    <div style="display: flex; gap: 12px;">
+      <div style="flex: 1;">
+        <div class="fld-label">Fecha</div>
+        <div class="fld" style="color: #1C2534; justify-content: space-between;">Jue 4 sep <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#97836A" stroke-width="1.7"><rect x="4" y="5" width="16" height="16" rx="2"/><path d="M4 10h16M9 3v4M15 3v4"/></svg></div>
+      </div>
+      <div style="flex: 1;">
+        <div class="fld-label">Hora</div>
+        <div class="fld" style="color: #1C2534; justify-content: space-between;">19:00 <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#97836A" stroke-width="1.7"><circle cx="12" cy="12" r="8"/><path d="M12 8v4l3 2"/></svg></div>
+      </div>
+    </div>
+
+    <div>
+      <div class="fld-label">Zona aproximada <span style="color:#97A0AD;font-weight:400;">· nunca la dirección exacta</span></div>
+      <div class="fld" style="color: #1C2534;">Zona Areal</div>
+    </div>
+
+    <div style="display: flex; gap: 12px;">
+      <div style="flex: 1;">
+        <div class="fld-label">Nº de plazas</div>
+        <div class="fld" style="color: #1C2534;">2</div>
+      </div>
+      <div style="flex: 1.4;">
+        <div class="fld-label">Acceso</div>
+        <div class="fld" style="color: #1C2534; justify-content: space-between;">Abierto <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#97836A" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg></div>
+      </div>
+    </div>
+
+    <div style="font-size: 11.5px; line-height: 1.45; color: #97A0AD; margin-top: 2px;">Al publicar aceptas que tu alias sea visible para quien vea el plan. Podrás editarlo o cancelarlo desde “Mis planes”.</div>
+
+  </div>
+
+  <!-- fixed CTA -->
+  <div style="position: absolute; left: 0; right: 0; bottom: 0; background: #FAF8F3; border-top: 1px solid #E6E1D7; padding: 14px 22px 22px; display: flex; flex-direction: column; gap: 10px;">
+    <div style="background: #8A6A3B; color: #FFFFFF; border-radius: 8px; height: 52px; display: grid; place-items: center; font-size: 15px; font-weight: 600;">Publicar plan</div>
+    <a href="#" style="text-align: center; font-size: 13px; font-weight: 700; text-decoration: none;">Guardar como borrador</a>
+  </div>
+
+</div>
+</x-dc>
+<script data-dc-script data-props='{"$preview":{"width":390,"height":844}}'>
+class Component extends DCLogic {}
+</script>
+</body>
+</html>

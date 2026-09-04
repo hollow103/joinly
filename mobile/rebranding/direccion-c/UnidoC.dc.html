@@ -1,0 +1,84 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700&display=swap">
+  <style>
+    * { box-sizing: border-box; }
+    body { margin: 0; }
+    .cC { font-family: "Sora", ui-sans-serif, system-ui, sans-serif; color: #EDF0F7; -webkit-font-smoothing: antialiased; }
+    .cC a { color: #F4B24C; } .cC a:hover { color: #E39A2E; }
+    .cC .kick { font-size: 10px; font-weight: 700; letter-spacing: 1.8px; text-transform: uppercase; color: #F4B24C; }
+    .cC .chip { font-size: 11.5px; color: #C3CAD9; border: 1px solid rgba(255,255,255,0.12); background: rgba(255,255,255,0.04); border-radius: 999px; padding: 6px 12px; }
+  </style>
+</helmet>
+
+<div class="cC" style="width: 390px; height: 844px; background: #0B0F1A; position: relative; overflow: hidden;">
+  <div style="position: absolute; inset: 0; background: radial-gradient(110% 55% at 50% 0%, rgba(244,178,76,0.16), transparent 62%);"></div>
+
+  <!-- back -->
+  <div style="position: relative; padding: 22px 22px 0;">
+    <a href="#" style="font-size: 13px; font-weight: 600; text-decoration: none; display: inline-flex; align-items: center; gap: 6px;">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#F4B24C" stroke-width="2"><path d="M15 5l-7 7 7 7"/></svg> Descubre
+    </a>
+  </div>
+
+  <!-- confirmed banner -->
+  <div style="position: relative; margin: 18px 22px 0; border-radius: 20px; padding: 22px; background: linear-gradient(180deg, rgba(244,178,76,0.16), rgba(244,178,76,0.04)); border: 1px solid rgba(244,178,76,0.3);">
+    <div style="display: flex; align-items: center; gap: 10px;">
+      <div style="width: 28px; height: 28px; border-radius: 50%; background: #F4B24C; display: grid; place-items: center; box-shadow: 0 0 18px rgba(244,178,76,0.7);">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#1A1204" stroke-width="3"><path d="M5 13l4 4L19 7"/></svg>
+      </div>
+      <span style="font-size: 19px; font-weight: 600;">Estás dentro</span>
+    </div>
+    <div style="font-size: 13px; color: #C9B79A; margin-top: 8px;">Nos vemos el jueves 4 de septiembre a las 19:00.</div>
+  </div>
+
+  <!-- recap -->
+  <div style="position: relative; padding: 20px 22px 0;">
+    <div class="kick">Cultura y ocio</div>
+    <h1 style="margin: 8px 0 0; font-size: 22px; font-weight: 600; line-height: 1.16; letter-spacing: -0.4px;">Club de lectura: novela gallega</h1>
+  </div>
+
+  <!-- exact location -->
+  <div style="position: relative; margin: 18px 22px 0; border-radius: 18px; background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.1); padding: 16px;">
+    <div style="display: flex; align-items: center; justify-content: space-between;">
+      <span class="kick">Ubicación exacta</span>
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#6E7793" stroke-width="1.8"><rect x="9" y="9" width="11" height="11" rx="2"/><path d="M5 15V6a2 2 0 0 1 2-2h9"/></svg>
+    </div>
+    <div style="font-size: 17px; font-weight: 600; margin-top: 8px;">Rúa do Areal 42, Vigo</div>
+    <div style="font-size: 11.5px; color: #6E7793; margin-top: 3px;">Planta baja · Librería A Reixa</div>
+  </div>
+
+  <div style="position: relative; display: flex; flex-wrap: wrap; gap: 8px; padding: 16px 22px 0;">
+    <span class="chip">Jue 4 sep · 19:00</span>
+    <span class="chip" style="color: #F0AEBF; border-color: rgba(155,47,76,0.5); background: rgba(155,47,76,0.16);">Organiza andrea.c</span>
+  </div>
+
+  <!-- reminder -->
+  <div style="position: relative; margin: 18px 22px 0; padding-top: 16px; border-top: 1px solid rgba(255,255,255,0.08); display: flex; gap: 12px;">
+    <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#F4B24C" stroke-width="1.7" style="flex-shrink: 0; margin-top: 1px;"><path d="M6 9a6 6 0 0 1 12 0c0 5 2 6 2 6H4s2-1 2-6Z"/><path d="M10 19a2 2 0 0 0 4 0"/></svg>
+    <div>
+      <div style="font-size: 13.5px; font-weight: 600;">Te avisamos si algo cambia</div>
+      <div style="font-size: 12px; line-height: 1.5; color: #8B95AD; margin-top: 3px;">Si andrea.c mueve la hora o el lugar, recibes un aviso. La víspera te recordamos el plan.</div>
+    </div>
+  </div>
+
+  <!-- actions -->
+  <div style="position: absolute; left: 0; right: 0; bottom: 0; background: linear-gradient(180deg, rgba(11,15,26,0) 0%, #0B0F1A 24%); padding: 24px 22px 22px; display: flex; flex-direction: column; gap: 12px;">
+    <div style="border: 1px solid rgba(255,255,255,0.18); color: #EDF0F7; border-radius: 14px; height: 48px; display: grid; place-items: center; font-size: 14px; font-weight: 500;">Guardar en el calendario</div>
+    <a href="#" style="text-align: center; font-size: 13px; font-weight: 600; text-decoration: none;">Abandonar plan</a>
+  </div>
+
+</div>
+</x-dc>
+<script data-dc-script data-props='{"$preview":{"width":390,"height":844}}'>
+class Component extends DCLogic {}
+</script>
+</body>
+</html>

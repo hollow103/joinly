@@ -1,0 +1,79 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Spectral:wght@400;500;600&family=Public+Sans:wght@400;500;600;700&display=swap">
+  <style>
+    * { box-sizing: border-box; }
+    body { margin: 0; }
+    .pr { font-family: "Public Sans", ui-sans-serif, system-ui, sans-serif; color: #1C2534; -webkit-font-smoothing: antialiased; }
+    .pr .ser { font-family: "Spectral", Georgia, "Times New Roman", serif; }
+    .pr a { color: #8A6A3B; } .pr a:hover { color: #6B5230; }
+    .pr .eb { font-size: 10px; font-weight: 700; letter-spacing: 1.6px; text-transform: uppercase; color: #97836A; }
+  </style>
+</helmet>
+
+<div class="pr" style="width: 390px; height: 844px; background: #FAF8F3; position: relative; overflow: hidden;">
+
+  <!-- back -->
+  <div style="padding: 18px 22px 0;">
+    <a href="#" style="font-size: 13px; font-weight: 700; text-decoration: none; display: inline-flex; align-items: center; gap: 6px;">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#8A6A3B" stroke-width="2"><path d="M15 5l-7 7 7 7"/></svg> Radar
+    </a>
+  </div>
+
+  <!-- headline -->
+  <div style="padding: 18px 22px 0;">
+    <div class="eb" style="color: #97836A;">Cultura y ocio</div>
+    <h1 class="ser" style="margin: 6px 0 0; font-size: 27px; font-weight: 500; line-height: 1.12; letter-spacing: -0.6px;">Club de lectura: novela gallega</h1>
+  </div>
+
+  <!-- meta -->
+  <div style="display: flex; flex-wrap: wrap; gap: 7px; padding: 16px 22px 0;">
+    <span style="font-size: 11.5px; color: #33404F; border: 1px solid #E6E1D7; border-radius: 999px; padding: 5px 11px;">Jue 4 sep · 19:00</span>
+    <span style="font-size: 11.5px; color: #33404F; border: 1px solid #E6E1D7; border-radius: 999px; padding: 5px 11px;">Zona Areal</span>
+    <span style="font-size: 11.5px; color: #33404F; border: 1px solid #E6E1D7; border-radius: 999px; padding: 5px 11px;">800 m</span>
+    <span style="font-size: 11.5px; font-weight: 600; color: #1E5B45; border: 1px solid #CDE2D8; border-radius: 999px; padding: 5px 11px;">2 plazas</span>
+  </div>
+
+  <!-- description -->
+  <p style="margin: 16px 22px 0; font-size: 14.5px; line-height: 1.55; color: #33404F;">Quedada tranquila para comentar novela gallega contemporánea. Trae el libro del mes; hay sitio para quien llegue sin haberlo terminado.</p>
+
+  <!-- organiser -->
+  <div style="margin: 18px 22px 0; padding-top: 16px; border-top: 1px solid #E6E1D7; display: flex; align-items: center; gap: 12px;">
+    <div class="ser" style="width: 40px; height: 40px; border-radius: 999px; background: #F1EEE6; border: 1px solid #E6E1D7; display: grid; place-items: center; font-size: 17px; font-weight: 600; color: #8A6A3B;">a</div>
+    <div style="flex: 1;">
+      <div style="font-size: 14px; font-weight: 600;">Organiza andrea.c</div>
+      <div style="font-size: 12px; color: #97A0AD;">Alias visible · sin datos de contacto</div>
+    </div>
+    <a href="#" style="font-size: 12px; font-weight: 700; text-decoration: none; color: #8E2C2C;">Reportar</a>
+  </div>
+
+  <!-- notice -->
+  <div style="margin: 16px 22px 0; background: #F1EEE6; border-radius: 10px; padding: 12px 14px; display: flex; gap: 10px;">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#5C6675" stroke-width="1.7" style="flex-shrink: 0; margin-top: 1px;"><rect x="4" y="10" width="16" height="11" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></svg>
+    <span style="font-size: 12.5px; line-height: 1.45; color: #5C6675;">La ubicación exacta se muestra solo cuando confirmes tu plaza.</span>
+  </div>
+
+  <!-- safety -->
+  <div style="margin: 14px 22px 0; font-size: 11.5px; line-height: 1.45; color: #97A0AD;">
+    Los reportes se revisan de forma privada. No compartimos tu identidad con la persona reportada.
+  </div>
+
+  <!-- fixed CTA -->
+  <div style="position: absolute; left: 0; right: 0; bottom: 0; background: #FAF8F3; border-top: 1px solid #E6E1D7; padding: 14px 22px 22px;">
+    <div style="background: #8A6A3B; color: #FFFFFF; border-radius: 8px; height: 52px; display: grid; place-items: center; font-size: 15px; font-weight: 600;">Unirme al plan</div>
+  </div>
+
+</div>
+</x-dc>
+<script data-dc-script data-props='{"$preview":{"width":390,"height":844}}'>
+class Component extends DCLogic {}
+</script>
+</body>
+</html>

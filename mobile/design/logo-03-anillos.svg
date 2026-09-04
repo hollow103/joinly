@@ -1,0 +1,39 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1160" height="420" viewBox="0 0 1160 420" fill="none">
+  <!-- Propuesta 3 — "Anillos": diana de radar mínima (tú estás aquí). La opción
+       más legible a cualquier tamaño. Un blip en acento rompe la simetría.
+       Marca: navy #101D40, acento #FF9E3D. Wordmark: sustituir por sans geométrico
+       (Poppins / Nunito) convertido a trazados en el arte final. -->
+  <rect width="1160" height="420" fill="#F5F7FC"/>
+
+  <!-- Icono de app -->
+  <rect x="60" y="70" width="200" height="200" rx="46" fill="#208AEF"/>
+  <g transform="translate(82 92) scale(0.78)">
+    <circle cx="100" cy="100" r="88" fill="none" stroke="#FFFFFF" stroke-width="10" stroke-opacity=".4"/>
+    <circle cx="100" cy="100" r="58" fill="none" stroke="#FFFFFF" stroke-width="12" stroke-opacity=".7"/>
+    <circle cx="100" cy="100" r="28" fill="none" stroke="#FFFFFF" stroke-width="14"/>
+    <circle cx="100" cy="100" r="10" fill="#FFFFFF"/>
+    <circle cx="150" cy="66" r="13" fill="#FF9E3D"/>
+  </g>
+  <text x="160" y="312" text-anchor="middle" fill="#65708F" font-family="Arial, sans-serif" font-size="15" font-weight="700">Icono de app</text>
+
+  <!-- Símbolo -->
+  <g transform="translate(360 86) scale(0.88)">
+    <circle cx="100" cy="100" r="88" fill="none" stroke="#101D40" stroke-width="10" stroke-opacity=".28"/>
+    <circle cx="100" cy="100" r="58" fill="none" stroke="#101D40" stroke-width="12" stroke-opacity=".55"/>
+    <circle cx="100" cy="100" r="28" fill="none" stroke="#101D40" stroke-width="14"/>
+    <circle cx="100" cy="100" r="10" fill="#101D40"/>
+    <circle cx="150" cy="66" r="13" fill="#FF9E3D"/>
+  </g>
+  <text x="448" y="312" text-anchor="middle" fill="#65708F" font-family="Arial, sans-serif" font-size="15" font-weight="700">Símbolo</text>
+
+  <!-- Lockup -->
+  <g transform="translate(612 96) scale(0.75)">
+    <circle cx="100" cy="100" r="88" fill="none" stroke="#101D40" stroke-width="10" stroke-opacity=".28"/>
+    <circle cx="100" cy="100" r="58" fill="none" stroke="#101D40" stroke-width="12" stroke-opacity=".55"/>
+    <circle cx="100" cy="100" r="28" fill="none" stroke="#101D40" stroke-width="14"/>
+    <circle cx="100" cy="100" r="10" fill="#101D40"/>
+    <circle cx="150" cy="66" r="13" fill="#FF9E3D"/>
+  </g>
+  <text x="770" y="202" fill="#101D40" font-family="Arial, Helvetica, sans-serif" font-size="94" font-weight="700" letter-spacing="-3">joinly</text>
+  <text x="612" y="312" fill="#65708F" font-family="Arial, sans-serif" font-size="15" font-weight="700">Lockup horizontal</text>
+</svg>

@@ -1,0 +1,30 @@
+{
+  "pages": [
+    { "id": "intro", "name": "Contexto" },
+    { "id": "dir-f", "name": "F · Neón" },
+    { "id": "dir-g", "name": "G · Riso" },
+    { "id": "dir-h", "name": "H · Aurora" },
+    { "id": "cierre", "name": "Comparativa" }
+  ],
+  "artboards": [
+    { "file": "Main.dc.html", "page": "intro", "x": 0, "y": 0, "w": 1240, "h": 1040 },
+
+    { "file": "SistemaF.dc.html", "page": "dir-f", "x": 0, "y": 0, "w": 920, "h": 1280 },
+    { "file": "PrototipoF.dc.html", "page": "dir-f", "x": 1000, "y": 0, "w": 390, "h": 860, "is_interactive": true },
+
+    { "file": "SistemaG.dc.html", "page": "dir-g", "x": 0, "y": 0, "w": 920, "h": 1280 },
+    { "file": "PrototipoG.dc.html", "page": "dir-g", "x": 1000, "y": 0, "w": 390, "h": 860, "is_interactive": true },
+
+    { "file": "SistemaH.dc.html", "page": "dir-h", "x": 0, "y": 0, "w": 920, "h": 1280 },
+    { "file": "PrototipoH.dc.html", "page": "dir-h", "x": 1000, "y": 0, "w": 390, "h": 860, "is_interactive": true },
+
+    { "file": "Comparativa.dc.html", "page": "cierre", "x": 0, "y": 0, "w": 1320, "h": 1040 }
+  ],
+  "annotations": [
+    { "id": "intro-note", "page": "intro", "x": -330, "y": 0, "w": 280, "text": "joinly · radar — F · G · H\n\nTres identidades completas (no tres temas de color): cada una con su fondo, su tipografía, su sombra y su forma de botón. Las tres conservan un radar, cada una con su enfoque. Cada dirección: hoja de sistema + prototipo navegable de las 6 pantallas (pulsa Play en la mesa del móvil)." },
+    { "id": "note-f", "page": "dir-f", "x": 0, "y": -74, "w": 1440, "text": "F · NEÓN NOCTURNO — Oscuro, degradados de malla + ruido, acentos eléctricos, sombras de brillo de color. El radar late. Izquierda: sistema (fondo, sombras, botones). Derecha: prototipo navegable — toca planes, Filtros y pestañas." },
+    { "id": "note-g", "page": "dir-g", "x": 0, "y": -74, "w": 1440, "text": "G · RISOGRAFÍA — Fanzine impreso: tramas de puntos, grano, tintas coral/azul/mostaza desregistradas, contorno de 2 px y sombra plana dura (clic físico al pulsar el CTA). El radar son círculos impresos y sellos girados." },
+    { "id": "note-h", "page": "dir-h", "x": 0, "y": -74, "w": 1440, "text": "H · AURORA / CRISTAL — Luz suave: manchas de aurora difuminadas, superficies de cristal esmerilado, sombras suaves multicapa, radios amplios. El radar es un orbe luminoso tras cristal. La recomendada." }
+  ],
+  "launch": { "view": "canvas", "page": "dir-h" }
+}

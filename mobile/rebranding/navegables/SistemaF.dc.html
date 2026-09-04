@@ -1,0 +1,97 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Unbounded:wght@500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap">
+  <style>
+    * { box-sizing: border-box; }
+    body { margin: 0; font-family: "Space Grotesk", ui-sans-serif, system-ui, sans-serif; color: #F2F2F7; }
+    .disp { font-family: "Unbounded", "Space Grotesk", system-ui, sans-serif; }
+    a { color: #C6FF3D; }
+    .eb { font-size: 10px; font-weight: 700; letter-spacing: 2.4px; text-transform: uppercase; color: #7C7C92; }
+    .panel { background: #15151F; border: 1px solid rgba(255,255,255,0.08); border-radius: 18px; padding: 24px; }
+  </style>
+</helmet>
+
+<div style="width: 920px; min-height: 1240px; background: #0B0B12; padding: 44px; position: relative;">
+  <svg width="920" height="1240" viewBox="0 0 920 1240" preserveAspectRatio="none" style="position:absolute;inset:0;z-index:0;">
+    <defs>
+      <radialGradient id="sf1" cx="12%" cy="6%" r="45%"><stop offset="0%" stop-color="#FF3D8A" stop-opacity="0.22"/><stop offset="100%" stop-color="#FF3D8A" stop-opacity="0"/></radialGradient>
+      <radialGradient id="sf2" cx="92%" cy="70%" r="50%"><stop offset="0%" stop-color="#3DE0FF" stop-opacity="0.16"/><stop offset="100%" stop-color="#3DE0FF" stop-opacity="0"/></radialGradient>
+      <pattern id="sfdot" width="26" height="26" patternUnits="userSpaceOnUse"><circle cx="1.5" cy="1.5" r="1.1" fill="#FFFFFF" fill-opacity="0.05"/></pattern>
+    </defs>
+    <rect width="920" height="1240" fill="#0B0B12"/><rect width="920" height="1240" fill="url(#sf1)"/><rect width="920" height="1240" fill="url(#sf2)"/><rect width="920" height="1240" fill="url(#sfdot)"/>
+  </svg>
+
+  <div style="position: relative; z-index: 1;">
+    <div style="border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 20px;">
+      <div class="eb" style="color: #C6FF3D;">Dirección F — Sistema</div>
+      <h1 class="disp" style="margin: 10px 0 0; font-size: 40px; font-weight: 700; letter-spacing: -1.4px;">Neón nocturno</h1>
+      <p style="margin: 8px 0 0; font-size: 13px; line-height: 1.55; color: #9A9AB0; max-width: 620px;">Vida nocturna, energía, público joven. Fondo oscuro con malla de degradados y ruido; acentos eléctricos; la sombra ES color que brilla. Tarjetas que flotan y se solapan; el radar late.</p>
+    </div>
+
+    <div class="panel" style="margin-top: 22px;">
+      <div class="eb" style="margin-bottom: 14px;">Fondo de pantalla</div>
+      <div style="height: 130px; border-radius: 12px; overflow: hidden;">
+        <svg width="100%" height="130" viewBox="0 0 800 130" preserveAspectRatio="none"><rect width="800" height="130" fill="#0B0B12"/><rect width="800" height="130" fill="url(#sf1)"/><rect width="800" height="130" fill="url(#sf2)"/><rect width="800" height="130" fill="url(#sfdot)"/></svg>
+      </div>
+      <p style="font-size: 11px; color: #7C7C92; margin: 10px 0 0;">Base <code>#0B0B12</code> + radiales magenta/cian a baja opacidad + retícula de puntos al 5&nbsp;% + textura de ruido. Un solo SVG, sin imágenes.</p>
+    </div>
+
+    <div class="panel" style="margin-top: 16px;">
+      <div class="eb" style="margin-bottom: 16px;">Paleta</div>
+      <div style="display: grid; grid-template-columns: repeat(5, 1fr); gap: 12px;">
+        <div><div style="height: 56px; border-radius: 8px; background: #0B0B12; border: 1px solid #333;"></div><div style="font-size: 10.5px; font-weight: 600; margin-top: 6px;">Fondo</div><div style="font-size: 9.5px; color: #7C7C92;">#0B0B12</div></div>
+        <div><div style="height: 56px; border-radius: 8px; background: #15151F; border: 1px solid #2A2A38;"></div><div style="font-size: 10.5px; font-weight: 600; margin-top: 6px;">Superficie</div><div style="font-size: 9.5px; color: #7C7C92;">#15151F</div></div>
+        <div><div style="height: 56px; border-radius: 8px; background: #C6FF3D;"></div><div style="font-size: 10.5px; font-weight: 600; margin-top: 6px;">Lima</div><div style="font-size: 9.5px; color: #7C7C92;">#C6FF3D · acción</div></div>
+        <div><div style="height: 56px; border-radius: 8px; background: #FF3D8A;"></div><div style="font-size: 10.5px; font-weight: 600; margin-top: 6px;">Magenta</div><div style="font-size: 9.5px; color: #7C7C92;">#FF3D8A</div></div>
+        <div><div style="height: 56px; border-radius: 8px; background: #3DE0FF;"></div><div style="font-size: 10.5px; font-weight: 600; margin-top: 6px;">Cian</div><div style="font-size: 9.5px; color: #7C7C92;">#3DE0FF</div></div>
+      </div>
+      <p style="font-size: 11px; color: #7C7C92; margin: 14px 0 0;">Lima = acción y confirmación. Magenta y cian rotan como color de categoría y de acento. Texto <code>#F2F2F7</code> / <code>#9A9AB0</code>. Contraste AA: lima sobre fondo 14:1.</p>
+    </div>
+
+    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 16px;">
+      <div class="panel">
+        <div class="eb" style="margin-bottom: 14px;">Sombras — brillo de color</div>
+        <div style="display: flex; gap: 14px; flex-wrap: wrap;">
+          <div style="width: 84px; height: 60px; border-radius: 14px; background: #15151F; box-shadow: 0 0 26px -8px #C6FF3D;"></div>
+          <div style="width: 84px; height: 60px; border-radius: 14px; background: #15151F; box-shadow: 0 0 26px -8px #FF3D8A;"></div>
+          <div style="width: 84px; height: 60px; border-radius: 14px; background: #15151F; box-shadow: 0 0 26px -8px #3DE0FF;"></div>
+        </div>
+        <p style="font-size: 10.5px; color: #7C7C92; margin: 12px 0 0;"><code>0 0 26px -8px &lt;acento&gt;</code> en tarjetas · <code>0 0 34px -4px #C6FF3D</code> en el CTA · <code>0 16px 44px -12px #000</code> en la barra.</p>
+      </div>
+      <div class="panel">
+        <div class="eb" style="margin-bottom: 14px;">Botones</div>
+        <div style="display: flex; flex-direction: column; gap: 10px;">
+          <div style="height: 44px; border-radius: 999px; background: #C6FF3D; color: #0B0B12; display: grid; place-items: center; font-size: 13px; font-weight: 700; box-shadow: 0 0 24px -4px #C6FF3D;">Unirme al plan</div>
+          <div style="height: 40px; border-radius: 999px; border: 1px solid #3DE0FF; color: #3DE0FF; display: grid; place-items: center; font-size: 12px; font-weight: 600; box-shadow: 0 0 16px -6px #3DE0FF;">Filtros</div>
+          <div style="align-self: flex-start; padding: 8px 14px; border-radius: 999px; border: 1px solid rgba(255,255,255,0.14); color: #C7C7D6; font-size: 12px;">chip</div>
+        </div>
+        <p style="font-size: 10.5px; color: #7C7C92; margin: 12px 0 0;">Píldora siempre. Primario lleno lima; secundario contorno neón; segmentado con indicador que desliza.</p>
+      </div>
+    </div>
+
+    <div class="panel" style="margin-top: 16px;">
+      <div class="eb" style="margin-bottom: 14px;">Componente — tarjeta de plan</div>
+      <div style="display: flex; gap: 16px;">
+        <div style="width: 260px; background: #15151F; border: 1px solid rgba(255,255,255,0.07); border-left: 3px solid #FF3D8A; border-radius: 18px; padding: 15px 16px; box-shadow: 0 0 26px -8px #FF3D8A;">
+          <div style="font-size: 9px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: #FF3D8A;">Aprendizaje</div>
+          <div class="disp" style="font-size: 15px; font-weight: 600; margin-top: 4px;">Café e conversa ES/EN</div>
+          <div style="font-size: 11.5px; color: #9A9AB0; margin-top: 4px;">Hoy 18:00 · 0,3 km · 10 plazas</div>
+        </div>
+        <p style="font-size: 11px; color: #9A9AB0; line-height: 1.6; flex: 1;">Barra de color a la izquierda = categoría. Glow del mismo color. Radio 18. Se solapan verticalmente con 12&nbsp;px de separación para dar sensación de pila viva, no de lista rígida. Tipografía display (Unbounded) solo en titulares grandes; el resto Space Grotesk.</p>
+      </div>
+    </div>
+  </div>
+</div>
+</x-dc>
+<script data-dc-script data-props='{"$preview":{"width":920,"height":1240}}'>
+class Component extends DCLogic {}
+</script>
+</body>
+</html>

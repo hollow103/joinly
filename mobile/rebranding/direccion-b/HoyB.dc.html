@@ -1,0 +1,98 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=DM+Mono:wght@400;500&display=swap">
+  <style>
+    * { box-sizing: border-box; }
+    body { margin: 0; }
+    .bB { font-family: "Space Grotesk", ui-sans-serif, system-ui, sans-serif; color: #111111; -webkit-font-smoothing: antialiased; }
+    .bB .mono { font-family: "DM Mono", ui-monospace, "SFMono-Regular", monospace; }
+    .bB a { color: #3B2EFF; } .bB a:hover { color: #2A1FCC; }
+    .bB .lbl { font-size: 10px; font-weight: 700; letter-spacing: 1.4px; text-transform: uppercase; }
+  </style>
+</helmet>
+
+<div class="bB" style="width: 390px; height: 844px; background: #F2F1EC; position: relative; overflow: hidden;">
+
+  <!-- header -->
+  <div style="display: flex; align-items: center; justify-content: space-between; padding: 18px 20px 0;">
+    <div style="font-size: 20px; font-weight: 700; letter-spacing: -0.6px;">joinly</div>
+    <div class="mono" style="font-size: 11px; font-weight: 500; border: 2px solid #111111; border-radius: 6px; padding: 4px 8px;">VIGO</div>
+  </div>
+
+  <!-- title -->
+  <div style="padding: 16px 20px 0;">
+    <h1 style="margin: 0; font-size: 56px; font-weight: 700; letter-spacing: -2.5px; line-height: 0.92;">Hoy</h1>
+    <div class="mono" style="font-size: 12px; color: #55524B; margin-top: 8px;">miércoles 3 sep · 4 planes</div>
+  </div>
+
+  <!-- day strip -->
+  <div style="display: flex; gap: 8px; padding: 18px 20px 0; overflow: hidden;">
+    <div style="flex-shrink: 0; background: #3B2EFF; color: #FFFFFF; border: 2px solid #111111; border-radius: 8px; padding: 8px 12px; text-align: center; box-shadow: 3px 3px 0 #111111;">
+      <div class="lbl">Mié</div><div style="font-size: 17px; font-weight: 700; margin-top: 1px;">3</div>
+    </div>
+    <div style="flex-shrink: 0; background: #FFFFFF; border: 2px solid #111111; border-radius: 8px; padding: 8px 12px; text-align: center;">
+      <div class="lbl" style="color: #55524B;">Jue</div><div style="font-size: 17px; font-weight: 700; margin-top: 1px;">4</div>
+    </div>
+    <div style="flex-shrink: 0; background: #FFFFFF; border: 2px solid #111111; border-radius: 8px; padding: 8px 12px; text-align: center;">
+      <div class="lbl" style="color: #55524B;">Vie</div><div style="font-size: 17px; font-weight: 700; margin-top: 1px;">5</div>
+    </div>
+    <div style="flex-shrink: 0; background: #FFFFFF; border: 2px solid #111111; border-radius: 8px; padding: 8px 12px; text-align: center;">
+      <div class="lbl" style="color: #55524B;">Sáb</div><div style="font-size: 17px; font-weight: 700; margin-top: 1px;">6</div>
+    </div>
+    <div style="flex-shrink: 0; background: #FFFFFF; border: 2px solid #111111; border-radius: 8px; padding: 8px 12px; text-align: center;">
+      <div class="lbl" style="color: #55524B;">Dom</div><div style="font-size: 17px; font-weight: 700; margin-top: 1px;">7</div>
+    </div>
+  </div>
+
+  <!-- timeline -->
+  <div style="padding: 22px 20px 0;">
+    <div style="display: flex; gap: 12px; margin-bottom: 12px;">
+      <div class="mono" style="width: 46px; flex-shrink: 0; font-size: 12px; font-weight: 500; padding-top: 4px;">17:00</div>
+      <div style="flex: 1; background: #FFFFFF; border: 2px solid #111111; border-radius: 10px; padding: 12px 14px; box-shadow: 4px 4px 0 #111111;">
+        <div class="lbl" style="color: #3B2EFF;">Conexiones</div>
+        <div style="font-size: 15.5px; font-weight: 600; line-height: 1.18; margin-top: 4px;">Café y networking para creativos</div>
+        <div class="mono" style="font-size: 11px; color: #55524B; margin-top: 6px;">Zona Centro · 400 m · 6 plazas</div>
+      </div>
+    </div>
+
+    <div style="display: flex; gap: 12px; margin-bottom: 12px;">
+      <div class="mono" style="width: 46px; flex-shrink: 0; font-size: 12px; font-weight: 500; padding-top: 4px;">18:30</div>
+      <div style="flex: 1; background: #FFFFFF; border: 2px solid #111111; border-radius: 10px; padding: 12px 14px; box-shadow: 4px 4px 0 #111111;">
+        <div class="lbl" style="color: #3B2EFF;">Aprendizaje</div>
+        <div style="font-size: 15.5px; font-weight: 600; line-height: 1.18; margin-top: 4px;">Intercambio de idiomas ES/EN</div>
+        <div class="mono" style="font-size: 11px; color: #55524B; margin-top: 6px;">O Berbés · 600 m · Con aprobación</div>
+      </div>
+    </div>
+
+    <div style="display: flex; gap: 12px;">
+      <div class="mono" style="width: 46px; flex-shrink: 0; font-size: 12px; font-weight: 500; padding-top: 4px;">19:00</div>
+      <div style="flex: 1; background: #D6FF3D; border: 2px solid #111111; border-radius: 10px; padding: 12px 14px; box-shadow: 4px 4px 0 #111111;">
+        <div class="lbl">Cultura y ocio</div>
+        <div style="font-size: 15.5px; font-weight: 700; line-height: 1.18; margin-top: 4px;">Club de lectura: novela gallega</div>
+        <div class="mono" style="font-size: 11px; color: #2E2E1A; margin-top: 6px;">Zona Areal · 800 m · 2 plazas</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- tab bar -->
+  <div style="position: absolute; left: 0; right: 0; bottom: 0; height: 68px; background: #FFFFFF; border-top: 2px solid #111111; display: flex; align-items: center; justify-content: space-around; padding: 0 14px;">
+    <div style="text-align: center;"><svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="#111111" stroke-width="2.2"><rect x="4" y="5" width="16" height="16" rx="1.5"/><path d="M4 10h16M9 3v4M15 3v4"/></svg><div style="font-size: 10px; font-weight: 700; margin-top: 2px;">Hoy</div></div>
+    <div style="text-align: center;"><svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="#8A877E" stroke-width="2.2"><path d="M4 6h16M4 12h16M4 18h10"/></svg><div style="font-size: 10px; font-weight: 500; color: #8A877E; margin-top: 2px;">Planes</div></div>
+    <div style="text-align: center;"><div style="width: 32px; height: 32px; background: #FF5C38; border: 2px solid #111111; border-radius: 8px; display: grid; place-items: center; box-shadow: 2px 2px 0 #111111;"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="3"><path d="M12 6v12M6 12h12"/></svg></div><div style="font-size: 10px; font-weight: 500; color: #8A877E; margin-top: 3px;">Crear</div></div>
+    <div style="text-align: center;"><svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="#8A877E" stroke-width="2.2"><circle cx="12" cy="8" r="3.6"/><path d="M5.5 20c1.3-3.6 4-5 6.5-5s5.2 1.4 6.5 5"/></svg><div style="font-size: 10px; font-weight: 500; color: #8A877E; margin-top: 2px;">Perfil</div></div>
+  </div>
+
+</div>
+</x-dc>
+<script data-dc-script data-props='{"$preview":{"width":390,"height":844}}'>
+class Component extends DCLogic {}
+</script>
+</body>
+</html>

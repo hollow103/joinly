@@ -34,7 +34,7 @@ export default function VerifyEmail() {
   }
 
   return (
-    <Screen backgroundColor={tokens.color.brandNavy} style={styles.screen}>
+    <Screen backgroundColor={tokens.color.bg} style={styles.screen}>
       <View style={styles.content}>
         <View style={styles.mark} accessibilityElementsHidden>
           <View style={styles.markInner} />
@@ -74,15 +74,26 @@ const styles = StyleSheet.create({
     height: 88,
     borderRadius: 44,
     borderWidth: 2,
-    borderColor: '#AFC0FF',
+    borderColor: tokens.color.primary,
     alignItems: 'center',
     justifyContent: 'center',
   },
   markInner: { width: 40, height: 40, borderRadius: 20, backgroundColor: tokens.color.accent },
   copy: { alignItems: 'center', gap: tokens.space.md },
-  title: { color: tokens.color.surface, fontSize: 28, fontWeight: '700' },
-  description: { color: '#D5DEFA', fontSize: 16, lineHeight: 23, textAlign: 'center' },
+  title: {
+    color: tokens.color.text,
+    fontFamily: tokens.font.family.serifSemibold,
+    fontSize: 28,
+    letterSpacing: -0.5,
+  },
+  description: {
+    color: tokens.color.textMuted,
+    fontFamily: tokens.font.family.sans,
+    fontSize: 15,
+    lineHeight: 23,
+    textAlign: 'center',
+  },
   actions: { width: '100%', gap: tokens.space.lg },
-  note: { color: '#B8C7FF', fontSize: 13, textAlign: 'center' },
-  notYet: { color: '#FFC9D2', fontSize: 13, textAlign: 'center', lineHeight: 19 },
+  note: { color: tokens.color.textMuted, fontFamily: tokens.font.family.sans, fontSize: 13, textAlign: 'center' },
+  notYet: { color: tokens.color.danger, fontFamily: tokens.font.family.sans, fontSize: 13, textAlign: 'center', lineHeight: 19 },
 });

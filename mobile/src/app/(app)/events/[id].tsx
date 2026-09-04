@@ -21,7 +21,13 @@ import {
 } from '@/api/endpoints';
 import { ApiError } from '@/api/problem';
 import { useSession } from '@/auth/session';
-import { availabilityLabel, categoryLabel, distanceLabel, eventDate } from '@/events/discovery';
+import {
+  availabilityLabel,
+  categoryColor,
+  categoryLabel,
+  distanceLabel,
+  eventDate,
+} from '@/events/discovery';
 import { clearJoinIdempotencyKey, getJoinIdempotencyKey } from '@/lib/idempotency';
 import { Button, Screen, Text, tokens } from '@/ui';
 
@@ -174,7 +180,9 @@ export default function EventDetailScreen() {
           <Text style={styles.backText}>Volver al radar</Text>
         </Pressable>
         <View style={styles.hero}>
-          <Text style={styles.category}>{categoryLabel(event.category).toUpperCase()}</Text>
+          <Text style={[styles.category, { color: categoryColor(event.category) }]}>
+            {categoryLabel(event.category).toUpperCase()}
+          </Text>
           <Text style={styles.title}>{event.title}</Text>
           <Text style={styles.heroDescription}>{event.description}</Text>
         </View>
@@ -387,44 +395,88 @@ const styles = StyleSheet.create({
   content: { gap: tokens.space.lg, paddingBottom: 96 },
   center: { alignItems: 'center', justifyContent: 'center', gap: tokens.space.lg },
   back: { alignSelf: 'flex-start', minHeight: 48, justifyContent: 'center' },
-  backText: { color: tokens.color.primary, fontSize: 14, fontWeight: '700' },
+  backText: {
+    color: tokens.color.primary,
+    fontFamily: tokens.font.family.sansSemibold,
+    fontSize: 14,
+  },
   hero: {
-    backgroundColor: tokens.color.brandNavy,
+    backgroundColor: tokens.color.surface,
+    borderColor: tokens.color.border,
+    borderWidth: 1,
     borderRadius: tokens.radius.lg,
     gap: tokens.space.md,
     padding: tokens.space.xl,
   },
-  category: { color: '#B8C7FF', fontSize: 10, fontWeight: '700', letterSpacing: 0.7 },
-  title: { color: tokens.color.primaryText, fontSize: 28, fontWeight: '700', lineHeight: 34 },
-  heroDescription: { color: '#D5DEFA', fontSize: 16, lineHeight: 23 },
+  category: {
+    color: tokens.color.primary,
+    fontFamily: tokens.font.family.sansSemibold,
+    fontSize: 10,
+    letterSpacing: 1,
+  },
+  title: {
+    color: tokens.color.text,
+    fontFamily: tokens.font.family.serifSemibold,
+    fontSize: 27,
+    lineHeight: 33,
+    letterSpacing: -0.5,
+  },
+  heroDescription: {
+    color: tokens.color.textMuted,
+    fontFamily: tokens.font.family.sans,
+    fontSize: 15,
+    lineHeight: 23,
+  },
   metadata: { flexDirection: 'row', flexWrap: 'wrap', gap: tokens.space.sm },
   meta: {
     backgroundColor: tokens.color.surface,
+    borderColor: tokens.color.border,
+    borderWidth: 1,
     borderRadius: tokens.radius.pill,
     color: tokens.color.text,
+    fontFamily: tokens.font.family.sans,
     fontSize: 13,
     paddingHorizontal: tokens.space.md,
     paddingVertical: tokens.space.sm,
   },
   banner: { borderRadius: tokens.radius.md, padding: tokens.space.lg },
   bannerOk: { backgroundColor: tokens.color.successSoft },
-  bannerPending: { backgroundColor: '#FFF3E6' },
+  bannerPending: { backgroundColor: tokens.color.primarySoft },
   bannerNeutral: { backgroundColor: tokens.color.primarySoft },
-  bannerText: { color: tokens.color.text, fontSize: 14, lineHeight: 20 },
+  bannerText: {
+    color: tokens.color.text,
+    fontFamily: tokens.font.family.sans,
+    fontSize: 14,
+    lineHeight: 20,
+  },
   exact: {
     backgroundColor: tokens.color.successSoft,
     borderRadius: tokens.radius.md,
     gap: 2,
     padding: tokens.space.lg,
   },
-  exactLabel: { color: tokens.color.success, fontSize: 11, fontWeight: '700', letterSpacing: 0.5 },
-  exactValue: { color: tokens.color.text, fontSize: 15, fontWeight: '600' },
+  exactLabel: {
+    color: tokens.color.success,
+    fontFamily: tokens.font.family.sansSemibold,
+    fontSize: 11,
+    letterSpacing: 1,
+  },
+  exactValue: {
+    color: tokens.color.text,
+    fontFamily: tokens.font.family.serifSemibold,
+    fontSize: 16,
+  },
   notice: {
     backgroundColor: tokens.color.primarySoft,
     borderRadius: tokens.radius.md,
     padding: tokens.space.lg,
   },
-  noticeText: { color: tokens.color.brandNavy, fontSize: 14, lineHeight: 20 },
+  noticeText: {
+    color: tokens.color.text,
+    fontFamily: tokens.font.family.sans,
+    fontSize: 14,
+    lineHeight: 20,
+  },
   notes: { color: tokens.color.text, fontSize: 15, lineHeight: 23 },
   creator: {
     alignItems: 'center',
@@ -442,10 +494,18 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     width: 48,
   },
-  avatarText: { color: tokens.color.primary, fontSize: 18, fontWeight: '700' },
+  avatarText: {
+    color: tokens.color.primary,
+    fontFamily: tokens.font.family.serifSemibold,
+    fontSize: 18,
+  },
   creatorMain: { flex: 1 },
   blockLink: { justifyContent: 'center', minHeight: 48, paddingHorizontal: tokens.space.sm },
-  blockLinkText: { color: tokens.color.danger, fontSize: 13, fontWeight: '700' },
+  blockLinkText: {
+    color: tokens.color.danger,
+    fontFamily: tokens.font.family.sansSemibold,
+    fontSize: 13,
+  },
   safety: {
     backgroundColor: tokens.color.surface,
     borderColor: tokens.color.border,
@@ -455,8 +515,17 @@ const styles = StyleSheet.create({
     padding: tokens.space.lg,
   },
   reportLink: { alignSelf: 'flex-start', justifyContent: 'center', minHeight: 48 },
-  reportLinkText: { color: tokens.color.danger, fontSize: 14, fontWeight: '700' },
-  error: { color: tokens.color.danger, fontSize: 13, lineHeight: 18 },
+  reportLinkText: {
+    color: tokens.color.danger,
+    fontFamily: tokens.font.family.sansSemibold,
+    fontSize: 14,
+  },
+  error: {
+    color: tokens.color.danger,
+    fontFamily: tokens.font.family.sans,
+    fontSize: 13,
+    lineHeight: 18,
+  },
   bottomBar: {
     backgroundColor: tokens.color.bg,
     borderTopColor: tokens.color.border,
@@ -468,14 +537,14 @@ const styles = StyleSheet.create({
     bottom: 0,
   },
   scrim: {
-    backgroundColor: 'rgba(16,29,64,0.55)',
+    backgroundColor: 'rgba(30,27,22,0.5)',
     flex: 1,
     justifyContent: 'flex-end',
   },
   sheet: {
     backgroundColor: tokens.color.surface,
-    borderTopLeftRadius: 24,
-    borderTopRightRadius: 24,
+    borderTopLeftRadius: tokens.radius.lg,
+    borderTopRightRadius: tokens.radius.lg,
     gap: tokens.space.md,
     padding: tokens.space.xl,
   },
